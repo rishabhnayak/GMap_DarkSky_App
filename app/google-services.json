@@ -1,0 +1,167 @@
+{
+  "project_info": {
+    "project_number": "270648059074",
+    "firebase_url": "https://sstc-attendance.firebaseio.com",
+    "project_id": "sstc-attendance",
+    "storage_bucket": "sstc-attendance.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:270648059074:android:88bb4ecc02ccce83",
+        "android_client_info": {
+          "package_name": "com.SSTC.EDRP"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "270648059074-bt5p5ele3fe203tvdiovncjqhmglvjak.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.SSTC.EDRP",
+            "certificate_hash": "1672c33f60d1ccccd80ed791d36fd5f90b0ddf4c"
+          }
+        },
+        {
+          "client_id": "270648059074-g5g0lat6nv3kq26jhend66b91o8trmv2.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.SSTC.EDRP",
+            "certificate_hash": "6bd1440a611360670f50d464b78187b3b69c68ae"
+          }
+        },
+        {
+          "client_id": "270648059074-hf1am6tohsdd6hbu91bklkpacc1cpqao.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.SSTC.EDRP",
+            "certificate_hash": "7f9a4c00f3f009c7bb00fedd65a023cfd1a05eaf"
+          }
+        },
+        {
+          "client_id": "270648059074-pmneimbi26qhogr48b1umqgtp3ejont1.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.SSTC.EDRP",
+            "certificate_hash": "42efdd2226e30fa299c231a08dcbdeb1de68fb26"
+          }
+        },
+        {
+          "client_id": "270648059074-k88do872hmahn61ke51toh5mgrvq8e55.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD-W9eH5NosDHqvsAfq2NNAE94WVugH6oQ"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "270648059074-k88do872hmahn61ke51toh5mgrvq8e55.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:270648059074:android:6060a9dc45a9abcc",
+        "android_client_info": {
+          "package_name": "com.example.kamlesh.multiplayer"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "270648059074-qommcbnfgia4nc879jr0j78es4ri4edv.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.kamlesh.multiplayer",
+            "certificate_hash": "6567d97298eb87b00c458703414cffc27d8fbea9"
+          }
+        },
+        {
+          "client_id": "270648059074-k88do872hmahn61ke51toh5mgrvq8e55.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD-W9eH5NosDHqvsAfq2NNAE94WVugH6oQ"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "270648059074-k88do872hmahn61ke51toh5mgrvq8e55.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:270648059074:android:2d084ade75d742f9",
+        "android_client_info": {
+          "package_name": "com.kamlesh.directionandweather123"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "270648059074-lpv7qo67sjphpaj6kjditb53879jd083.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.kamlesh.directionandweather123",
+            "certificate_hash": "896d88af419149ad9c20d5a702cdc2df211ff438"
+          }
+        },
+        {
+          "client_id": "270648059074-k88do872hmahn61ke51toh5mgrvq8e55.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD-W9eH5NosDHqvsAfq2NNAE94WVugH6oQ"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "270648059074-k88do872hmahn61ke51toh5mgrvq8e55.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

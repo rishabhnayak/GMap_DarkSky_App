@@ -1,0 +1,32 @@
+<resources>
+    <string name="app_name">WeatherOnMyTripRoute</string>
+    <string name="simple_direction">Simple Direction</string>
+    <string name="transit_direction">Transit Direction</string>
+    <string name="alternative_direction">Alternative Direction</string>
+    <string name="waypoints_direction">Waypoints Direction</string>
+    <string name="request_direction">Request Direction</string>
+    <string name="title_activity_main2">Main2Activity</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="action_settings">Settings</string>
+    <string name="wait">wait…</string>
+    <string name="LicenseKey">MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAnh6LDOmwwPSQ8KesBlRQ/LrN/75xUFQhVmvfJG6uUlmgxU4iWiMzwr1iydveIz3cNT2C1IdnBpohHuDhn9RlOn5uaR3Cw0BDGrnRzwHZRPdoJ3/tAWIS+cLD/5LU7sriMOi6spMaPTYjgrT/Lck36goPwY88FK+e2G09cFrd54WQBPwHO+COKlKOFQ7Yt9yiCLlwivhdSDbacuVGg696JjAeTBvnw0eqks7Q/FHg2U0TlhBf/RU2+tvCnR2L0hk1kgkkdZFua8aDrZ1xQkEkBzlrrHrGnmqCyVoPHwMcxoOKM61BX511NMRuBJv9Eg19n4QITqT/fsR7vzmnljjxLQIDAQAB</string>
+
+    <string name="subscription_period_prompt">Select your subscription period</string>
+    <string name="subscription_resignup_prompt">To reactivate your subscription, select your subscription period</string>
+    <string name="subscription_update_prompt">To change your subscription, select your new subscription period</string>
+    <string name="subscription_period_monthly">Monthly</string>
+    <string name="subscription_period_quaterly">Quarterly</string>
+    <string name="subscription_period_halfyearly">Half-Yearly</string>
+    <string name="subscription_period_yearly">Yearly</string>
+    <string name="subscription_prompt_continue">Continue</string>
+    <string name="subscription_prompt_cancel">Cancel</string>
+    <string name="content_description_app_loading_image">App loading image</string>
+    <string name="content_description_title_image">80\'s Video Game Style Car Logo</string>
+    <string name="content_desc_gas_gauge_indicator">Gas gauge indicator</string>
+    <string name="content_desc_free_vs_premium_indicator">Free or Premium Image Indicator</string>
+    <string name="title_activity_subscription3">Subscription3</string>
+    <string name="title_activity_main123">MainActivity123</string>
+
+
+</resources>
