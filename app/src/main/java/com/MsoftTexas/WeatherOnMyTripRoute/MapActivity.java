@@ -25,6 +25,8 @@ import android.widget.DatePicker;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.TimePicker;
@@ -140,6 +142,9 @@ public class MapActivity extends AppCompatActivity implements
             static LinearLayout relativeLayout;
             static TextView step_time,step_weather;
             static ImageView step_icon;
+
+            RadioGroup radioGroup;
+            String selectedText="one";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -317,8 +322,80 @@ public class MapActivity extends AppCompatActivity implements
             }
         });
 
-    }
+        //radio button method
+        radioGroup=findViewById(R.id.test_radio);
+        radioGroup.check(R.id._1);
+        Toast.makeText(context, selectedText, Toast.LENGTH_SHORT).show();
+        ((ImageView)(findViewById(R.id.a))).setImageResource(R.drawable.car_on);
+        ((ImageView)(findViewById(R.id.b))).setImageResource(R.drawable.train_off);
+        ((ImageView)(findViewById(R.id.c))).setImageResource(R.drawable.walk_off);
+        ((ImageView)(findViewById(R.id.d))).setImageResource(R.drawable.bike_off);
+        ((ImageView)(findViewById(R.id.e))).setImageResource(R.drawable.plane_off);
+        radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup radioGroup, int i) {
+                int selectedId =    radioGroup.getCheckedRadioButtonId();
+                selectedText = ((RadioButton)(findViewById(selectedId))).getText().toString();
+                Toast.makeText(getApplicationContext(), selectedText, Toast.LENGTH_SHORT).show();
+                switch (selectedText){
+                    case "one":
+                        ((ImageView)(findViewById(R.id.a))).setImageResource(R.drawable.car_on);
+                        ((ImageView)(findViewById(R.id.b))).setImageResource(R.drawable.train_off);
+                        ((ImageView)(findViewById(R.id.c))).setImageResource(R.drawable.walk_off);
+                        ((ImageView)(findViewById(R.id.d))).setImageResource(R.drawable.bike_off);
+                        ((ImageView)(findViewById(R.id.e))).setImageResource(R.drawable.plane_off);
+                        break;
+                    case "two":
+                        ((ImageView)(findViewById(R.id.a))).setImageResource(R.drawable.car_off);
+                        ((ImageView)(findViewById(R.id.b))).setImageResource(R.drawable.train_on);
+                        ((ImageView)(findViewById(R.id.c))).setImageResource(R.drawable.walk_off);
+                        ((ImageView)(findViewById(R.id.d))).setImageResource(R.drawable.bike_off);
+                        ((ImageView)(findViewById(R.id.e))).setImageResource(R.drawable.plane_off);
+                        break;
+                    case "three":
+                        ((ImageView)(findViewById(R.id.a))).setImageResource(R.drawable.car_off);
+                        ((ImageView)(findViewById(R.id.b))).setImageResource(R.drawable.train_off);
+                        ((ImageView)(findViewById(R.id.c))).setImageResource(R.drawable.walk_on);
+                        ((ImageView)(findViewById(R.id.d))).setImageResource(R.drawable.bike_off);
+                        ((ImageView)(findViewById(R.id.e))).setImageResource(R.drawable.plane_off);
+                        break;
+                    case "four":
+                        ((ImageView)(findViewById(R.id.a))).setImageResource(R.drawable.car_off);
+                        ((ImageView)(findViewById(R.id.b))).setImageResource(R.drawable.train_off);
+                        ((ImageView)(findViewById(R.id.c))).setImageResource(R.drawable.walk_off);
+                        ((ImageView)(findViewById(R.id.d))).setImageResource(R.drawable.bike_on);
+                        ((ImageView)(findViewById(R.id.e))).setImageResource(R.drawable.plane_off);
+                        break;
+                    case "five":
+                        ((ImageView)(findViewById(R.id.a))).setImageResource(R.drawable.car_off);
+                        ((ImageView)(findViewById(R.id.b))).setImageResource(R.drawable.train_off);
+                        ((ImageView)(findViewById(R.id.c))).setImageResource(R.drawable.walk_off);
+                        ((ImageView)(findViewById(R.id.d))).setImageResource(R.drawable.bike_off);
+                        ((ImageView)(findViewById(R.id.e))).setImageResource(R.drawable.plane_on);
+                        break;
+                    default:
 
+                }
+
+            }
+        });
+
+    }
+            public void first(View view) {
+                radioGroup.check(R.id._1);
+            }
+            public void second(View view) {
+                radioGroup.check(R.id._2);
+            }
+            public void third(View view) {
+                radioGroup.check(R.id._3);
+            }
+            public void forth(View view) {
+                radioGroup.check(R.id._4);
+            }
+            public void fifth(View view) {
+                radioGroup.check(R.id._5);
+            }
     @Override
     public void onBackPressed() {
         Intent intent = new Intent(Intent.ACTION_MAIN);

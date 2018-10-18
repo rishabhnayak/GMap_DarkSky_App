@@ -140,6 +140,103 @@
 
                         </android.support.v7.widget.CardView>
                         </LinearLayout>
+
+
+                        <android.support.v7.widget.CardView
+                            android:visibility="gone"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+                            <RadioGroup
+
+                                android:id="@+id/test_radio"
+                                android:gravity="center"
+                                android:orientation="horizontal"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content">
+                                <RadioButton
+                                    android:id="@+id/_1"
+                                    android:text="one"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    />
+                                <RadioButton
+                                    android:text="two"
+                                    android:id="@+id/_2"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    />
+                                <RadioButton
+                                    android:text="three"
+                                    android:id="@+id/_3"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    />
+                                <RadioButton
+                                    android:text="four"
+                                    android:id="@+id/_4"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    />
+                                <RadioButton
+                                    android:text="five"
+                                    android:id="@+id/_5"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    />
+                            </RadioGroup>
+                        </android.support.v7.widget.CardView>
+
+                        <android.support.v7.widget.CardView
+                            android:layout_margin="10dp"
+                            sothree:cardElevation="3dp"
+                            sothree:cardCornerRadius="20dp"
+                            sothree:cardBackgroundColor="#ffffff"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+                            <LinearLayout
+                                android:gravity="center"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content">
+                                <ImageView
+                                    android:layout_weight="1"
+                                    android:onClick="first"
+                                    android:id="@+id/a"
+                                    android:padding="3dp"
+                                    android:layout_width="40dp"
+                                    android:layout_height="40dp" />
+                                <ImageView
+                                    android:layout_weight="1"
+                                    android:onClick="second"
+                                    android:id="@+id/b"
+                                    android:padding="3dp"
+                                    android:layout_width="40dp"
+                                    android:layout_height="40dp" />
+                                <ImageView
+                                    android:layout_weight="1"
+                                    android:onClick="third"
+                                    android:id="@+id/c"
+                                    android:padding="3dp"
+                                    android:layout_width="40dp"
+                                    android:layout_height="40dp" />
+                                <ImageView
+                                    android:layout_weight="1"
+                                    android:onClick="forth"
+                                    android:id="@+id/d"
+                                    android:padding="3dp"
+                                    android:layout_width="40dp"
+                                    android:layout_height="40dp" />
+                                <ImageView
+                                    android:layout_weight="1"
+                                    android:onClick="fifth"
+                                    android:id="@+id/e"
+                                    android:padding="3dp"
+                                    android:layout_width="40dp"
+                                    android:layout_height="40dp" />
+                            </LinearLayout>
+
+
+                        </android.support.v7.widget.CardView>
+
                     </LinearLayout>
 
                     <ImageView
