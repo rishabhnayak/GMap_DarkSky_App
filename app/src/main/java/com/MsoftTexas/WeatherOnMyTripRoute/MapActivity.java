@@ -59,6 +59,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
 import com.google.firebase.analytics.FirebaseAnalytics;
+import com.google.maps.model.DirectionsRoute;
 import com.sothree.slidinguppanel.SlidingUpPanelLayout;
 import com.vipul.hp_hp.library.Layout_to_Image;
 
@@ -146,6 +147,9 @@ public class MapActivity extends AppCompatActivity implements
 
             RadioGroup radioGroup;
             String selectedText="one",selectedUnit="automatic";
+
+     static int travelmode=0;
+     static String restrictions="0";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -559,11 +563,11 @@ public class MapActivity extends AppCompatActivity implements
                 for(int k=0;k<markersInterm.size();k++){
                     markersInterm.get(k).remove();
                 }
-                custom_dialog.setVisibility(View.VISIBLE);
-                loading.setVisibility(View.VISIBLE);
-                loading_text.setVisibility(View.VISIBLE);
-                loading_text.setText("loading weather...");
-                new WeatherApi().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+            //    custom_dialog.setVisibility(View.VISIBLE);
+            //    loading.setVisibility(View.VISIBLE);
+            //    loading_text.setVisibility(View.VISIBLE);
+            //    loading_text.setText("loading weather...");
+           //     new WeatherApi().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
             }
         });
 
@@ -714,12 +718,12 @@ public class MapActivity extends AppCompatActivity implements
 
         if(origin!=null && destination!=null) {
             googleMap.clear();
-            custom_dialog.setVisibility(View.VISIBLE);
-            loading.setVisibility(View.VISIBLE);
-            loading_text.setVisibility(View.VISIBLE);
+          //  custom_dialog.setVisibility(View.VISIBLE);
+          //  loading.setVisibility(View.VISIBLE);
+          //  loading_text.setVisibility(View.VISIBLE);
            // slidingUpPanelLayout.setAlpha(0.5f);
-            loading.setSpeed(1f);
-            loading_text.setText("Loading Route");
+          //  loading.setSpeed(1f);
+          //  loading_text.setText("Loading Route");
 
             originMarker=googleMap.addMarker(new MarkerOptions().position(origin).icon(BitmapDescriptorFactory.fromResource(R.drawable.pinb)));
             originMarker.setDraggable(true);
@@ -731,15 +735,15 @@ public class MapActivity extends AppCompatActivity implements
 
 
              new RouteApi().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-             new WeatherApi().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+         //    new WeatherApi().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
         }else{
             Toast.makeText(getApplicationContext(),"origin or destination null", Toast.LENGTH_LONG).show();
         }
     }
 
-    static void setCameraWithCoordinationBounds(Route route) {
-        LatLng southwest = new LatLng(route.getBounds().getSouthwest().getLat(),route.getBounds().getSouthwest().getLng());
-        LatLng northeast =  new LatLng(route.getBounds().getNortheast().getLat(),route.getBounds().getNortheast().getLng());
+    static void setCameraWithCoordinationBounds(DirectionsRoute route) {
+        LatLng southwest = new LatLng(route.bounds.southwest.lat,route.bounds.southwest.lng);
+        LatLng northeast =  new LatLng(route.bounds.northeast.lat,route.bounds.northeast.lng);
         LatLngBounds bounds = new LatLngBounds(southwest, northeast);
         googleMap.animateCamera(CameraUpdateFactory.newLatLngBounds(bounds, 250));
     }

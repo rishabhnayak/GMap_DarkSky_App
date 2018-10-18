@@ -146,28 +146,7 @@ public class WeatherApi extends AsyncTask<Object,Object,String> {
                                         .position(new LatLng(item.getPoint().getLatitude(), item.getPoint().getLongitude())));
                                 marker.setTag("I"+finalC);
                                 markersInterm.add(marker);
-//                Glide.with(context)
-//                        .load(item.getWlist().get(0).getImgurl())
-//                        .asBitmap()
-//                        .fitCenter()
-//                        .into(new SimpleTarget<Bitmap>(90, 90) {
-//                            @Override
-//                            public void onResourceReady(Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {
-//                                Marker marker = googleMap.addMarker(new MarkerOptions()
-//                                        .icon(BitmapDescriptorFactory.fromBitmap(resource))
-//                                        .position(new LatLng(item.getPoint().getLatitude(), item.getPoint().getLongitude())));
-//                                marker.setTag("I"+finalC);
-//                                markersInterm.add(marker);
-//                            }
-//
-//                            @Override
-//                            public void onLoadFailed(Exception e, Drawable errorDrawable) {
-////                                googleMap.addMarker(new MarkerOptions()
-////                                        .icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_marker_default_logo))
-////                                        .position(place.getLatLng()));
-//                                e.printStackTrace();
-//                            }
-//                        });
+
             }
         }else{
             System.out.println("api data is null or api.getlist is null");
@@ -247,46 +226,7 @@ public class WeatherApi extends AsyncTask<Object,Object,String> {
                                             .position(new LatLng(mStep.getStep().getStart_location().getLat(), mStep.getStep().getStart_location().getLng())));
                                     marker.setTag("S" + finalC);
                                     markersSteps.add(marker);
-                try {
 
-//                    System.out.println(mStep.getWlist().getIcon());
-//
-//                    StorageReference storageRef = storage.getReference(mStep.getWlist().getIcon());
-//                    System.out.println(storageRef.toString());
-//
-//                    Glide.with(context)
-//
-//                            .load(storageRef)
-//
-//                            .asBitmap()
-//                            .fitCenter()
-//                            .into(new SimpleTarget<Bitmap>(90, 90) {
-//                                @Override
-//                                public void onResourceReady(Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {
-//                                    Marker marker = googleMap.addMarker(new MarkerOptions()
-//                                            .icon(BitmapDescriptorFactory.fromBitmap(resource))
-//                                            .position(new LatLng(mStep.getStep().getStart_location().getLat(), mStep.getStep().getStart_location().getLng())));
-//                                    marker.setTag("S" + finalC);
-//                                    markersSteps.add(marker);
-//                                }
-//
-//
-//
-//
-//                                @Override
-//                                public void onLoadFailed(Exception e, Drawable errorDrawable) {
-////                                googleMap.addMarker(new MarkerOptions()
-////                                        .icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_marker_default_logo))
-////                                        .position(place.getLatLng()));
-//                                    e.printStackTrace();
-//                                }
-//                            });
-
-                }catch (Exception e){
-                    e.printStackTrace();
-
-
-                }
             }
 
         }else {
@@ -331,24 +271,7 @@ public class WeatherApi extends AsyncTask<Object,Object,String> {
             if (netInfo != null && netInfo.isConnected()) {
             HttpClient client = new DefaultHttpClient();
             HttpResponse response = null;
-            //nbsc-1518068960369.appspot.com
-//            System.out.println("https://nbsc-1518068960369.appspot.com/_ah/api/darksky/v1/wdata?"
-//                    +"olat="+origin.latitude+"&olng="+origin.longitude
-//                    +"&dlat="+destination.latitude+"&dlng="+destination.longitude
-//                    +"&route="+selectedroute
-//                    +"&interval="+interval
-//                    +"&tz="+timezone
-//                    +"&jstime="+(jstart_date_millis+jstart_time_millis));
-//            HttpGet request=new HttpGet("https://nbsc-1518068960369.appspot.com/_ah/api/darksky/v1/wdata?" +
-//                    "olat="+origin.latitude +
-//                    "&olng="+origin.longitude +
-//                    "&dlat="+destination.latitude +
-//                    "&dlng="+destination.longitude +
-//                    "&route="+selectedroute +
-//                    "&interval="+interval +
-//                    "&tz=" +timezone.replace("/","%2F") +
-//                    "&jstime="+(jstart_date_millis+jstart_time_millis)
-//            );
+
             BufferedReader rd=null;
                 String url="https://4svktzsdok.execute-api.ap-south-1.amazonaws.com/dev";
               //  String url="https://dgaprckvs3.execute-api.ap-south-1.amazonaws.com/dev";

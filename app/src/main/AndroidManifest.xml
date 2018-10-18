@@ -29,7 +29,7 @@
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyDi3B9R9hVpC9YTmOCCz_pCR1BKW3tIRGY" />
+            android:value="@string/googleAPIkey" />
 
         <activity
             android:name=".SearchPlace"
