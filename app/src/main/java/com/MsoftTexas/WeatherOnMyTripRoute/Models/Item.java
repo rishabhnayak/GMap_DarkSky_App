@@ -1,9 +1,11 @@
 
 package com.MsoftTexas.WeatherOnMyTripRoute.Models;
 
+import com.google.maps.model.LatLng;
+
 public class Item {
 
-    private Point point;
+    private LatLng point;
     private Wlist wlist = null;
     private String arrtime;
     private String distance;
@@ -24,7 +26,7 @@ public class Item {
      * @param arrtime
      * @param wlist
      */
-    public Item(Point point, Wlist wlist, String arrtime, String distance, String lname) {
+    public Item(LatLng point, Wlist wlist, String arrtime, String distance, String lname) {
         super();
         this.point = point;
         this.wlist = wlist;
@@ -33,7 +35,7 @@ public class Item {
         this.lname=lname;
     }
 
-    public Item(Point point, Wlist wlist, String arrtime, String distance, Step step) {
+    public Item(LatLng point, Wlist wlist, String arrtime, String distance, Step step) {
         super();
         this.point = point;
         this.wlist = wlist;
@@ -42,11 +44,11 @@ public class Item {
         this.step=step;
     }
 
-    public Point getPoint() {
+    public LatLng getPoint() {
         return point;
     }
 
-    public void setPoint(Point point) {
+    public void setPoint(LatLng point) {
         this.point = point;
     }
 

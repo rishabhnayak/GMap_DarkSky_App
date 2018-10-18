@@ -14,7 +14,6 @@ import com.MsoftTexas.WeatherOnMyTripRoute.Adapters.DragupListAdapter;
 import com.MsoftTexas.WeatherOnMyTripRoute.Models.Apidata;
 import com.MsoftTexas.WeatherOnMyTripRoute.Models.Input;
 import com.MsoftTexas.WeatherOnMyTripRoute.Models.Item;
-import com.MsoftTexas.WeatherOnMyTripRoute.Models.LatLng1;
 import com.MsoftTexas.WeatherOnMyTripRoute.Models.MStep;
 import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
@@ -25,7 +24,6 @@ import com.google.gson.Gson;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
@@ -143,7 +141,7 @@ public class WeatherApi extends AsyncTask<Object,Object,String> {
                 BitmapDescriptor icon = new bitmapfromstring(item.getWlist().getIcon()).getIcon();
                 Marker marker = googleMap.addMarker(new MarkerOptions()
                                         .icon(BitmapDescriptorFactory.fromBitmap(bitmap))
-                                        .position(new LatLng(item.getPoint().getLatitude(), item.getPoint().getLongitude())));
+                                        .position(new LatLng(item.getPoint().lat, item.getPoint().lng)));
                                 marker.setTag("I"+finalC);
                                 markersInterm.add(marker);
 
@@ -278,9 +276,9 @@ public class WeatherApi extends AsyncTask<Object,Object,String> {
                 HttpPost request = new HttpPost(url);
 
                 Input input=new Input();
-                input.setOrigin(new LatLng1(((float) origin.latitude), ((float) origin.longitude)));
-                input.setDestination(new LatLng1(((float)destination.latitude),((float)destination.longitude)));
-                input.setRoute((long)selectedroute);
+                input.setOrigin(new LatLng(((float) origin.latitude), ((float) origin.longitude)));
+                input.setDestination(new LatLng(((float)destination.latitude),((float)destination.longitude)));
+                input.setRoute(selectedroute);
                 input.setInterval(interval);
                 input.setTimeZone(timezone);
                 input.setTime(jstart_date_millis+jstart_time_millis);

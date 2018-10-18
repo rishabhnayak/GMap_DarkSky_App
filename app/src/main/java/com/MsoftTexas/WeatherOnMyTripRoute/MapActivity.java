@@ -34,8 +34,7 @@ import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.MsoftTexas.WeatherOnMyTripRoute.Adapters.ArrrayAdapter;
-import com.MsoftTexas.WeatherOnMyTripRoute.DirectionApiModel.DirectionApi;
-import com.MsoftTexas.WeatherOnMyTripRoute.DirectionApiModel.Route;
+
 import com.MsoftTexas.WeatherOnMyTripRoute.Models.Apidata;
 import com.MsoftTexas.WeatherOnMyTripRoute.Models.Item;
 import com.MsoftTexas.WeatherOnMyTripRoute.Models.MStep;
@@ -59,6 +58,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
 import com.google.firebase.analytics.FirebaseAnalytics;
+import com.google.maps.model.DirectionsResult;
 import com.google.maps.model.DirectionsRoute;
 import com.sothree.slidinguppanel.SlidingUpPanelLayout;
 import com.vipul.hp_hp.library.Layout_to_Image;
@@ -109,7 +109,7 @@ public class MapActivity extends AppCompatActivity implements
     static Apidata apiData=null;
     static GoogleMap googleMap;
     private String serverKey = "AIzaSyDi3B9R9hVpC9YTmOCCz_pCR1BKW3tIRGY";
-    static DirectionApi directionapi;
+    static DirectionsResult directionapi;
     static TextView distance, duration;
     ImageView RequestDirection;
     static LatLng origin = null;
@@ -554,8 +554,8 @@ public class MapActivity extends AppCompatActivity implements
                 selectedPolyline.setClickable(true);
                 polylines.set(val,selectedPolyline);
 
-                distance.setText("("+directionapi.getRoutes().get(val).getLegs().get(0).getDistance().getText()+")");
-                duration.setText(directionapi.getRoutes().get(val).getLegs().get(0).getDuration().getText());
+                distance.setText("("+directionapi.routes[val].legs[0].distance.humanReadable+")");
+                duration.setText(directionapi.routes[val].legs[0].durationInTraffic!=null?directionapi.routes[val].legs[0].durationInTraffic.humanReadable:directionapi.routes[val].legs[0].duration.humanReadable);
 
                 for(int k=0;k<markersSteps.size();k++){
                     markersSteps.get(k).remove();
@@ -613,7 +613,7 @@ public class MapActivity extends AppCompatActivity implements
 
                         builderSingle.setIcon(R.drawable.ic_directions_black_24dp);
                         try {
-                            builderSingle.setTitle(new Geocoder(getApplicationContext(), Locale.ENGLISH).getFromLocation(item.getPoint().getLatitude(), item.getPoint().getLatitude(), 1).get(0).getAddressLine(0));
+                            builderSingle.setTitle(new Geocoder(getApplicationContext(), Locale.ENGLISH).getFromLocation(item.getPoint().lat, item.getPoint().lng, 1).get(0).getAddressLine(0));
                         }catch (Exception e){
                             e.printStackTrace();
                         }

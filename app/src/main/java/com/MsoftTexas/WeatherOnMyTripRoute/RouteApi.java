@@ -7,8 +7,7 @@ import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.view.View;
 
-import com.MsoftTexas.WeatherOnMyTripRoute.DirectionApiModel.DirectionApi;
-import com.MsoftTexas.WeatherOnMyTripRoute.DirectionApiModel.Route;
+
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
@@ -70,7 +69,7 @@ public class RouteApi extends AsyncTask<Object,Object,DirectionsResult> {
             MapActivity.routeloaded = true;
 
             //      System.out.println("direction data : "+new Gson().toJson(apidata));
-      //      MapActivity.directionapi = apidata;
+            MapActivity.directionapi = apidata;
             DirectionsRoute route = apidata.routes[0];
 
 

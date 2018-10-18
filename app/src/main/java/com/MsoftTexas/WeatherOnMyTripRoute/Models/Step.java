@@ -1,6 +1,7 @@
 
 package com.MsoftTexas.WeatherOnMyTripRoute.Models;
 
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -33,13 +34,13 @@ public class Step {
 
     /**
      * No args constructor for use in serialization
-     * 
+     *
      */
     public Step() {
     }
 
     /**
-     * 
+     *
      * @param html_instructions
      * @param duration
      * @param distance

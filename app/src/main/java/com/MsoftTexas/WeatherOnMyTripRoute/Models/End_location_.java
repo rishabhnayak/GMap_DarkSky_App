@@ -8,10 +8,10 @@ public class End_location_ {
 
     @SerializedName("lat")
     @Expose
-    private Float lat;
+    private Double lat;
     @SerializedName("lng")
     @Expose
-    private Float lng;
+    private Double lng;
 
     /**
      * No args constructor for use in serialization
@@ -25,25 +25,25 @@ public class End_location_ {
      * @param lng
      * @param lat
      */
-    public End_location_(Float lat, Float lng) {
+    public End_location_(Double lat, Double lng) {
         super();
         this.lat = lat;
         this.lng = lng;
     }
 
-    public Float getLat() {
+    public Double getLat() {
         return lat;
     }
 
-    public void setLat(Float lat) {
+    public void setLat(Double lat) {
         this.lat = lat;
     }
 
-    public Float getLng() {
+    public Double getLng() {
         return lng;
     }
 
-    public void setLng(Float lng) {
+    public void setLng(Double lng) {
         this.lng = lng;
     }
 

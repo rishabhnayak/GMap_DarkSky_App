@@ -11,7 +11,7 @@ public class Distance_ {
     private String text;
     @SerializedName("value")
     @Expose
-    private Long value;
+    private Integer value;
 
     /**
      * No args constructor for use in serialization
@@ -25,7 +25,7 @@ public class Distance_ {
      * @param text
      * @param value
      */
-    public Distance_(String text, Long value) {
+    public Distance_(String text, Integer value) {
         super();
         this.text = text;
         this.value = value;
@@ -39,11 +39,11 @@ public class Distance_ {
         this.text = text;
     }
 
-    public Long getValue() {
+    public Integer getValue() {
         return value;
     }
 
-    public void setValue(Long value) {
+    public void setValue(Integer value) {
         this.value = value;
     }
 

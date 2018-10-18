@@ -1,24 +1,22 @@
 
 package com.MsoftTexas.WeatherOnMyTripRoute.Models;
 
-import java.io.Serializable;
 
-
+import com.google.android.gms.maps.model.LatLng;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Input implements Serializable
-{
+public class Input {
 
     @SerializedName("origin")
     @Expose
-    private LatLng1 origin;
+    private LatLng origin;
     @SerializedName("destination")
     @Expose
-    private LatLng1 destination;
+    private LatLng destination;
     @SerializedName("route")
     @Expose
-    private Long route;
+    private Integer route;
     @SerializedName("interval")
     @Expose
     private Long interval;
@@ -28,55 +26,34 @@ public class Input implements Serializable
     @SerializedName("time")
     @Expose
     private Long time;
-    private final static long serialVersionUID = -784466641420971157L;
+    @SerializedName("travelmode")
+    @Expose
+    private Integer travelmode;
+    @SerializedName("restrictions")
+    @Expose
+    private String restrictions;
 
-    /**
-     * No args constructor for use in serialization
-     * 
-     */
-    public Input() {
-    }
-
-    /**
-     * 
-     * @param time
-     * @param interval
-     * @param route
-     * @param origin
-     * @param timeZone
-     * @param destination
-     */
-    public Input(LatLng1 origin, LatLng1 destination, Long route, Long interval, String timeZone, Long time) {
-        super();
-        this.origin = origin;
-        this.destination = destination;
-        this.route = route;
-        this.interval = interval;
-        this.timeZone = timeZone;
-        this.time = time;
-    }
-
-    public LatLng1 getOrigin() {
+    public LatLng getOrigin() {
         return origin;
     }
 
-    public void setOrigin(LatLng1 origin) {
+    public void setOrigin(LatLng origin) {
         this.origin = origin;
     }
 
-    public LatLng1 getDestination() {
+    public LatLng getDestination() {
         return destination;
     }
 
-    public void setDestination(LatLng1 destination) {
+    public void setDestination(LatLng destination) {
         this.destination = destination;
     }
 
-    public Long getRoute() {
+    public Integer getRoute() {
         return route;
     }
 
-    public void setRoute(Long route) {
+    public void setRoute(Integer route) {
         this.route = route;
     }
 
@@ -84,29 +61,43 @@ public class Input implements Serializable
         return interval;
     }
 
-    public void setInterval(Long interval) {
-        this.interval = interval;
+    public void setInterval(long interval2) {
+        this.interval = interval2;
     }
 
     public String getTimeZone() {
-     return timeZone;
+    	if(timeZone.contains("."))
+    		timeZone=timeZone.replace(".", "/");
+    	
+    		return timeZone;
     }
 
     public void setTimeZone(String timeZone) {
-        if(timeZone.contains("/")) {
-            this.timeZone= timeZone.replace("/", ".");
-        }else {
-            this.timeZone= timeZone;
-        }
-
+        this.timeZone = timeZone;
     }
 
     public Long getTime() {
         return time;
     }
 
-    public void setTime(Long time) {
-        this.time = time;
+    public void setTime(long starttime) {
+        this.time = starttime;
+    }
+
+    public Integer getTravelmode() {
+        return travelmode;
+    }
+
+    public void setTravelmode(Integer travelmode) {
+        this.travelmode = travelmode;
+    }
+
+    public String getRestrictions() {
+        return restrictions;
+    }
+
+    public void setRestrictions(String restrictions) {
+        this.restrictions = restrictions;
     }
 
 }
