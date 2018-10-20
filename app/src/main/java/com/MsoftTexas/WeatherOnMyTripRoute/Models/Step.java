@@ -4,6 +4,7 @@ package com.MsoftTexas.WeatherOnMyTripRoute.Models;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+import com.google.maps.model.LatLng;
 
 public class Step {
 
@@ -15,7 +16,7 @@ public class Step {
     private Duration_ duration;
     @SerializedName("end_location")
     @Expose
-    private End_location_ end_location;
+    private LatLng end_location;
     @SerializedName("html_instructions")
     @Expose
     private String html_instructions;
@@ -24,7 +25,7 @@ public class Step {
     private Polyline polyline;
     @SerializedName("start_location")
     @Expose
-    private Start_location_ start_location;
+    private LatLng start_location;
     @SerializedName("travel_mode")
     @Expose
     private String travel_mode;
@@ -50,7 +51,7 @@ public class Step {
      * @param maneuver
      * @param travel_mode
      */
-    public Step(Distance_ distance, Duration_ duration, End_location_ end_location, String html_instructions, Polyline polyline, Start_location_ start_location, String travel_mode, String maneuver) {
+    public Step(Distance_ distance, Duration_ duration, LatLng end_location, String html_instructions, Polyline polyline, LatLng start_location, String travel_mode, String maneuver) {
         super();
         this.distance = distance;
         this.duration = duration;
@@ -78,11 +79,11 @@ public class Step {
         this.duration = duration;
     }
 
-    public End_location_ getEnd_location() {
+    public LatLng getEnd_location() {
         return end_location;
     }
 
-    public void setEnd_location(End_location_ end_location) {
+    public void setEnd_location(LatLng end_location) {
         this.end_location = end_location;
     }
 
@@ -102,11 +103,11 @@ public class Step {
         this.polyline = polyline;
     }
 
-    public Start_location_ getStart_location() {
+    public LatLng getStart_location() {
         return start_location;
     }
 
-    public void setStart_location(Start_location_ start_location) {
+    public void setStart_location(LatLng start_location) {
         this.start_location = start_location;
     }
 

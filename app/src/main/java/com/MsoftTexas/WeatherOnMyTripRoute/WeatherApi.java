@@ -31,6 +31,8 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 
+import cz.msebera.android.httpclient.impl.client.cache.ManagedHttpCacheStorage;
+
 import static com.MsoftTexas.WeatherOnMyTripRoute.MapActivity.apiData;
 import static com.MsoftTexas.WeatherOnMyTripRoute.MapActivity.context;
 import static com.MsoftTexas.WeatherOnMyTripRoute.MapActivity.custom_dialog;
@@ -45,10 +47,12 @@ import static com.MsoftTexas.WeatherOnMyTripRoute.MapActivity.loading_text;
 import static com.MsoftTexas.WeatherOnMyTripRoute.MapActivity.markersInterm;
 import static com.MsoftTexas.WeatherOnMyTripRoute.MapActivity.markersSteps;
 import static com.MsoftTexas.WeatherOnMyTripRoute.MapActivity.origin;
+import static com.MsoftTexas.WeatherOnMyTripRoute.MapActivity.restrictions;
 import static com.MsoftTexas.WeatherOnMyTripRoute.MapActivity.routeloaded;
 import static com.MsoftTexas.WeatherOnMyTripRoute.MapActivity.selectedroute;
 import static com.MsoftTexas.WeatherOnMyTripRoute.MapActivity.slidingUpPanelLayout;
 import static com.MsoftTexas.WeatherOnMyTripRoute.MapActivity.timezone;
+import static com.MsoftTexas.WeatherOnMyTripRoute.MapActivity.travelmode;
 
 /**
  * Created by kamlesh on 29-03-2018.
@@ -66,7 +70,7 @@ public class WeatherApi extends AsyncTask<Object,Object,String> {
         try {
         Apidata apidata=null;
 
-            apidata = new Gson().fromJson(data, Apidata.class);
+        apidata = new Gson().fromJson(data, Apidata.class);
 
         System.out.println("weather data call has started........");
         MapActivity.weatherloaded=true;
@@ -282,6 +286,8 @@ public class WeatherApi extends AsyncTask<Object,Object,String> {
                 input.setInterval(interval);
                 input.setTimeZone(timezone);
                 input.setTime(jstart_date_millis+jstart_time_millis);
+                input.setRestrictions(restrictions);
+                input.setTravelmode(travelmode);
 
 
                 String json =new Gson().toJson(input);

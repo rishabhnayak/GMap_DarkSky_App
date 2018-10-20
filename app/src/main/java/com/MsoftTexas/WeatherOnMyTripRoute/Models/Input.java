@@ -66,14 +66,15 @@ public class Input {
     }
 
     public String getTimeZone() {
-    	if(timeZone.contains("."))
-    		timeZone=timeZone.replace(".", "/");
+
     	
     		return timeZone;
     }
 
     public void setTimeZone(String timeZone) {
-        this.timeZone = timeZone;
+        if(timeZone.contains("/"))
+            this.timeZone =timeZone.replace("/", ".");
+
     }
 
     public Long getTime() {

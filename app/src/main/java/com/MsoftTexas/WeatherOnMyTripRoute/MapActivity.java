@@ -735,7 +735,7 @@ public class MapActivity extends AppCompatActivity implements
 
 
              new RouteApi().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-         //    new WeatherApi().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+             new WeatherApi().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
         }else{
             Toast.makeText(getApplicationContext(),"origin or destination null", Toast.LENGTH_LONG).show();
         }
