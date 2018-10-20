@@ -223,11 +223,11 @@ public class WeatherApi extends AsyncTask<Object,Object,String> {
                 BitmapDescriptor icon = new bitmapfromstring(mStep.getWlist().getIcon()).getIcon();
 
 
-//                Marker marker = googleMap.addMarker(new MarkerOptions()
-//                                            .icon(BitmapDescriptorFactory.fromBitmap(bitmap))
-//                                            .position(new LatLng(mStep.getStep().getStart_location().getLat(), mStep.getStep().getStart_location().getLng())));
-//                                    marker.setTag("S" + finalC);
-//                                    markersSteps.add(marker);
+                Marker marker = googleMap.addMarker(new MarkerOptions()
+                                            .icon(BitmapDescriptorFactory.fromBitmap(bitmap))
+                                            .position(new LatLng(mStep.getStep().getStart_location().getLat(), mStep.getStep().getStart_location().getLng())));
+                                    marker.setTag("S" + finalC);
+                                    markersSteps.add(marker);
 
             }
 
