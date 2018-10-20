@@ -142,197 +142,25 @@
                         </LinearLayout>
 
 
-                        <android.support.v7.widget.CardView
-                            android:visibility="gone"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content">
-                            <RadioGroup
-
-                                android:id="@+id/test_radio"
-                                android:gravity="center"
-                                android:orientation="horizontal"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content">
-                                <RadioButton
-                                    android:id="@+id/_1"
-                                    android:text="one"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    />
-                                <RadioButton
-                                    android:text="two"
-                                    android:id="@+id/_2"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    />
-                                <RadioButton
-                                    android:text="three"
-                                    android:id="@+id/_3"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    />
-                                <RadioButton
-                                    android:text="four"
-                                    android:id="@+id/_4"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    />
-                                <RadioButton
-                                    android:text="five"
-                                    android:id="@+id/_5"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    />
-                            </RadioGroup>
-                        </android.support.v7.widget.CardView>
-
-                        <android.support.v7.widget.CardView
-                            android:layout_margin="10dp"
-                            sothree:cardElevation="3dp"
-                            sothree:cardCornerRadius="20dp"
-                            sothree:cardBackgroundColor="#ffffff"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content">
-                            <LinearLayout
-                                android:gravity="center"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content">
-                                <ImageView
-                                    android:layout_weight="1"
-                                    android:id="@+id/a"
-                                    android:padding="3dp"
-                                    android:layout_width="40dp"
-                                    android:layout_height="40dp" />
-                                <ImageView
-                                    android:layout_weight="1"
-                                    android:id="@+id/b"
-                                    android:padding="3dp"
-                                    android:layout_width="40dp"
-                                    android:layout_height="40dp" />
-                                <ImageView
-                                    android:layout_weight="1"
-                                    android:id="@+id/c"
-                                    android:padding="3dp"
-                                    android:layout_width="40dp"
-                                    android:layout_height="40dp" />
-                                <ImageView
-                                    android:layout_weight="1"
-                                    android:id="@+id/d"
-                                    android:padding="3dp"
-                                    android:layout_width="40dp"
-                                    android:layout_height="40dp" />
-                                <ImageView
-                                    android:layout_weight="1"
-                                    android:id="@+id/e"
-                                    android:padding="3dp"
-                                    android:layout_width="40dp"
-                                    android:layout_height="40dp" />
-                            </LinearLayout>
-
-
-                        </android.support.v7.widget.CardView>
-
                         <LinearLayout
-                            android:orientation="vertical"
+                            android:layout_marginRight="3dp"
+                            android:gravity="right"
+                            android:orientation="horizontal"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content">
-                            <LinearLayout
-                                android:layout_margin="7dp"
-                                android:gravity="right"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content">
-                                <TextView
-                                    android:id="@+id/option"
-                                    android:textColor="@color/colorPrimary"
-                                    android:textSize="13sp"
-                                    android:textAllCaps="true"
-                                    android:text="options"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content" />
-                            </LinearLayout>
+                            <Switch
 
-                            <LinearLayout
-                                android:visibility="gone"
-                                android:id="@+id/option_list"
-                                android:orientation="horizontal"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content">
-                                <LinearLayout
-                                    android:paddingLeft="5dp"
-                                    android:orientation="vertical"
-                                    android:layout_weight="1"
-                                    android:layout_width="0dp"
-                                    android:layout_height="wrap_content">
-                                    <TextView
-                                        android:textSize="13sp"
-                                        android:textAllCaps="true"
-                                        android:text="Avoid"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content" />
-                                    <CheckBox
-                                        android:id="@+id/highway"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:padding="10dp"
-                                        android:text="Highways"
-                                    />
-                                    <CheckBox
-                                        android:id="@+id/tolls"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:padding="10dp"
-                                        android:text="Tolls"
-                                        />
-                                    <CheckBox
-                                        android:id="@+id/ferries"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:padding="10dp"
-                                        android:text="Ferries"
-                                       />
-                                </LinearLayout>
-                                <LinearLayout
-                                    android:orientation="vertical"
-                                    android:layout_weight="1"
-                                    android:layout_width="0dp"
-                                    android:layout_height="wrap_content">
-                                    <TextView
-                                        android:textSize="13sp"
-                                        android:textAllCaps="true"
-                                        android:text="Distance units"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content" />
-                                    <RadioGroup
-                                        android:id="@+id/distance_unit"
-                                        android:orientation="vertical"
-                                        android:layout_width="match_parent"
-                                        android:layout_height="wrap_content">
-                                        <RadioButton
-                                            android:padding="10dp"
-                                            android:id="@+id/automatic"
-                                            android:text="automatic"
-                                            android:layout_width="wrap_content"
-                                            android:layout_height="wrap_content"
-                                            />
-                                        <RadioButton
-                                            android:padding="10dp"
-                                            android:text="miles"
-                                            android:id="@+id/miles"
-                                            android:layout_width="wrap_content"
-                                            android:layout_height="wrap_content"
-                                            />
-                                        <RadioButton
-                                            android:padding="10dp"
-                                            android:text="km"
-                                            android:id="@+id/km"
-                                            android:layout_width="wrap_content"
-                                            android:layout_height="wrap_content"
-                                            />
-                                    </RadioGroup>
-
-                                </LinearLayout>
-                            </LinearLayout>
-
+                                android:textSize="13sp"
+                                android:layout_gravity="center_vertical"
+                                android:textColor="#9e9e9e"
+                                android:id="@+id/weather_switch"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Show Weather  " />
+                            <ImageView
+                                android:id="@+id/weather_switch_icon"
+                                android:layout_width="40dp"
+                                android:layout_height="40dp" />
                         </LinearLayout>
 
                     </LinearLayout>
