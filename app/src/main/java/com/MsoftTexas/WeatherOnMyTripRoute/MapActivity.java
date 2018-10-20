@@ -151,7 +151,7 @@ public class MapActivity extends AppCompatActivity implements
 
      static int travelmode=0;
      static String restrictions="0";
-            boolean flag;
+//            boolean flag;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -330,24 +330,24 @@ public class MapActivity extends AppCompatActivity implements
             }
         });
 
-        Switch weatherSwitch=findViewById(R.id.weather_switch);
-        weatherSwitch.setChecked(false);
-        flag=false;
-        ((ImageView)(findViewById(R.id.weather_switch_icon))).setImageResource(R.drawable.weather_off);
-        weatherSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                if (b==true){
-                    Toast.makeText(getApplicationContext(), "true", Toast.LENGTH_SHORT).show();
-                    ((ImageView)(findViewById(R.id.weather_switch_icon))).setImageResource(R.drawable.weather_on);
-                    flag=true;
-                }else {
-                    flag=false;
-                    ((ImageView)(findViewById(R.id.weather_switch_icon))).setImageResource(R.drawable.weather_off);
-                    Toast.makeText(getApplicationContext(), "false", Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
+//        Switch weatherSwitch=findViewById(R.id.weather_switch);
+//        weatherSwitch.setChecked(false);
+//        flag=false;
+//        ((ImageView)(findViewById(R.id.weather_switch_icon))).setImageResource(R.drawable.weather_off);
+//        weatherSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+//            @Override
+//            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+//                if (b==true){
+//                    Toast.makeText(getApplicationContext(), "true", Toast.LENGTH_SHORT).show();
+//                    ((ImageView)(findViewById(R.id.weather_switch_icon))).setImageResource(R.drawable.weather_on);
+//                    flag=true;
+//                }else {
+//                    flag=false;
+//                    ((ImageView)(findViewById(R.id.weather_switch_icon))).setImageResource(R.drawable.weather_off);
+//                    Toast.makeText(getApplicationContext(), "false", Toast.LENGTH_SHORT).show();
+//                }
+//            }
+//        });
 
     }
 
