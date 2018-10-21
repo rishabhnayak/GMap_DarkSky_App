@@ -5,9 +5,11 @@ import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
+import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
 
 
+import com.MsoftTexas.WeatherOnMyTripRoute.Adapters.AdapterList;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
@@ -33,21 +35,22 @@ import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.MsoftTexas.WeatherOnMyTripRoute.MapActivity.context;
+import static com.MsoftTexas.WeatherOnMyTripRoute.TravelWithActivity.context;
 import static com.MsoftTexas.WeatherOnMyTripRoute.MapActivity.custom_dialog;
-import static com.MsoftTexas.WeatherOnMyTripRoute.MapActivity.destination;
+import static com.MsoftTexas.WeatherOnMyTripRoute.TravelWithActivity.destination;
 import static com.MsoftTexas.WeatherOnMyTripRoute.MapActivity.googleMap;
-import static com.MsoftTexas.WeatherOnMyTripRoute.MapActivity.jstart_date_millis;
-import static com.MsoftTexas.WeatherOnMyTripRoute.MapActivity.jstart_time_millis;
+import static com.MsoftTexas.WeatherOnMyTripRoute.TravelWithActivity.jstart_date_millis;
+import static com.MsoftTexas.WeatherOnMyTripRoute.TravelWithActivity.jstart_time_millis;
 import static com.MsoftTexas.WeatherOnMyTripRoute.MapActivity.loading;
 import static com.MsoftTexas.WeatherOnMyTripRoute.MapActivity.loading_text;
-import static com.MsoftTexas.WeatherOnMyTripRoute.MapActivity.origin;
+import static com.MsoftTexas.WeatherOnMyTripRoute.TravelWithActivity.origin;
 import static com.MsoftTexas.WeatherOnMyTripRoute.MapActivity.polylineOptionsList;
 import static com.MsoftTexas.WeatherOnMyTripRoute.MapActivity.polylines;
 import static com.MsoftTexas.WeatherOnMyTripRoute.MapActivity.restrictions;
 import static com.MsoftTexas.WeatherOnMyTripRoute.MapActivity.setCameraWithCoordinationBounds;
 import static com.MsoftTexas.WeatherOnMyTripRoute.MapActivity.slidingUpPanelLayout;
-import static com.MsoftTexas.WeatherOnMyTripRoute.MapActivity.travelmode;
+import static com.MsoftTexas.WeatherOnMyTripRoute.TravelWithActivity.recyclerView;
+import static com.MsoftTexas.WeatherOnMyTripRoute.TravelWithActivity.travelmode;
 import static com.MsoftTexas.WeatherOnMyTripRoute.MapActivity.weatherloaded;
 
 /**
@@ -64,90 +67,100 @@ public class RouteApi extends AsyncTask<Object,Object,DirectionsResult> {
     @Override
     protected void onPostExecute(DirectionsResult apidata) {
 
-        try {
+//        try {
         //    DirectionApi apidata = new Gson().fromJson(data, DirectionApi.class);
-            MapActivity.routeloaded = true;
+//            MapActivity.routeloaded = true;
 
             //      System.out.println("direction data : "+new Gson().toJson(apidata));
-            MapActivity.directionapi = apidata;
-            DirectionsRoute route = apidata.routes[0];
+            TravelWithActivity.directionapi = apidata;
+        LinearLayoutManager manager = new LinearLayoutManager(context);
+        recyclerView.setLayoutManager(manager);
+        recyclerView.setHasFixedSize(true);
 
+        AdapterList adapterList=new AdapterList(TravelWithActivity.context,apidata);
 
-//            System.out.println("here is polyline : " + apidata.routes[0].overviewPolyline.getEncodedPath());
-//            if (weatherloaded) {
-//                custom_dialog.setVisibility(View.GONE);
-//            } else {
-//                MapActivity.loading_text.setText("loading weather..");
+        recyclerView.setAdapter(adapterList);
+
+        System.out.println("code run");
+
+//            DirectionsRoute route = apidata.routes[0];
+//
+//
+////            System.out.println("here is polyline : " + apidata.routes[0].overviewPolyline.getEncodedPath());
+////            if (weatherloaded) {
+////                custom_dialog.setVisibility(View.GONE);
+////            } else {
+////                MapActivity.loading_text.setText("loading weather..");
+////            }
+//
+////            System.out.println("here is the route data :\n" + new Gson().toJson(apidata));
+//            if (new Gson().toJson(apidata) != null) {
+//
+//                slidingUpPanelLayout.setAlpha(1);
 //            }
-
-//            System.out.println("here is the route data :\n" + new Gson().toJson(apidata));
-            if (new Gson().toJson(apidata) != null) {
-
-                slidingUpPanelLayout.setAlpha(1);
-            }
-            System.out.println("direction success.............babes.......");
-            MapActivity.polylines = new ArrayList<>();
-            //add route(s) to the map.
-
-            MapActivity.distance.setText("(" + route.legs[0].distance.humanReadable+ ")");
-            MapActivity.duration.setText(route.legs[0].durationInTraffic!=null?route.legs[0].durationInTraffic.humanReadable:route.legs[0].duration.humanReadable);
-            if (route.legs[0].duration.humanReadable != null) {
-                slidingUpPanelLayout.setPanelHeight(context.getResources().getDimensionPixelSize(R.dimen.dragupsize));
-            }
-
-
-            polylineOptionsList = new ArrayList<>();
-            System.out.println("route options : " + apidata.routes.length);
-            Polyline selectedPolyline = null;
-            if (apidata.routes.length > 0) {
-               List<LatLng> lst = PolyUtil.decode(apidata.routes[0].overviewPolyline.getEncodedPath());
-
-                PolylineOptions polyOptions = new PolylineOptions();
-                polyOptions.color(context.getResources().getColor(R.color.seletedRoute));
-                polyOptions.width(14);
-                polyOptions.addAll(lst);
-                polylineOptionsList.add(polyOptions);
-                MapActivity.polylines.add(selectedPolyline);
-            }
-
-            if (apidata.routes.length > 1) {
-                for (int i = 1; i < apidata.routes.length; i++) {
-                    List<LatLng> lst = PolyUtil.decode(apidata.routes[i].overviewPolyline.getEncodedPath());
-                    //In case of more than 5 alternative routes
-                    //   int colorIndex = i % COLORS.length;
-
-                    PolylineOptions polyOptions = new PolylineOptions();
-
-                    polyOptions.color(context.getResources().getColor(R.color.alternateRoute));
-                    polyOptions.width(12);
-
-
-                    polyOptions.addAll(lst);
-                    Polyline polyline = MapActivity.googleMap.addPolyline(polyOptions);
-                    MapActivity.polylines.add(polyline);
-                    polyline.setClickable(true);
-                    polylineOptionsList.add(polyOptions);
-                }
-            }
-
-            if (polylineOptionsList != null && polylineOptionsList.get(0) != null) {
-                selectedPolyline = googleMap.addPolyline(polylineOptionsList.get(0));
-                polylines.set(0, selectedPolyline);
-                selectedPolyline.setClickable(true);
-            }
-
-            setCameraWithCoordinationBounds(route);
-        }catch (Exception e){
-            e.printStackTrace();
-            custom_dialog.setVisibility(View.VISIBLE);
-            loading.setVisibility(View.GONE);
-            loading_text.setVisibility(View.VISIBLE);
-//            if(data.equals("NoInternet")){
-//                loading_text.setText("No Internet Connection.Please Check Your Internet Connection");
-//            }else {
-//                loading_text.setText("Error :" + e.toString());
+//            System.out.println("direction success.............babes.......");
+//            MapActivity.polylines = new ArrayList<>();
+//            //add route(s) to the map.
+//
+//            MapActivity.distance.setText("(" + route.legs[0].distance.humanReadable+ ")");
+//            MapActivity.duration.setText(route.legs[0].durationInTraffic!=null?route.legs[0].durationInTraffic.humanReadable:route.legs[0].duration.humanReadable);
+//            if (route.legs[0].duration.humanReadable != null) {
+//                slidingUpPanelLayout.setPanelHeight(context.getResources().getDimensionPixelSize(R.dimen.dragupsize));
 //            }
-        }
+//
+//
+//            polylineOptionsList = new ArrayList<>();
+//            System.out.println("route options : " + apidata.routes.length);
+//            Polyline selectedPolyline = null;
+//            if (apidata.routes.length > 0) {
+//               List<LatLng> lst = PolyUtil.decode(apidata.routes[0].overviewPolyline.getEncodedPath());
+//
+//                PolylineOptions polyOptions = new PolylineOptions();
+//                polyOptions.color(context.getResources().getColor(R.color.seletedRoute));
+//                polyOptions.width(14);
+//                polyOptions.addAll(lst);
+//                polylineOptionsList.add(polyOptions);
+//                MapActivity.polylines.add(selectedPolyline);
+//            }
+//
+//            if (apidata.routes.length > 1) {
+//                for (int i = 1; i < apidata.routes.length; i++) {
+//                    List<LatLng> lst = PolyUtil.decode(apidata.routes[i].overviewPolyline.getEncodedPath());
+//                    //In case of more than 5 alternative routes
+//                    //   int colorIndex = i % COLORS.length;
+//
+//                    PolylineOptions polyOptions = new PolylineOptions();
+//
+//                    polyOptions.color(context.getResources().getColor(R.color.alternateRoute));
+//                    polyOptions.width(12);
+//
+//
+//                    polyOptions.addAll(lst);
+//                    Polyline polyline = MapActivity.googleMap.addPolyline(polyOptions);
+//                    MapActivity.polylines.add(polyline);
+//                    polyline.setClickable(true);
+//                    polylineOptionsList.add(polyOptions);
+//                }
+//            }
+//
+//            if (polylineOptionsList != null && polylineOptionsList.get(0) != null) {
+//                selectedPolyline = googleMap.addPolyline(polylineOptionsList.get(0));
+//                polylines.set(0, selectedPolyline);
+//                selectedPolyline.setClickable(true);
+//            }
+//
+//            setCameraWithCoordinationBounds(route);
+//        }catch (Exception e){
+//            e.printStackTrace();
+//            custom_dialog.setVisibility(View.VISIBLE);
+//            loading.setVisibility(View.GONE);
+//            loading_text.setVisibility(View.VISIBLE);
+////            if(data.equals("NoInternet")){
+////                loading_text.setText("No Internet Connection.Please Check Your Internet Connection");
+////            }else {
+////                loading_text.setText("Error :" + e.toString());
+////            }
+//        }
 
     }
 

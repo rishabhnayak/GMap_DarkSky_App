@@ -154,13 +154,13 @@
             <!--android:layout_height="40dp" />-->
             <ImageView
                 android:layout_weight="1"
-                android:id="@+id/c"
+                android:id="@+id/d"
                 android:padding="3dp"
                 android:layout_width="40dp"
                 android:layout_height="40dp" />
             <ImageView
                 android:layout_weight="1"
-                android:id="@+id/d"
+                android:id="@+id/c"
                 android:padding="3dp"
                 android:layout_width="40dp"
                 android:layout_height="40dp" />
@@ -182,19 +182,24 @@
         android:orientation="horizontal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
-        <Switch
 
-            android:textSize="13sp"
-            android:layout_gravity="center_vertical"
-            android:textColor="#9e9e9e"
-            android:id="@+id/weather_switch"
-            android:layout_width="wrap_content"
+        <Button
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="" />
-        <ImageView
-            android:id="@+id/weather_switch_icon"
-            android:layout_width="40dp"
-            android:layout_height="40dp" />
+            android:id="@+id/mapact"/>
+        <!--<Switch-->
+
+            <!--android:textSize="13sp"-->
+            <!--android:layout_gravity="center_vertical"-->
+            <!--android:textColor="#9e9e9e"-->
+            <!--android:id="@+id/weather_switch"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:text="" />-->
+        <!--<ImageView-->
+            <!--android:id="@+id/weather_switch_icon"-->
+            <!--android:layout_width="40dp"-->
+            <!--android:layout_height="40dp" />-->
     </LinearLayout>
 
 

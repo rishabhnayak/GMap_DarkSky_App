@@ -119,7 +119,7 @@ public class MapActivity extends AppCompatActivity implements
     protected GeoDataClient mGeoDataClientS, mGeoDataClientD;
     SharedPreferences sd;
     String[] month={"Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"};
-    private FirebaseAnalytics mFirebaseAnalytics;
+ //   private FirebaseAnalytics mFirebaseAnalytics;
     static RecyclerView link;
 
     static String TRIALY_APP_KEY = "CNXFXUSWNXNREPZN6FW"; //TODO: Replace with your app key, which can be found on your Trialy developer dashboard
@@ -159,11 +159,11 @@ public class MapActivity extends AppCompatActivity implements
 
         mTrialy = new Trialy(this, TRIALY_APP_KEY);
         mTrialy.checkTrial(TRIALY_SKU, mTrialyCallback);
-        mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
+ //       mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
         Bundle bundle = new Bundle();
         bundle.putString(FirebaseAnalytics.Param.ITEM_ID, "1");
         bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, "MapActivity");
-        mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
+ //       mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
         sd = this.getSharedPreferences("com.MsoftTexas.WeatherOnMyTripRoute", Context.MODE_PRIVATE);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -240,7 +240,7 @@ public class MapActivity extends AppCompatActivity implements
         RequestDirection.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                findViewById(R.id.option_list).setVisibility(View.GONE);
+             //   findViewById(R.id.option_list).setVisibility(View.GONE);
                 requestDirection();
             }
         });
@@ -353,13 +353,13 @@ public class MapActivity extends AppCompatActivity implements
 
     @Override
     public void onBackPressed() {
-        Intent intent = new Intent(Intent.ACTION_MAIN);
-        intent.addCategory(Intent.CATEGORY_HOME);
-        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        startActivity(intent);
-        finish();
-        System.exit(0);
-        super.onBackPressed();
+//        Intent intent = new Intent(Intent.ACTION_MAIN);
+//        intent.addCategory(Intent.CATEGORY_HOME);
+//        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+//        startActivity(intent);
+//        finish();
+//        System.exit(0);
+//        super.onBackPressed();
 
 
     }

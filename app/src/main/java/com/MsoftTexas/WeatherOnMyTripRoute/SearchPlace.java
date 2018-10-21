@@ -98,30 +98,30 @@ public class SearchPlace extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(),recentSearches.get(arg2).getName(),Toast.LENGTH_LONG).show();
                 if(getIntent().getStringExtra("SrcOrDstn").equals("Src")){
 
-                    MapActivity.src.setText(recentSearches.get(arg2).getAdress());
+                    TravelWithActivity.tv_source.setText(recentSearches.get(arg2).getAdress());
 
-                    MapActivity.origin=recentSearches.get(arg2).getLatLng();
+                    TravelWithActivity.origin=recentSearches.get(arg2).getLatLng();
 
-                    if(TextUtils.isEmpty(MapActivity.dstn.getText())){
+                    if(TextUtils.isEmpty(TravelWithActivity.tv_dstn.getText())){
                         Intent intent=new Intent(SearchPlace.this,SearchPlace.class);
                         intent.putExtra("SrcOrDstn","Dstn");
 
                         startActivity(intent);
 
                     }else{
-                        MapActivity.go.setBackground(getResources().getDrawable(R.drawable.send_blue));
+                        TravelWithActivity.go.setBackground(getResources().getDrawable(R.drawable.send_blue));
                     }
 
                 }else{
-                    MapActivity.dstn.setText(recentSearches.get(arg2).getAdress());
-                    MapActivity.destination=recentSearches.get(arg2).getLatLng();
+                   TravelWithActivity.tv_dstn.setText(recentSearches.get(arg2).getAdress());
+                   TravelWithActivity.destination=recentSearches.get(arg2).getLatLng();
 
-                    if(TextUtils.isEmpty(MapActivity.src.getText())){
+                    if(TextUtils.isEmpty(TravelWithActivity.tv_source.getText())){
                         Intent intent=new Intent(SearchPlace.this,SearchPlace.class);
                         intent.putExtra("SrcOrDstn","Src");
                         startActivity(intent);
                     }else{
-                        MapActivity.go.setBackground(getResources().getDrawable(R.drawable.send_blue));
+                        TravelWithActivity.go.setBackground(getResources().getDrawable(R.drawable.send_blue));
                     }
                 }
                 finish();
@@ -190,9 +190,9 @@ public class SearchPlace extends AppCompatActivity {
 
                     if(getIntent().getStringExtra("SrcOrDstn").equals("Src")){
 
-                        MapActivity.src.setText(place.getAddress());
-                        MapActivity.origin=place.getLatLng();
-                        if(TextUtils.isEmpty(MapActivity.dstn.getText())){
+                        TravelWithActivity.tv_source.setText(place.getAddress());
+                        TravelWithActivity.origin=place.getLatLng();
+                        if(TextUtils.isEmpty(TravelWithActivity.tv_dstn.getText())){
                             Intent intent=new Intent(SearchPlace.this,SearchPlace.class);
                             intent.putExtra("SrcOrDstn","Dstn");
                             startActivity(intent);
@@ -202,14 +202,14 @@ public class SearchPlace extends AppCompatActivity {
 
                     }else{
 
-                        MapActivity.dstn.setText(place.getAddress());
-                        MapActivity.destination=place.getLatLng();
-                        if(TextUtils.isEmpty(MapActivity.src.getText())){
+                        TravelWithActivity.tv_dstn.setText(place.getAddress());
+                        TravelWithActivity.destination=place.getLatLng();
+                        if(TextUtils.isEmpty(TravelWithActivity.tv_source.getText())){
                             Intent intent=new Intent(SearchPlace.this,SearchPlace.class);
                             intent.putExtra("SrcOrDstn","Src");
                             startActivity(intent);
                         }else{
-                            MapActivity.go.setBackground(getResources().getDrawable(R.drawable.send_blue));
+                           TravelWithActivity.go.setBackground(getResources().getDrawable(R.drawable.send_blue));
                         }
                     }
                // Intent intent = new Intent(SearchPlace.this, MapActivity.class);

@@ -2,7 +2,9 @@ package com.MsoftTexas.WeatherOnMyTripRoute;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.CardView;
@@ -19,42 +21,54 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import com.google.android.gms.maps.model.LatLng;
+import com.google.maps.model.DirectionsResult;
+
 import java.util.Calendar;
 
 
 public class TravelWithActivity extends AppCompatActivity {
     RadioGroup radioGroup;
     boolean flag;
-    String selectedText="one",selectedUnit="automatic";
-    RecyclerView recyclerView;
+    String selectedText = "one", selectedUnit = "automatic";
+    static   RecyclerView recyclerView;
     static TextView departAt;
-    static int mYear,mMonth,mDay, mHour, mMinute;
+    static int mYear, mMonth, mDay, mHour, mMinute;
     static long jstart_date_millis, jstart_time_millis;
-    String[] month={"Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"};
+    static String[] month = {"Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"};
     static CardView date_holder;
     ImageView requestDirection;
+    static String timezone;
+    static TextView tv_source, tv_dstn;
+    static ImageView go;
+    static LatLng origin = null;
+    static LatLng destination = null;
+    static Context context;
 
-    TextView autoCompleteSource,autoCompleteDstn;
+    static int travelmode=0;
+    static String restrictions="0";
+
+    static DirectionsResult directionapi;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_travel_with);
         recyclerView = findViewById(R.id.recycler);
 
-
-        autoCompleteSource= findViewById(R.id.source);
-        autoCompleteDstn=findViewById(R.id.destination);
-        requestDirection=findViewById(R.id.submit);
-
+        tv_source = findViewById(R.id.source);
+        tv_dstn = findViewById(R.id.destination);
+ //       requestDirection = findViewById(R.id.submit);
+        go=findViewById(R.id.submit);
         //Custom radio button...............................................................................
         radioGroup = findViewById(R.id.test_radio);
         radioGroup.check(R.id._1);
-        //  Toast.makeText(getApplicationContext(), selectedText, Toast.LENGTH_SHORT).show();
+        context=getApplicationContext();
         ((ImageView) (findViewById(R.id.a))).setImageResource(R.drawable.car_on);
-//        ((ImageView) (findViewById(R.id.b))).setImageResource(R.drawable.train_off);
+
         ((ImageView) (findViewById(R.id.c))).setImageResource(R.drawable.walk_off);
-        ((ImageView)(findViewById(R.id.d))).setImageResource(R.drawable.bike_off);
-//        ((ImageView)(findViewById(R.id.e))).setImageResource(R.drawable.plane_off);
+        ((ImageView) (findViewById(R.id.d))).setImageResource(R.drawable.bike_off);
+
         radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup radioGroup, int i) {
@@ -64,38 +78,29 @@ public class TravelWithActivity extends AppCompatActivity {
                 switch (selectedText) {
                     case "one":
                         ((ImageView) (findViewById(R.id.a))).setImageResource(R.drawable.car_on);
-//                        ((ImageView) (findViewById(R.id.b))).setImageResource(R.drawable.train_off);
                         ((ImageView) (findViewById(R.id.c))).setImageResource(R.drawable.walk_off);
-                        ((ImageView)(findViewById(R.id.d))).setImageResource(R.drawable.bike_off);
-//                        ((ImageView)(findViewById(R.id.e))).setImageResource(R.drawable.plane_off);
+                        ((ImageView) (findViewById(R.id.d))).setImageResource(R.drawable.bike_off);
                         break;
                     case "two":
                         ((ImageView) (findViewById(R.id.a))).setImageResource(R.drawable.car_off);
-//                       ((ImageView) (findViewById(R.id.b))).setImageResource(R.drawable.train_on);
                         ((ImageView) (findViewById(R.id.c))).setImageResource(R.drawable.walk_off);
-                        ((ImageView)(findViewById(R.id.d))).setImageResource(R.drawable.bike_off);
-//                        ((ImageView)(findViewById(R.id.e))).setImageResource(R.drawable.plane_off);
+                        ((ImageView) (findViewById(R.id.d))).setImageResource(R.drawable.bike_off);
                         break;
                     case "three":
                         ((ImageView) (findViewById(R.id.a))).setImageResource(R.drawable.car_off);
-//                        ((ImageView) (findViewById(R.id.b))).setImageResource(R.drawable.train_off);
                         ((ImageView) (findViewById(R.id.c))).setImageResource(R.drawable.walk_on);
-                        ((ImageView)(findViewById(R.id.d))).setImageResource(R.drawable.bike_off);
-//                        ((ImageView)(findViewById(R.id.e))).setImageResource(R.drawable.plane_off);
+                        ((ImageView) (findViewById(R.id.d))).setImageResource(R.drawable.bike_off);
                         break;
                     case "four":
                         ((ImageView) (findViewById(R.id.a))).setImageResource(R.drawable.car_off);
-//                        ((ImageView) (findViewById(R.id.b))).setImageResource(R.drawable.train_off);
                         ((ImageView) (findViewById(R.id.c))).setImageResource(R.drawable.walk_off);
-                        ((ImageView)(findViewById(R.id.d))).setImageResource(R.drawable.bike_on);
-//                        ((ImageView)(findViewById(R.id.e))).setImageResource(R.drawable.plane_off);
+                        ((ImageView) (findViewById(R.id.d))).setImageResource(R.drawable.bike_on);
+
                         break;
                     case "five":
                         ((ImageView) (findViewById(R.id.a))).setImageResource(R.drawable.car_off);
-//                        ((ImageView) (findViewById(R.id.b))).setImageResource(R.drawable.train_off);
                         ((ImageView) (findViewById(R.id.c))).setImageResource(R.drawable.walk_off);
-                        ((ImageView)(findViewById(R.id.d))).setImageResource(R.drawable.bike_off);
-//                        ((ImageView)(findViewById(R.id.e))).setImageResource(R.drawable.plane_on);
+                        ((ImageView) (findViewById(R.id.d))).setImageResource(R.drawable.bike_off);
                         break;
                     default:
 
@@ -109,12 +114,7 @@ public class TravelWithActivity extends AppCompatActivity {
                 radioGroup.check(R.id._1);
             }
         });
-//        findViewById(R.id.b).setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                radioGroup.check(R.id._2);
-//            }
-//        });
+
         findViewById(R.id.c).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -127,12 +127,7 @@ public class TravelWithActivity extends AppCompatActivity {
                 radioGroup.check(R.id._4);
             }
         });
-//        findViewById(R.id.e).setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                radioGroup.check(R.id._5);
-//            }
-//        });
+
         findViewById(R.id.option).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -160,28 +155,35 @@ public class TravelWithActivity extends AppCompatActivity {
         boolean tolls = ((CheckBox) findViewById(R.id.tolls)).isChecked();
         boolean ferries = ((CheckBox) findViewById(R.id.ferries)).isChecked();
 
-        Switch weatherSwitch=findViewById(R.id.weather_switch);
-        weatherSwitch.setChecked(false);
+//        Switch weatherSwitch=findViewById(R.id.weather_switch);
+//        weatherSwitch.setChecked(false);
 
-        flag=false;
-        ((ImageView)(findViewById(R.id.weather_switch_icon))).setImageResource(R.drawable.weather_off);
-        weatherSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        findViewById(R.id.mapact).setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                if (b==true){
-                    Toast.makeText(getApplicationContext(), "true", Toast.LENGTH_SHORT).show();
-                    ((ImageView)(findViewById(R.id.weather_switch_icon))).setImageResource(R.drawable.weather_on);
-                    flag=true;
-                }else {
-                    flag=false;
-                    ((ImageView)(findViewById(R.id.weather_switch_icon))).setImageResource(R.drawable.weather_off);
-                    Toast.makeText(getApplicationContext(), "false", Toast.LENGTH_SHORT).show();
-                }
+            public void onClick(View view) {
+                startActivity(new Intent(TravelWithActivity.this, MapActivity.class));
             }
         });
 
+//        flag=false;
+//        ((ImageView)(findViewById(R.id.weather_switch_icon))).setImageResource(R.drawable.weather_off);
+//        weatherSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+//            @Override
+//            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+//                if (b==true){
+//                    Toast.makeText(getApplicationContext(), "true", Toast.LENGTH_SHORT).show();
+//                    ((ImageView)(findViewById(R.id.weather_switch_icon))).setImageResource(R.drawable.weather_on);
+//                    flag=true;
+//                }else {
+//                    flag=false;
+//                    ((ImageView)(findViewById(R.id.weather_switch_icon))).setImageResource(R.drawable.weather_off);
+//                    Toast.makeText(getApplicationContext(), "false", Toast.LENGTH_SHORT).show();
+//                }
+//            }
+//        });
+
         date_holder = findViewById(R.id.card_date);
-        departAt=findViewById(R.id.date1);
+        departAt = findViewById(R.id.date1);
         date_holder.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -190,47 +192,107 @@ public class TravelWithActivity extends AppCompatActivity {
 
             }
         });
+
+        final Calendar c = Calendar.getInstance();
+        timezone=c.getTimeZone().getID();
+        mYear = c.get(Calendar.YEAR);
+        mMonth = c.get(Calendar.MONTH);
+        mDay = c.get(Calendar.DAY_OF_MONTH);
+        mHour = c.get(Calendar.HOUR_OF_DAY);
+        mMinute = c.get(Calendar.MINUTE);
+        jstart_date_millis=c.getTimeInMillis()-((mHour*60+mMinute)*60*1000);
+        jstart_time_millis=(mHour*60+mMinute)*60*1000;
+
+
+        String sHour = mHour < 10 ? "0" + mHour : "" + mHour;
+        String sMinute = mMinute < 10 ? "0" + mMinute : "" + mMinute;
+        String curr_time = sHour + ":" + sMinute;
+        //       time.setText(curr_time);
+        departAt.setText(curr_time+","+mDay+" "+month[mMonth]+" "+String.valueOf(mYear).substring(2));
+
+        tv_source.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent=new Intent(TravelWithActivity.this,SearchPlace.class);
+                intent.putExtra("SrcOrDstn","Src");
+                startActivity(intent);
+            }
+        });
+
+        tv_dstn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent=new Intent(TravelWithActivity.this,SearchPlace.class);
+                intent.putExtra("SrcOrDstn","Dstn");
+                startActivity(intent);
+            }
+        });
+
+        go.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //   findViewById(R.id.option_list).setVisibility(View.GONE);
+                requestDirection();
+            }
+        });
+
+
+
+
+
+
     }
-//..................................................................................................
-private void datePicker(){
 
-    // Get Current Date
+    public void requestDirection() {
 
+        if(origin!=null && destination!=null) {
+            //googleMap.clear();
+            //  custom_dialog.setVisibility(View.VISIBLE);
+            //  loading.setVisibility(View.VISIBLE);
+            //  loading_text.setVisibility(View.VISIBLE);
+            // slidingUpPanelLayout.setAlpha(0.5f);
+            //  loading.setSpeed(1f);
+            //  loading_text.setText("Loading Route");
 
-    final DatePickerDialog datePickerDialog = new DatePickerDialog(this,
-            new DatePickerDialog.OnDateSetListener() {
+            new RouteApi().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+        }else{
+            Toast.makeText(getApplicationContext(),"origin or destination null", Toast.LENGTH_LONG).show();
+        }
+    }
 
-                @Override
-                public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+    //..................................................................................................
+    private void datePicker() {
 
-try{
-    departAt.setText(dayOfMonth + " " + month[monthOfYear] + " " + String.valueOf(year).substring(2));
-}catch (Exception e){
-    System.out.println(e);
-}
-                    Calendar cal = Calendar.getInstance();
-                    cal.set(Calendar.DAY_OF_MONTH,dayOfMonth);
-                    cal.set(Calendar.MONTH, monthOfYear);
-                    cal.set(Calendar.YEAR, year);
-                    cal.set(Calendar.HOUR_OF_DAY,0);
-                    cal.set(Calendar.MINUTE,0);
-
-                    jstart_date_millis=cal.getTimeInMillis();
-
-                    timePicker();
-
-                    //*************Call Time Picker Here ********************
-
-                }
-            }, mYear, mMonth, mDay);
+        // Get Current Date
 
 
+        final DatePickerDialog datePickerDialog = new DatePickerDialog(this,
+                new DatePickerDialog.OnDateSetListener() {
 
-    //   datePickerDialog.getDatePicker().setMinDate(jstart_date_millis);
-    //   datePickerDialog.getDatePicker().setMaxDate(jstart_date_millis+5*24*60*60*1000);
-    datePickerDialog.show();
-}
-    private void timePicker(){
+                    @Override
+                    public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+
+                        departAt.setText(dayOfMonth + " " + month[monthOfYear] + " " + String.valueOf(year).substring(2));
+                        Calendar cal = Calendar.getInstance();
+                        cal.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+                        cal.set(Calendar.MONTH, monthOfYear);
+                        cal.set(Calendar.YEAR, year);
+                        cal.set(Calendar.HOUR_OF_DAY, 0);
+                        cal.set(Calendar.MINUTE, 0);
+
+                        jstart_date_millis = cal.getTimeInMillis();
+
+                        timePicker();
+
+                        //*************Call Time Picker Here ********************
+
+                    }
+                }, mYear, mMonth, mDay);
+
+        datePickerDialog.show();
+    }
+
+    private void timePicker() {
         // Get Current Time
 
 
@@ -247,9 +309,11 @@ try{
                         String sHour = mHour < 10 ? "0" + mHour : "" + mHour;
                         String sMinute = mMinute < 10 ? "0" + mMinute : "" + mMinute;
                         String set_time = sHour + ":" + sMinute;
-                        departAt.setText(set_time+","+departAt.getText());
+                        departAt.setText(set_time + "," + departAt.getText());
 
-                        jstart_time_millis=(mHour*60+mMinute)*60*1000;
+                        jstart_time_millis = (mHour * 60 + mMinute) * 60 * 1000;
+
+
                     }
                 }, mHour, mMinute, false);
         timePickerDialog.show();
