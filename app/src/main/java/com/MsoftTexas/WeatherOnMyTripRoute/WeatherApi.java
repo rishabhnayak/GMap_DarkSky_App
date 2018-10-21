@@ -36,23 +36,22 @@ import cz.msebera.android.httpclient.impl.client.cache.ManagedHttpCacheStorage;
 import static com.MsoftTexas.WeatherOnMyTripRoute.MapActivity.apiData;
 import static com.MsoftTexas.WeatherOnMyTripRoute.MapActivity.context;
 import static com.MsoftTexas.WeatherOnMyTripRoute.MapActivity.custom_dialog;
-import static com.MsoftTexas.WeatherOnMyTripRoute.MapActivity.destination;
+import static com.MsoftTexas.WeatherOnMyTripRoute.TravelWithActivity.destination;
 import static com.MsoftTexas.WeatherOnMyTripRoute.MapActivity.googleMap;
 import static com.MsoftTexas.WeatherOnMyTripRoute.MapActivity.interval;
-import static com.MsoftTexas.WeatherOnMyTripRoute.MapActivity.jstart_date_millis;
-import static com.MsoftTexas.WeatherOnMyTripRoute.MapActivity.jstart_time_millis;
-import static com.MsoftTexas.WeatherOnMyTripRoute.MapActivity.link;
+import static com.MsoftTexas.WeatherOnMyTripRoute.TravelWithActivity.jstart_date_millis;
+import static com.MsoftTexas.WeatherOnMyTripRoute.TravelWithActivity.jstart_time_millis;
 import static com.MsoftTexas.WeatherOnMyTripRoute.MapActivity.loading;
 import static com.MsoftTexas.WeatherOnMyTripRoute.MapActivity.loading_text;
 import static com.MsoftTexas.WeatherOnMyTripRoute.MapActivity.markersInterm;
-import static com.MsoftTexas.WeatherOnMyTripRoute.MapActivity.markersSteps;
-import static com.MsoftTexas.WeatherOnMyTripRoute.MapActivity.origin;
-import static com.MsoftTexas.WeatherOnMyTripRoute.MapActivity.restrictions;
+
+import static com.MsoftTexas.WeatherOnMyTripRoute.TravelWithActivity.origin;
+import static com.MsoftTexas.WeatherOnMyTripRoute.TravelWithActivity.restrictions;
 import static com.MsoftTexas.WeatherOnMyTripRoute.MapActivity.routeloaded;
-import static com.MsoftTexas.WeatherOnMyTripRoute.MapActivity.selectedroute;
+import static com.MsoftTexas.WeatherOnMyTripRoute.TravelWithActivity.selectedroute;
 import static com.MsoftTexas.WeatherOnMyTripRoute.MapActivity.slidingUpPanelLayout;
-import static com.MsoftTexas.WeatherOnMyTripRoute.MapActivity.timezone;
-import static com.MsoftTexas.WeatherOnMyTripRoute.MapActivity.travelmode;
+import static com.MsoftTexas.WeatherOnMyTripRoute.TravelWithActivity.timezone;
+import static com.MsoftTexas.WeatherOnMyTripRoute.TravelWithActivity.travelmode;
 
 /**
  * Created by kamlesh on 29-03-2018.
@@ -156,7 +155,7 @@ public class WeatherApi extends AsyncTask<Object,Object,String> {
 
 
         if(apidata!=null && apidata.getSteps()!=null){
-            link.setAdapter(new DragupListAdapter(context, apidata.getSteps()));
+      //      link.setAdapter(new DragupListAdapter(context, apidata.getSteps()));
             for(final MStep mStep:apidata.getSteps()) {
                 c++;
                 System.out.println(new Gson().toJson(mStep));

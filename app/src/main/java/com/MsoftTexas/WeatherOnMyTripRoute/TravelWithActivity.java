@@ -49,6 +49,7 @@ public class TravelWithActivity extends AppCompatActivity {
     static String restrictions="0";
 
     static DirectionsResult directionapi;
+    static public int selectedroute=0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

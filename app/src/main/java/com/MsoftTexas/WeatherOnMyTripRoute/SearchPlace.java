@@ -197,7 +197,7 @@ public class SearchPlace extends AppCompatActivity {
                             intent.putExtra("SrcOrDstn","Dstn");
                             startActivity(intent);
                         }else{
-                            MapActivity.go.setBackground(getResources().getDrawable(R.drawable.send_blue));
+                           TravelWithActivity.go.setBackground(getResources().getDrawable(R.drawable.send_blue));
                         }
 
                     }else{

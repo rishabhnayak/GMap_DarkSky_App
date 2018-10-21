@@ -15,6 +15,8 @@ import android.widget.TextView;
 import com.MsoftTexas.WeatherOnMyTripRoute.Models.MStep;
 import com.MsoftTexas.WeatherOnMyTripRoute.R;
 import com.bumptech.glide.Glide;
+import com.google.maps.model.DirectionsRoute;
+import com.google.maps.model.DirectionsStep;
 
 import java.util.List;
 import java.util.Locale;
@@ -27,10 +29,10 @@ import java.util.Locale;
 public class DragupListAdapter extends RecyclerView.Adapter<DragupListAdapter.PnrViewHolder>{
 
     private Context context;
-    private List<MStep> mSteps;
-    public DragupListAdapter(Context context, List<MStep> mSteps){
+    private DirectionsRoute route;
+    public DragupListAdapter(Context context, DirectionsRoute route){
         this.context=context;
-        this.mSteps=mSteps;
+        this.route=route;
     }
 
 
@@ -44,62 +46,62 @@ public class DragupListAdapter extends RecyclerView.Adapter<DragupListAdapter.Pn
 
     @Override
     public void onBindViewHolder(PnrViewHolder holder, int position) {
-        MStep mStep =mSteps.get(position);
+        DirectionsStep mStep =route.legs[0].steps[position];
        // Glide.with(holder.image.getContext()).load(passengerList.getLink()).into(holder.image);
 
 
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            holder.instr.setText(Html.fromHtml(mStep.getStep().getHtml_instructions(), Html.FROM_HTML_MODE_COMPACT));
+            holder.instr.setText(Html.fromHtml(mStep.htmlInstructions, Html.FROM_HTML_MODE_COMPACT));
         }else {
-            holder.instr.setText(Html.fromHtml(mStep.getStep().getHtml_instructions()));
+            holder.instr.setText(Html.fromHtml(mStep.htmlInstructions));
         }
         //     holder.instr.setText(mStep.getStep().getHtml_instructions());
 //        holder.distance.setText("Traveled : "+mStep.getAft_distance()/(long)1000+" km");
 //        holder.arrtime.setText("Start time:"+mStep.getArrtime());
         try {
-            holder.distance.setText(String.format("%.2f", (float) mStep.getAft_distance() / (float) 1000 * (0.621371)) + " miles");
-            holder.arrtime.setText(mStep.getArrtime());
-            holder.weather.setText(mStep.getWlist().getSummary());
-            holder.temp.setText(mStep.getWlist().getTemperature() + "°F");
-            holder.stepLength.setText(String.format("%.2f", (float) mStep.getStep().getDistance().getValue() / (float) 1000 * (0.621371)) + " miles");
+            holder.distance.setText(String.format("%.2f", (float) mStep.distance.inMeters / (float) 1000 * (0.621371)) + " miles");
+      //      holder.arrtime.setText(mStep.getArrtime());
+      //      holder.weather.setText(mStep.getWlist().getSummary());
+      //      holder.temp.setText(mStep.getWlist().getTemperature() + "°F");
+       //     holder.stepLength.setText(String.format("%.2f", (float) mStep.getStep().getDistance().getValue() / (float) 1000 * (0.621371)) + " miles");
          //   StorageReference storageRef = storage.getReference(mStep.getWlist().getIcon()+".png");
-            Drawable icon = context.getResources().getDrawable( R.drawable.clear_day );
-
-
-            switch (mStep.getWlist().getIcon()){
-                case "clear-day":icon = context.getResources().getDrawable(R.drawable.clear_day);
-                    break;
-                case "cloudy":icon = context.getResources().getDrawable(R.drawable.cloudy);
-                    break;
-                case "clear-night":icon = context.getResources().getDrawable(R.drawable.clear_night);
-                    break;
-                case "fog":icon = context.getResources().getDrawable(R.drawable.fog);
-                    break;
-                case "hail":icon = context.getResources().getDrawable(R.drawable.hail);
-                    break;
-                case "partly-cloudy-day":icon = context.getResources().getDrawable(R.drawable.partly_cloudy_day);
-                    break;
-                case "partly-cloudy-night":icon = context.getResources().getDrawable(R.drawable.partly_cloudy_night);
-                    break;
-                case "rain":icon = context.getResources().getDrawable(R.drawable.rain);
-                    break;
-                case "sleet":icon = context.getResources().getDrawable(R.drawable.sleet);
-                    break;
-                case "snow":icon = context.getResources().getDrawable(R.drawable.snow);
-                    break;
-                case "thunderstorm":icon = context.getResources().getDrawable(R.drawable.thunderstorm);
-                    break;
-                case "tornado":icon = context.getResources().getDrawable(R.drawable.tornado);
-                    break;
-                case "wind":icon = context.getResources().getDrawable(R.drawable.wind);
-                    break;
-            }
-            Glide.with(context)
-                    //  .load("http://openweathermap.org/img/w/"+itemslist.get(position).weather.get(0).icon+".png")
-                    .load(icon)
-                    //     .override(100,100)
-                    .into(holder.weatherimg);
+//            Drawable icon = context.getResources().getDrawable( R.drawable.clear_day );
+//
+//
+//            switch (mStep.getWlist().getIcon()){
+//                case "clear-day":icon = context.getResources().getDrawable(R.drawable.clear_day);
+//                    break;
+//                case "cloudy":icon = context.getResources().getDrawable(R.drawable.cloudy);
+//                    break;
+//                case "clear-night":icon = context.getResources().getDrawable(R.drawable.clear_night);
+//                    break;
+//                case "fog":icon = context.getResources().getDrawable(R.drawable.fog);
+//                    break;
+//                case "hail":icon = context.getResources().getDrawable(R.drawable.hail);
+//                    break;
+//                case "partly-cloudy-day":icon = context.getResources().getDrawable(R.drawable.partly_cloudy_day);
+//                    break;
+//                case "partly-cloudy-night":icon = context.getResources().getDrawable(R.drawable.partly_cloudy_night);
+//                    break;
+//                case "rain":icon = context.getResources().getDrawable(R.drawable.rain);
+//                    break;
+//                case "sleet":icon = context.getResources().getDrawable(R.drawable.sleet);
+//                    break;
+//                case "snow":icon = context.getResources().getDrawable(R.drawable.snow);
+//                    break;
+//                case "thunderstorm":icon = context.getResources().getDrawable(R.drawable.thunderstorm);
+//                    break;
+//                case "tornado":icon = context.getResources().getDrawable(R.drawable.tornado);
+//                    break;
+//                case "wind":icon = context.getResources().getDrawable(R.drawable.wind);
+//                    break;
+//            }
+//            Glide.with(context)
+//                    //  .load("http://openweathermap.org/img/w/"+itemslist.get(position).weather.get(0).icon+".png")
+//                    .load(icon)
+//                    //     .override(100,100)
+//                    .into(holder.weatherimg);
         //    System.out.println(mStep.getStep().getStart_location().getLat());
          //   System.out.println(mStep.getStep().getStart_location().getLng());
 
@@ -115,7 +117,7 @@ public class DragupListAdapter extends RecyclerView.Adapter<DragupListAdapter.Pn
 
    @Override
     public int getItemCount() {
-      return mSteps.size();
+      return route.legs[0].steps.length;
     }
 
     public class PnrViewHolder extends RecyclerView.ViewHolder {

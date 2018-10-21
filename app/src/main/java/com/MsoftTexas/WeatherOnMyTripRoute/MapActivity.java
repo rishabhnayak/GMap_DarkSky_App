@@ -37,6 +37,7 @@ import android.widget.Toast;
 
 import com.MsoftTexas.WeatherOnMyTripRoute.Adapters.ArrrayAdapter;
 
+import com.MsoftTexas.WeatherOnMyTripRoute.Adapters.DragupListAdapter;
 import com.MsoftTexas.WeatherOnMyTripRoute.Models.Apidata;
 import com.MsoftTexas.WeatherOnMyTripRoute.Models.Item;
 import com.MsoftTexas.WeatherOnMyTripRoute.Models.MStep;
@@ -60,6 +61,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
 import com.google.firebase.analytics.FirebaseAnalytics;
+import com.google.maps.android.PolyUtil;
 import com.google.maps.model.DirectionsResult;
 import com.google.maps.model.DirectionsRoute;
 import com.sothree.slidinguppanel.SlidingUpPanelLayout;
@@ -73,6 +75,10 @@ import java.util.Locale;
 import io.trialy.library.Trialy;
 import io.trialy.library.TrialyCallback;
 
+import static com.MsoftTexas.WeatherOnMyTripRoute.TravelWithActivity.destination;
+import static com.MsoftTexas.WeatherOnMyTripRoute.TravelWithActivity.directionapi;
+import static com.MsoftTexas.WeatherOnMyTripRoute.TravelWithActivity.origin;
+import static com.MsoftTexas.WeatherOnMyTripRoute.TravelWithActivity.selectedroute;
 import static io.trialy.library.Constants.STATUS_TRIAL_JUST_ENDED;
 import static io.trialy.library.Constants.STATUS_TRIAL_JUST_STARTED;
 import static io.trialy.library.Constants.STATUS_TRIAL_NOT_YET_STARTED;
@@ -100,30 +106,31 @@ public class MapActivity extends AppCompatActivity implements
     static long interval=50000;
     static Boolean weatherloaded=false, routeloaded=false;
  //   static TextView time;
-    static CardView date_holder;
-    static TextView departAt;
-    static ImageView go;
-    static TextView src,dstn;
+ //   static CardView date_holder;
+//   static TextView departAt;
+//    static ImageView go;
+//    static TextView src,dstn;
     static  SlidingUpPanelLayout slidingUpPanelLayout;
-    static long jstart_date_millis, jstart_time_millis;
+//    static long jstart_date_millis, jstart_time_millis;
     static private Marker originMarker, dstnMarker;
     private List<Marker> markers = new ArrayList<>();
     static Apidata apiData=null;
     static GoogleMap googleMap;
     private String serverKey = "AIzaSyDi3B9R9hVpC9YTmOCCz_pCR1BKW3tIRGY";
-    static DirectionsResult directionapi;
+//    static DirectionsResult directionapi;
     static TextView distance, duration;
     ImageView RequestDirection;
-    static LatLng origin = null;
-    static LatLng destination = null;
+//    static LatLng origin = null;
+//    static LatLng destination = null;
     protected GeoDataClient mGeoDataClientS, mGeoDataClientD;
     SharedPreferences sd;
-    String[] month={"Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"};
+ //   String[] month={"Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"};
  //   private FirebaseAnalytics mFirebaseAnalytics;
     static RecyclerView link;
+            DragupListAdapter adapter;
 
     static String TRIALY_APP_KEY = "CNXFXUSWNXNREPZN6FW"; //TODO: Replace with your app key, which can be found on your Trialy developer dashboard
-    static String TRIALY_SKU = "t2_test"; //TODO: Replace with a trial SKU, which can be found on your Trialy developer dashboard. Each app can have multiple trials
+    static String TRIALY_SKU = "t21_test"; //TODO: Replace with a trial SKU, which can be found on your Trialy developer dashboard. Each app can have multiple trials
     static String base64EncodedPublicKey = "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAnh6LDOmwwPSQ8KesBlRQ/LrN/75xUFQhVmvfJG6uUlmgxU4iWiMzwr1iydveIz3cNT2C1IdnBpohHuDhn9RlOn5uaR3Cw0BDGrnRzwHZRPdoJ3/tAWIS+cLD/5LU7sriMOi6spMaPTYjgrT/Lck36goPwY88FK+e2G09cFrd54WQBPwHO+COKlKOFQ7Yt9yiCLlwivhdSDbacuVGg696JjAeTBvnw0eqks7Q/FHg2U0TlhBf/RU2+tvCnR2L0hk1kgkkdZFua8aDrZ1xQkEkBzlrrHrGnmqCyVoPHwMcxoOKM61BX511NMRuBJv9Eg19n4QITqT/fsR7vzmnljjxLQIDAQAB" ;
 
      IabHelper mHelper;
@@ -168,9 +175,9 @@ public class MapActivity extends AppCompatActivity implements
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         context=getApplicationContext();
-        src =findViewById(R.id.autocomplete_source);
-        dstn=findViewById(R.id.autocomplete_destination);
-        go=findViewById(R.id.request_direction);
+//        src =findViewById(R.id.autocomplete_source);
+//        dstn=findViewById(R.id.autocomplete_destination);
+//        go=findViewById(R.id.request_direction);
         RequestDirection=findViewById(R.id.request_direction);
 //loading.................lottie
         custom_dialog=findViewById(R.id.custom_dialog);
@@ -190,6 +197,8 @@ public class MapActivity extends AppCompatActivity implements
         link.setLayoutManager(new LinearLayoutManager(this));
 //Markers with text.................................................................................
 
+        adapter = new DragupListAdapter(context, directionapi.routes[selectedroute]);
+        link.setAdapter(adapter);
 
         //provide layout with its id in Xml
         relativeLayout=findViewById(R.id.show);
@@ -206,8 +215,8 @@ public class MapActivity extends AppCompatActivity implements
         duration = findViewById(R.id.duration);
 
   //      time = findViewById(R.id.time);
-        date_holder = findViewById(R.id.card_date);
-        departAt=findViewById(R.id.date1);
+//        date_holder = findViewById(R.id.card_date);
+//        departAt=findViewById(R.id.date1);
 
 
         ((SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map)).getMapAsync(this);
@@ -219,49 +228,49 @@ public class MapActivity extends AppCompatActivity implements
         // Retrieve the AutoCompleteTextView that will display Place suggestions.
 
 
-        src.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent=new Intent(MapActivity.this,SearchPlace.class);
-                  intent.putExtra("SrcOrDstn","Src");
-                    startActivity(intent);
-            }
-        });
+//        src.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Intent intent=new Intent(MapActivity.this,SearchPlace.class);
+//                  intent.putExtra("SrcOrDstn","Src");
+//                    startActivity(intent);
+//            }
+//        });
+//
+//        dstn.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Intent intent=new Intent(MapActivity.this,SearchPlace.class);
+//                intent.putExtra("SrcOrDstn","Dstn");
+//                startActivity(intent);
+//            }
+//        });
+//
+//        RequestDirection.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//             //   findViewById(R.id.option_list).setVisibility(View.GONE);
+//                requestDirection();
+//            }
+//        });
 
-        dstn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent=new Intent(MapActivity.this,SearchPlace.class);
-                intent.putExtra("SrcOrDstn","Dstn");
-                startActivity(intent);
-            }
-        });
-
-        RequestDirection.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-             //   findViewById(R.id.option_list).setVisibility(View.GONE);
-                requestDirection();
-            }
-        });
-
-
-        final Calendar c = Calendar.getInstance();
-        timezone=c.getTimeZone().getID();
-        mYear = c.get(Calendar.YEAR);
-        mMonth = c.get(Calendar.MONTH);
-        mDay = c.get(Calendar.DAY_OF_MONTH);
-        mHour = c.get(Calendar.HOUR_OF_DAY);
-        mMinute = c.get(Calendar.MINUTE);
-        jstart_date_millis=c.getTimeInMillis()-((mHour*60+mMinute)*60*1000);
-        jstart_time_millis=(mHour*60+mMinute)*60*1000;
-
-
-        String sHour = mHour < 10 ? "0" + mHour : "" + mHour;
-        String sMinute = mMinute < 10 ? "0" + mMinute : "" + mMinute;
-        String curr_time = sHour + ":" + sMinute;
- //       time.setText(curr_time);
-        departAt.setText(curr_time+","+mDay+" "+month[mMonth]+" "+String.valueOf(mYear).substring(2));
+//
+//        final Calendar c = Calendar.getInstance();
+//        timezone=c.getTimeZone().getID();
+//        mYear = c.get(Calendar.YEAR);
+//        mMonth = c.get(Calendar.MONTH);
+//        mDay = c.get(Calendar.DAY_OF_MONTH);
+//        mHour = c.get(Calendar.HOUR_OF_DAY);
+//        mMinute = c.get(Calendar.MINUTE);
+//        jstart_date_millis=c.getTimeInMillis()-((mHour*60+mMinute)*60*1000);
+//        jstart_time_millis=(mHour*60+mMinute)*60*1000;
+//
+//
+//        String sHour = mHour < 10 ? "0" + mHour : "" + mHour;
+//        String sMinute = mMinute < 10 ? "0" + mMinute : "" + mMinute;
+//        String curr_time = sHour + ":" + sMinute;
+// //       time.setText(curr_time);
+//        departAt.setText(curr_time+","+mDay+" "+month[mMonth]+" "+String.valueOf(mYear).substring(2));
         
 //        Button clearButton = findViewById(R.id.button_clear);
 //        clearButton.setOnClickListener(new View.OnClickListener() {
@@ -270,14 +279,14 @@ public class MapActivity extends AppCompatActivity implements
 //                recreate();
 //            }
 //        });
-        date_holder.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                datePicker();
-
-            }
-        });
+//        date_holder.setOnClickListener(new View.OnClickListener() {
+//
+//            @Override
+//            public void onClick(View v) {
+//                datePicker();
+//
+//            }
+//        });
 //        time.setOnClickListener(new View.OnClickListener() {
 //
 //            @Override
@@ -353,6 +362,7 @@ public class MapActivity extends AppCompatActivity implements
 
     @Override
     public void onBackPressed() {
+        finish();
 //        Intent intent = new Intent(Intent.ACTION_MAIN);
 //        intent.addCategory(Intent.CATEGORY_HOME);
 //        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -395,10 +405,10 @@ public class MapActivity extends AppCompatActivity implements
                 item.setChecked(true);
                 MapActivity.interval=50000;
                 return true;
-            case R.id.action_retry:
-                requestDirection();
-                Toast.makeText(this, "Retrying...", Toast.LENGTH_SHORT).show();
-                return true;
+//            case R.id.action_retry:
+//                requestDirection();
+//                Toast.makeText(this, "Retrying...", Toast.LENGTH_SHORT).show();
+//                return true;
             case R.id.Subscription:
                 Intent intent=new Intent(MapActivity.this, Subscription.class);
                 startActivity(intent);
@@ -427,9 +437,9 @@ public class MapActivity extends AppCompatActivity implements
     public void onMapReady(final GoogleMap googleMap) {
         this.googleMap = googleMap;
 
-       
 
 
+        drawRoute();
   
 
         googleMap.setOnPolylineClickListener(new GoogleMap.OnPolylineClickListener()
@@ -439,6 +449,7 @@ public class MapActivity extends AppCompatActivity implements
             {
 
 
+             //   link.setAdapter(adapter);
                 int val=0;
                 for(int k=0;k<polylines.size();k++){
                     polylines.get(k).remove();
@@ -454,6 +465,8 @@ public class MapActivity extends AppCompatActivity implements
 
                 }
                 selectedroute=val;
+                adapter = new DragupListAdapter(context, directionapi.routes[selectedroute]);
+                adapter.notifyDataSetChanged();
 
                 polylineOptionsList.get(val).color(getResources().getColor(R.color.seletedRoute));
                 polylineOptionsList.get(val).width(15);
@@ -478,181 +491,254 @@ public class MapActivity extends AppCompatActivity implements
             }
         });
 
-        googleMap.setOnMapLongClickListener(new GoogleMap.OnMapLongClickListener() {
-
-            @Override
-            public void onMapLongClick(LatLng point) {
-                if (originMarker == null) {
-                    originMarker = googleMap.addMarker(new MarkerOptions().position(point).icon(BitmapDescriptorFactory.fromResource(R.drawable.pinb)));
-                    originMarker.setDraggable(true);
-                    originMarker.setTitle("Source");
-                    // originMarker.setTag(0);
-                    origin=point;
-                } else if (dstnMarker == null) {
-                    dstnMarker=googleMap.addMarker(new MarkerOptions().position(point).icon(BitmapDescriptorFactory.fromResource(R.drawable.pina)));
-                    //    dstnMarker.setTag(1);
-                    dstnMarker.setDraggable(true);
-                    dstnMarker.setTitle("Destination");
-                    destination=point;
-                    requestDirection();
-                }
-
-            }});
-
-        googleMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
-            @Override
-            public boolean onMarkerClick(Marker marker) {
-
-                System.out.println("marker tag :"+marker.getTag());
-
-                try{
-
-                    if(marker.getTag().toString().startsWith("I")) {
-
-                        Item item = apiData.getItems().get(Integer.parseInt(marker.getTag().toString().replace("I","")));
-
-
-                        AlertDialog.Builder builderSingle = new AlertDialog.Builder(MapActivity.this);
-
-//                        builderSingle.setTitle(
-//                                item.getLname().substring(0, 20) + "...\n Arr :" + item.getArrtime() + "   Dist :" + item.getDistance()
-//                        );
-
-                        builderSingle.setIcon(R.drawable.ic_directions_black_24dp);
-                        try {
-                            builderSingle.setTitle(new Geocoder(getApplicationContext(), Locale.ENGLISH).getFromLocation(item.getPoint().lat, item.getPoint().lng, 1).get(0).getAddressLine(0));
-                        }catch (Exception e){
-                            e.printStackTrace();
-                        }
-                        builderSingle.setMessage("Time :"+item.getArrtime()+"  "+"Traveled :"+String.format("%.2f", (Integer.valueOf(item.getDistance().split(" ")[0]))/(float)1000*(0.621371))+" miles");
-                        final ArrrayAdapter Adapter = new ArrrayAdapter(MapActivity.this, item);
-
-                        final ListView modeList = new ListView(MapActivity.this);
-                        modeList.setAdapter(Adapter);
-
-
-                        builderSingle.setView(modeList);
-                        builderSingle.setNegativeButton("OK", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                dialog.dismiss();
-                            }
-                        });
-
-                        builderSingle.show();
-                    }else
-                        if(marker.getTag().toString().startsWith("S")){
-                        MStep step = apiData.getSteps().get(Integer.parseInt(marker.getTag().toString().replace("S","")));
-                        AlertDialog.Builder builderSingle = new AlertDialog.Builder(MapActivity.this);
-
-//                        builderSingle.setTitle(
-//                                step.getStep().getManeuver() + "...\n Arr :" + step.getArrtime() + "   Dist :" + step.getAft_distance()
-//                        );
-
-                        builderSingle.setIcon(R.drawable.ic_directions_black_24dp);
-          //              builderSingle.setTitle(new Geocoder(getApplicationContext(), Locale.ENGLISH).getFromLocation(step.getStep().getStart_location().getLat(), step.getStep().getStart_location().getLng(), 1).get(0).getAddressLine(0));
-                        builderSingle.setMessage("Time :"+step.getArrtime()+"  "+"Traveled :"+String.format("%.2f",step.getAft_distance()/(float)1000*(0.621371))+" miles");
-                        final ArrrayAdapter Adapter = new ArrrayAdapter(MapActivity.this, step);
-
-                        final ListView modeList = new ListView(MapActivity.this);
-                        modeList.setAdapter(Adapter);
-
-
-                        builderSingle.setView(modeList);
-                        builderSingle.setNegativeButton("OK", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                dialog.dismiss();
-                            }
-                        });
-
-                        builderSingle.show();
-                    }
-                }catch (Exception e){
-                    e.printStackTrace();
-                }
-
-
-                return false;
-            }
-        });
-
-
+//        googleMap.setOnMapLongClickListener(new GoogleMap.OnMapLongClickListener() {
+//
+//            @Override
+//            public void onMapLongClick(LatLng point) {
+//                if (originMarker == null) {
+//                    originMarker = googleMap.addMarker(new MarkerOptions().position(point).icon(BitmapDescriptorFactory.fromResource(R.drawable.pinb)));
+//                    originMarker.setDraggable(true);
+//                    originMarker.setTitle("Source");
+//                    // originMarker.setTag(0);
+//                    origin=point;
+//                } else if (dstnMarker == null) {
+//                    dstnMarker=googleMap.addMarker(new MarkerOptions().position(point).icon(BitmapDescriptorFactory.fromResource(R.drawable.pina)));
+//                    //    dstnMarker.setTag(1);
+//                    dstnMarker.setDraggable(true);
+//                    dstnMarker.setTitle("Destination");
+//                    destination=point;
+//                    requestDirection();
+//                }
+//
+//            }});
+//
+//        googleMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+//            @Override
+//            public boolean onMarkerClick(Marker marker) {
+//
+//                System.out.println("marker tag :"+marker.getTag());
+//
+//                try{
+//
+//                    if(marker.getTag().toString().startsWith("I")) {
+//
+//                        Item item = apiData.getItems().get(Integer.parseInt(marker.getTag().toString().replace("I","")));
+//
+//
+//                        AlertDialog.Builder builderSingle = new AlertDialog.Builder(MapActivity.this);
+//
+////                        builderSingle.setTitle(
+////                                item.getLname().substring(0, 20) + "...\n Arr :" + item.getArrtime() + "   Dist :" + item.getDistance()
+////                        );
+//
+//                        builderSingle.setIcon(R.drawable.ic_directions_black_24dp);
+//                        try {
+//                            builderSingle.setTitle(new Geocoder(getApplicationContext(), Locale.ENGLISH).getFromLocation(item.getPoint().lat, item.getPoint().lng, 1).get(0).getAddressLine(0));
+//                        }catch (Exception e){
+//                            e.printStackTrace();
+//                        }
+//                        builderSingle.setMessage("Time :"+item.getArrtime()+"  "+"Traveled :"+String.format("%.2f", (Integer.valueOf(item.getDistance().split(" ")[0]))/(float)1000*(0.621371))+" miles");
+//                        final ArrrayAdapter Adapter = new ArrrayAdapter(MapActivity.this, item);
+//
+//                        final ListView modeList = new ListView(MapActivity.this);
+//                        modeList.setAdapter(Adapter);
+//
+//
+//                        builderSingle.setView(modeList);
+//                        builderSingle.setNegativeButton("OK", new DialogInterface.OnClickListener() {
+//                            @Override
+//                            public void onClick(DialogInterface dialog, int which) {
+//                                dialog.dismiss();
+//                            }
+//                        });
+//
+//                        builderSingle.show();
+//                    }else
+//                        if(marker.getTag().toString().startsWith("S")){
+//                        MStep step = apiData.getSteps().get(Integer.parseInt(marker.getTag().toString().replace("S","")));
+//                        AlertDialog.Builder builderSingle = new AlertDialog.Builder(MapActivity.this);
+//
+////                        builderSingle.setTitle(
+////                                step.getStep().getManeuver() + "...\n Arr :" + step.getArrtime() + "   Dist :" + step.getAft_distance()
+////                        );
+//
+//                        builderSingle.setIcon(R.drawable.ic_directions_black_24dp);
+//          //              builderSingle.setTitle(new Geocoder(getApplicationContext(), Locale.ENGLISH).getFromLocation(step.getStep().getStart_location().getLat(), step.getStep().getStart_location().getLng(), 1).get(0).getAddressLine(0));
+//                        builderSingle.setMessage("Time :"+step.getArrtime()+"  "+"Traveled :"+String.format("%.2f",step.getAft_distance()/(float)1000*(0.621371))+" miles");
+//                        final ArrrayAdapter Adapter = new ArrrayAdapter(MapActivity.this, step);
+//
+//                        final ListView modeList = new ListView(MapActivity.this);
+//                        modeList.setAdapter(Adapter);
+//
+//
+//                        builderSingle.setView(modeList);
+//                        builderSingle.setNegativeButton("OK", new DialogInterface.OnClickListener() {
+//                            @Override
+//                            public void onClick(DialogInterface dialog, int which) {
+//                                dialog.dismiss();
+//                            }
+//                        });
+//
+//                        builderSingle.show();
+//                    }
+//                }catch (Exception e){
+//                    e.printStackTrace();
+//                }
+//
+//
+//                return false;
+//            }
+//        });
 
 
-        googleMap.setOnMarkerDragListener(new GoogleMap.OnMarkerDragListener() {
 
-            @Override
-            public void onMarkerDrag(Marker marker) {
 
-            }
-            @Override
-            public void onMarkerDragEnd(Marker marker) {
-                LatLng newLocation = marker.getPosition();
+//        googleMap.setOnMarkerDragListener(new GoogleMap.OnMarkerDragListener() {
+//
+//            @Override
+//            public void onMarkerDrag(Marker marker) {
+//
+//            }
+//            @Override
+//            public void onMarkerDragEnd(Marker marker) {
+//                LatLng newLocation = marker.getPosition();
+//
+//                if(marker!=null){
+//                    System.out.println("tag :"+marker.getTag());
+//                    System.out.println("title :"+marker.getTitle());
+//                }else{
+//                    System.out.println(" marker is null babes ");
+//                }
+//
+//                if(marker.getTitle().equals(originMarker.getTitle())) {
+//                    origin = newLocation;
+//                    //     googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(origin, 15.0f));
+//
+//                }else if(marker.getTitle().equals(dstnMarker.getTitle())){
+//                    destination = newLocation;
+//                    //     googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(destination, 15.0f));
+//                }
+//                requestDirection();
+//            }
+//            @Override
+//            public void onMarkerDragStart(Marker marker) {}
+//
+//        });
 
-                if(marker!=null){
-                    System.out.println("tag :"+marker.getTag());
-                    System.out.println("title :"+marker.getTitle());
-                }else{
-                    System.out.println(" marker is null babes ");
-                }
 
-                if(marker.getTitle().equals(originMarker.getTitle())) {
-                    origin = newLocation;
-                    //     googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(origin, 15.0f));
-
-                }else if(marker.getTitle().equals(dstnMarker.getTitle())){
-                    destination = newLocation;
-                    //     googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(destination, 15.0f));
-                }
-                requestDirection();
-            }
-            @Override
-            public void onMarkerDragStart(Marker marker) {}
-
-        });
     }
 
 
 
 
-    public void requestDirection() {
-        apiData=null;
-        weatherloaded=false;
-        routeloaded=false;
-        markersInterm.clear();
-        markersSteps.clear();
+//    public void requestDirection() {
+//        apiData=null;
+//        weatherloaded=false;
+//        routeloaded=false;
+//        markersInterm.clear();
+//        markersSteps.clear();
+//
+//        if(origin!=null && destination!=null) {
+//            googleMap.clear();
+//          //  custom_dialog.setVisibility(View.VISIBLE);
+//          //  loading.setVisibility(View.VISIBLE);
+//          //  loading_text.setVisibility(View.VISIBLE);
+//           // slidingUpPanelLayout.setAlpha(0.5f);
+//          //  loading.setSpeed(1f);
+//          //  loading_text.setText("Loading Route");
+//
+//            originMarker=googleMap.addMarker(new MarkerOptions().position(origin).icon(BitmapDescriptorFactory.fromResource(R.drawable.pinb)));
+//            originMarker.setDraggable(true);
+//            originMarker.setTitle("source");
+//
+//            dstnMarker=googleMap.addMarker(new MarkerOptions().position(destination).icon(BitmapDescriptorFactory.fromResource(R.drawable.pina)));
+//            dstnMarker.setDraggable(true);
+//            dstnMarker.setTitle("destination");
+//
+//
+//             new RouteApi().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+//             new WeatherApi().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+//        }else{
+//            Toast.makeText(getApplicationContext(),"origin or destination null", Toast.LENGTH_LONG).show();
+//        }
+//    }
 
-        if(origin!=null && destination!=null) {
-            googleMap.clear();
-          //  custom_dialog.setVisibility(View.VISIBLE);
-          //  loading.setVisibility(View.VISIBLE);
-          //  loading_text.setVisibility(View.VISIBLE);
-           // slidingUpPanelLayout.setAlpha(0.5f);
-          //  loading.setSpeed(1f);
-          //  loading_text.setText("Loading Route");
-
-            originMarker=googleMap.addMarker(new MarkerOptions().position(origin).icon(BitmapDescriptorFactory.fromResource(R.drawable.pinb)));
-            originMarker.setDraggable(true);
-            originMarker.setTitle("source");
-
-            dstnMarker=googleMap.addMarker(new MarkerOptions().position(destination).icon(BitmapDescriptorFactory.fromResource(R.drawable.pina)));
-            dstnMarker.setDraggable(true);
-            dstnMarker.setTitle("destination");
-
-
-             new RouteApi().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-             new WeatherApi().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-        }else{
-            Toast.makeText(getApplicationContext(),"origin or destination null", Toast.LENGTH_LONG).show();
-        }
-    }
-
-    static void setCameraWithCoordinationBounds(DirectionsRoute route) {
+     void setCameraWithCoordinationBounds(DirectionsRoute route) {
         LatLng southwest = new LatLng(route.bounds.southwest.lat,route.bounds.southwest.lng);
         LatLng northeast =  new LatLng(route.bounds.northeast.lat,route.bounds.northeast.lng);
         LatLngBounds bounds = new LatLngBounds(southwest, northeast);
-        googleMap.animateCamera(CameraUpdateFactory.newLatLngBounds(bounds, 250));
+
+        int width = getResources().getDisplayMetrics().widthPixels;
+        int height = getResources().getDisplayMetrics().heightPixels;
+        int padding = (int) (width * 0.12);
+        googleMap.animateCamera(CameraUpdateFactory.newLatLngBounds(bounds, width,height,padding));
+    }
+
+    void drawRoute(){
+                    originMarker=googleMap.addMarker(new MarkerOptions().position(origin).icon(BitmapDescriptorFactory.fromResource(R.drawable.pinb)));
+           // originMarker.setDraggable(true);
+            originMarker.setTitle("source");
+
+            dstnMarker=googleMap.addMarker(new MarkerOptions().position(destination).icon(BitmapDescriptorFactory.fromResource(R.drawable.pina)));
+         //   dstnMarker.setDraggable(true);
+            dstnMarker.setTitle("destination");
+
+
+                    MapActivity.polylines = new ArrayList<>();
+            //add route(s) to the map.
+
+            MapActivity.distance.setText("(" + directionapi.routes[selectedroute].legs[0].distance.humanReadable+ ")");
+            MapActivity.duration.setText(directionapi.routes[selectedroute].legs[0].durationInTraffic!=null?directionapi.routes[selectedroute].legs[0].durationInTraffic.humanReadable:directionapi.routes[selectedroute].legs[0].duration.humanReadable);
+            if (directionapi.routes[selectedroute].legs[0].duration.humanReadable != null) {
+                slidingUpPanelLayout.setPanelHeight(context.getResources().getDimensionPixelSize(R.dimen.dragupsize));
+            }
+
+
+            polylineOptionsList = new ArrayList<>();
+            System.out.println("route options : " + directionapi.routes.length);
+            Polyline selectedPolyline = null;
+            if (directionapi.routes.length > 0) {
+               List<LatLng> lst = PolyUtil.decode(directionapi.routes[0].overviewPolyline.getEncodedPath());
+
+                PolylineOptions polyOptions = new PolylineOptions();
+                polyOptions.color(context.getResources().getColor(R.color.seletedRoute));
+                polyOptions.width(14);
+                polyOptions.addAll(lst);
+                polylineOptionsList.add(polyOptions);
+                MapActivity.polylines.add(selectedPolyline);
+            }
+
+            if (directionapi.routes.length > 1) {
+                for (int i = 1; i < directionapi.routes.length; i++) {
+                    List<LatLng> lst = PolyUtil.decode(directionapi.routes[i].overviewPolyline.getEncodedPath());
+                    //In case of more than 5 alternative routes
+                    //   int colorIndex = i % COLORS.length;
+
+                    PolylineOptions polyOptions = new PolylineOptions();
+
+                    polyOptions.color(context.getResources().getColor(R.color.alternateRoute));
+                    polyOptions.width(12);
+
+
+                    polyOptions.addAll(lst);
+                    Polyline polyline = MapActivity.googleMap.addPolyline(polyOptions);
+                    MapActivity.polylines.add(polyline);
+                    polyline.setClickable(true);
+                    polylineOptionsList.add(polyOptions);
+                }
+            }
+
+            if (polylineOptionsList != null && polylineOptionsList.get(0) != null) {
+                selectedPolyline = googleMap.addPolyline(polylineOptionsList.get(0));
+                polylines.set(0, selectedPolyline);
+                selectedPolyline.setClickable(true);
+            }
+
+
+            setCameraWithCoordinationBounds(directionapi.routes[0]);
+
+
+
     }
 
 
@@ -661,68 +747,68 @@ public class MapActivity extends AppCompatActivity implements
 
 
 
-    private void datePicker(){
-
-        // Get Current Date
-
-
-        final DatePickerDialog datePickerDialog = new DatePickerDialog(this,
-                new DatePickerDialog.OnDateSetListener() {
-
-                    @Override
-                    public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-
-                        departAt.setText(dayOfMonth + " " + month[monthOfYear] + " " + String.valueOf(year).substring(2));
-                        Calendar cal = Calendar.getInstance();
-                        cal.set(Calendar.DAY_OF_MONTH,dayOfMonth);
-                        cal.set(Calendar.MONTH, monthOfYear);
-                        cal.set(Calendar.YEAR, year);
-                        cal.set(Calendar.HOUR_OF_DAY,0);
-                        cal.set(Calendar.MINUTE,0);
-
-                        jstart_date_millis=cal.getTimeInMillis();
-
-                        timePicker();
-
-                        //*************Call Time Picker Here ********************
-
-                    }
-                }, mYear, mMonth, mDay);
-
-
-
-     //   datePickerDialog.getDatePicker().setMinDate(jstart_date_millis);
-     //   datePickerDialog.getDatePicker().setMaxDate(jstart_date_millis+5*24*60*60*1000);
-        datePickerDialog.show();
-    }
-
-    private void timePicker(){
-        // Get Current Time
-
-
-        // Launch Time Picker Dialog
-        TimePickerDialog timePickerDialog = new TimePickerDialog(this,
-                new TimePickerDialog.OnTimeSetListener() {
-
-                    @Override
-                    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-
-                        mHour = hourOfDay;
-                        mMinute = minute;
-
-                        String sHour = mHour < 10 ? "0" + mHour : "" + mHour;
-                        String sMinute = mMinute < 10 ? "0" + mMinute : "" + mMinute;
-                        String set_time = sHour + ":" + sMinute;
-                        departAt.setText(set_time+","+departAt.getText());
-
-                        jstart_time_millis=(mHour*60+mMinute)*60*1000;
-
-
-
-                    }
-                }, mHour, mMinute, false);
-        timePickerDialog.show();
-    }
+//    private void datePicker(){
+//
+//        // Get Current Date
+//
+//
+//        final DatePickerDialog datePickerDialog = new DatePickerDialog(this,
+//                new DatePickerDialog.OnDateSetListener() {
+//
+//                    @Override
+//                    public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+//
+//                        departAt.setText(dayOfMonth + " " + month[monthOfYear] + " " + String.valueOf(year).substring(2));
+//                        Calendar cal = Calendar.getInstance();
+//                        cal.set(Calendar.DAY_OF_MONTH,dayOfMonth);
+//                        cal.set(Calendar.MONTH, monthOfYear);
+//                        cal.set(Calendar.YEAR, year);
+//                        cal.set(Calendar.HOUR_OF_DAY,0);
+//                        cal.set(Calendar.MINUTE,0);
+//
+//                        jstart_date_millis=cal.getTimeInMillis();
+//
+//                        timePicker();
+//
+//                        //*************Call Time Picker Here ********************
+//
+//                    }
+//                }, mYear, mMonth, mDay);
+//
+//
+//
+//     //   datePickerDialog.getDatePicker().setMinDate(jstart_date_millis);
+//     //   datePickerDialog.getDatePicker().setMaxDate(jstart_date_millis+5*24*60*60*1000);
+//        datePickerDialog.show();
+//    }
+//
+//    private void timePicker(){
+//        // Get Current Time
+//
+//
+//        // Launch Time Picker Dialog
+//        TimePickerDialog timePickerDialog = new TimePickerDialog(this,
+//                new TimePickerDialog.OnTimeSetListener() {
+//
+//                    @Override
+//                    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+//
+//                        mHour = hourOfDay;
+//                        mMinute = minute;
+//
+//                        String sHour = mHour < 10 ? "0" + mHour : "" + mHour;
+//                        String sMinute = mMinute < 10 ? "0" + mMinute : "" + mMinute;
+//                        String set_time = sHour + ":" + sMinute;
+//                        departAt.setText(set_time+","+departAt.getText());
+//
+//                        jstart_time_millis=(mHour*60+mMinute)*60*1000;
+//
+//
+//
+//                    }
+//                }, mHour, mMinute, false);
+//        timePickerDialog.show();
+//    }
 
      IabHelper.QueryInventoryFinishedListener mGotInventoryListener = new IabHelper.QueryInventoryFinishedListener() {
                 public void onQueryInventoryFinished(IabResult result, Inventory inventory) {
@@ -852,4 +938,8 @@ public class MapActivity extends AppCompatActivity implements
                 }
             }
 
-}
+
+            public void showWeather(View view) {
+                new WeatherApi().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+            }
+        }

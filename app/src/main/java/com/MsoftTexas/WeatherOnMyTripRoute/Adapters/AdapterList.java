@@ -1,6 +1,7 @@
 package com.MsoftTexas.WeatherOnMyTripRoute.Adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -10,7 +11,10 @@ import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.MsoftTexas.WeatherOnMyTripRoute.MapActivity;
 import com.MsoftTexas.WeatherOnMyTripRoute.R;
+import com.MsoftTexas.WeatherOnMyTripRoute.TravelWithActivity;
+import com.MsoftTexas.WeatherOnMyTripRoute.WeatherApi;
 import com.google.maps.model.DirectionsResult;
 import com.google.maps.model.DirectionsRoute;
 
@@ -45,7 +49,9 @@ public class AdapterList extends RecyclerView.Adapter<AdapterList.AdapterAllHold
             public void onClick(View view) {
 //                System.out.println("hre is position "+position);
 //                System.out.println(route.summary);
-
+                Intent intent=new Intent(context,MapActivity.class);
+                TravelWithActivity.selectedroute=position;
+                context.startActivity(intent);
 
             }
         });

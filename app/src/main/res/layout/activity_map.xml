@@ -14,6 +14,7 @@
         sothree:umanoPanelHeight="68dp"
         sothree:umanoShadowHeight="4dp">
 
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -37,13 +38,21 @@
     sothree:cardElevation="4dp"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/showweather"
+        android:onClick="showWeather"
+        android:text="showweather"/>
                 <RelativeLayout
+                    android:visibility="gone"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:id="@+id/fillform"
                     >
 
                     <LinearLayout
+
                         android:id="@+id/card"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
