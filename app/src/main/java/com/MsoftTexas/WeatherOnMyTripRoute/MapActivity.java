@@ -1,18 +1,12 @@
 package com.MsoftTexas.WeatherOnMyTripRoute;
 
-import android.app.DatePickerDialog;
-import android.app.TimePickerDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
-import android.location.Geocoder;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -20,27 +14,15 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
-import android.widget.CheckBox;
-import android.widget.CompoundButton;
-import android.widget.DatePicker;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ListView;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
-import android.widget.Switch;
 import android.widget.TextView;
-import android.widget.TimePicker;
 import android.widget.Toast;
 
-import com.MsoftTexas.WeatherOnMyTripRoute.Adapters.ArrrayAdapter;
-
-import com.MsoftTexas.WeatherOnMyTripRoute.Adapters.DragupListAdapter;
+import com.MsoftTexas.WeatherOnMyTripRoute.Adapters.DragupListAdapter_weather;
+import com.MsoftTexas.WeatherOnMyTripRoute.Adapters.DragupListAdapter_route;
 import com.MsoftTexas.WeatherOnMyTripRoute.Models.Apidata;
-import com.MsoftTexas.WeatherOnMyTripRoute.Models.Item;
-import com.MsoftTexas.WeatherOnMyTripRoute.Models.MStep;
 import com.MsoftTexas.WeatherOnMyTripRoute.util.IabBroadcastReceiver;
 import com.MsoftTexas.WeatherOnMyTripRoute.util.IabHelper;
 import com.MsoftTexas.WeatherOnMyTripRoute.util.IabResult;
@@ -62,15 +44,12 @@ import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
 import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.maps.android.PolyUtil;
-import com.google.maps.model.DirectionsResult;
 import com.google.maps.model.DirectionsRoute;
 import com.sothree.slidinguppanel.SlidingUpPanelLayout;
 import com.vipul.hp_hp.library.Layout_to_Image;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
-import java.util.Locale;
 
 import io.trialy.library.Trialy;
 import io.trialy.library.TrialyCallback;
@@ -78,7 +57,6 @@ import io.trialy.library.TrialyCallback;
 import static com.MsoftTexas.WeatherOnMyTripRoute.TravelWithActivity.destination;
 import static com.MsoftTexas.WeatherOnMyTripRoute.TravelWithActivity.directionapi;
 import static com.MsoftTexas.WeatherOnMyTripRoute.TravelWithActivity.origin;
-import static com.MsoftTexas.WeatherOnMyTripRoute.TravelWithActivity.selectedroute;
 import static io.trialy.library.Constants.STATUS_TRIAL_JUST_ENDED;
 import static io.trialy.library.Constants.STATUS_TRIAL_JUST_STARTED;
 import static io.trialy.library.Constants.STATUS_TRIAL_NOT_YET_STARTED;
@@ -127,7 +105,9 @@ public class MapActivity extends AppCompatActivity implements
  //   String[] month={"Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"};
  //   private FirebaseAnalytics mFirebaseAnalytics;
     static RecyclerView link;
-            DragupListAdapter adapter;
+    DragupListAdapter_route routeadapter;
+    DragupListAdapter_weather adapter;
+
 
     static String TRIALY_APP_KEY = "CNXFXUSWNXNREPZN6FW"; //TODO: Replace with your app key, which can be found on your Trialy developer dashboard
     static String TRIALY_SKU = "t21_test"; //TODO: Replace with a trial SKU, which can be found on your Trialy developer dashboard. Each app can have multiple trials
@@ -197,8 +177,8 @@ public class MapActivity extends AppCompatActivity implements
         link.setLayoutManager(new LinearLayoutManager(this));
 //Markers with text.................................................................................
 
-        adapter = new DragupListAdapter(context, directionapi.routes[selectedroute]);
-        link.setAdapter(adapter);
+        routeadapter = new DragupListAdapter_route(context, directionapi.routes[selectedroute]);
+        link.setAdapter(routeadapter);
 
         //provide layout with its id in Xml
         relativeLayout=findViewById(R.id.show);
@@ -465,8 +445,8 @@ public class MapActivity extends AppCompatActivity implements
 
                 }
                 selectedroute=val;
-                adapter = new DragupListAdapter(context, directionapi.routes[selectedroute]);
-                adapter.notifyDataSetChanged();
+                routeadapter = new DragupListAdapter_route(context, directionapi.routes[selectedroute]);
+                routeadapter.notifyDataSetChanged();
 
                 polylineOptionsList.get(val).color(getResources().getColor(R.color.seletedRoute));
                 polylineOptionsList.get(val).width(15);

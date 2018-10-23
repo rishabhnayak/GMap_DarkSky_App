@@ -10,7 +10,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.MsoftTexas.WeatherOnMyTripRoute.Adapters.DragupListAdapter;
+import com.MsoftTexas.WeatherOnMyTripRoute.Adapters.DragupListAdapter_weather;
 import com.MsoftTexas.WeatherOnMyTripRoute.Models.Apidata;
 import com.MsoftTexas.WeatherOnMyTripRoute.Models.Input;
 import com.MsoftTexas.WeatherOnMyTripRoute.Models.Item;
@@ -31,11 +31,10 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 
-import cz.msebera.android.httpclient.impl.client.cache.ManagedHttpCacheStorage;
-
 import static com.MsoftTexas.WeatherOnMyTripRoute.MapActivity.apiData;
 import static com.MsoftTexas.WeatherOnMyTripRoute.MapActivity.context;
 import static com.MsoftTexas.WeatherOnMyTripRoute.MapActivity.custom_dialog;
+import static com.MsoftTexas.WeatherOnMyTripRoute.MapActivity.link;
 import static com.MsoftTexas.WeatherOnMyTripRoute.TravelWithActivity.destination;
 import static com.MsoftTexas.WeatherOnMyTripRoute.MapActivity.googleMap;
 import static com.MsoftTexas.WeatherOnMyTripRoute.MapActivity.interval;
@@ -155,7 +154,8 @@ public class WeatherApi extends AsyncTask<Object,Object,String> {
 
 
         if(apidata!=null && apidata.getSteps()!=null){
-      //      link.setAdapter(new DragupListAdapter(context, apidata.getSteps()));
+
+            link.setAdapter(new DragupListAdapter_weather(context, apidata.getSteps()));
             for(final MStep mStep:apidata.getSteps()) {
                 c++;
                 System.out.println(new Gson().toJson(mStep));

@@ -1,11 +1,13 @@
 package com.MsoftTexas.WeatherOnMyTripRoute.Models;
 
+import com.google.maps.model.DirectionsStep;
+
 public class MStep {
 
 
     String arrtime;
     String steplength;
-    Step step;
+    DirectionsStep step;
     long aft_distance;
     private Wlist wlist;
 
@@ -13,7 +15,7 @@ public class MStep {
         super();
     }
 
-    public MStep(Step step ,Wlist wlist, String arrtime,long aft_distance, String steplength) {
+    public MStep(DirectionsStep step ,Wlist wlist, String arrtime,long aft_distance, String steplength) {
         this.step=step;
 
         this.arrtime=arrtime;
@@ -40,11 +42,11 @@ public class MStep {
         return wlist;
     }
 
-    public Step getStep() {
+    public DirectionsStep getStep() {
         return step;
     }
 
-    public void setStep(Step step) {
+    public void setStep(DirectionsStep step) {
         this.step = step;
     }
 

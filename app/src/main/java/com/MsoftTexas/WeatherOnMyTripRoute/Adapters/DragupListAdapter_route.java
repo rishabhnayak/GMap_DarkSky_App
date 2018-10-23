@@ -1,8 +1,6 @@
 package com.MsoftTexas.WeatherOnMyTripRoute.Adapters;
 
 import android.content.Context;
-import android.graphics.drawable.Drawable;
-import android.location.Geocoder;
 import android.os.Build;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
@@ -12,25 +10,20 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.MsoftTexas.WeatherOnMyTripRoute.Models.MStep;
 import com.MsoftTexas.WeatherOnMyTripRoute.R;
-import com.bumptech.glide.Glide;
 import com.google.maps.model.DirectionsRoute;
 import com.google.maps.model.DirectionsStep;
-
-import java.util.List;
-import java.util.Locale;
 
 
 /**
  * Created by RAJA on 18-12-2017.
  */
 
-public class DragupListAdapter extends RecyclerView.Adapter<DragupListAdapter.PnrViewHolder>{
+public class DragupListAdapter_route extends RecyclerView.Adapter<DragupListAdapter_route.PnrViewHolder>{
 
     private Context context;
     private DirectionsRoute route;
-    public DragupListAdapter(Context context, DirectionsRoute route){
+    public DragupListAdapter_route(Context context, DirectionsRoute route){
         this.context=context;
         this.route=route;
     }
@@ -40,7 +33,7 @@ public class DragupListAdapter extends RecyclerView.Adapter<DragupListAdapter.Pn
     @Override
     public PnrViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         LayoutInflater inflater= LayoutInflater.from(parent.getContext());
-        View view=inflater.inflate(R.layout.dragup_list_layout,parent,false);
+        View view=inflater.inflate(R.layout.dragup_list_route,parent,false);
         return new PnrViewHolder(view);
     }
 
@@ -60,7 +53,8 @@ public class DragupListAdapter extends RecyclerView.Adapter<DragupListAdapter.Pn
 //        holder.distance.setText("Traveled : "+mStep.getAft_distance()/(long)1000+" km");
 //        holder.arrtime.setText("Start time:"+mStep.getArrtime());
         try {
-            holder.distance.setText(String.format("%.2f", (float) mStep.distance.inMeters / (float) 1000 * (0.621371)) + " miles");
+            String dist= String.format("%.2f", (float) mStep.distance.inMeters / (float) 1000 * (0.621371)) + " miles";
+            holder.stepLength.setText(dist);
       //      holder.arrtime.setText(mStep.getArrtime());
       //      holder.weather.setText(mStep.getWlist().getSummary());
       //      holder.temp.setText(mStep.getWlist().getTemperature() + "°F");
@@ -128,12 +122,12 @@ public class DragupListAdapter extends RecyclerView.Adapter<DragupListAdapter.Pn
         ImageView weatherimg;
         public PnrViewHolder(View itemView) {
             super(itemView);
-            instr= (TextView) itemView.findViewById(R.id.instr);
-            weather= (TextView) itemView.findViewById(R.id.weather);
-            temp= (TextView) itemView.findViewById(R.id.temp);
-            distance= (TextView) itemView.findViewById(R.id.distance);
-            arrtime= (TextView) itemView.findViewById(R.id.arrtime);
-            weatherimg=itemView.findViewById(R.id.weatherImg);
+            instr= (TextView) itemView.findViewById(R.id.desc);
+//            weather= (TextView) itemView.findViewById(R.id.weather);
+//            temp= (TextView) itemView.findViewById(R.id.temp);
+//            distance= (TextView) itemView.findViewById(R.id.distance);
+//            arrtime= (TextView) itemView.findViewById(R.id.arrtime);
+//            weatherimg=itemView.findViewById(R.id.weatherImg);
             stepLength=itemView.findViewById(R.id.stepLength);
 //            address=itemView.findViewById(R.id.address);
         }
