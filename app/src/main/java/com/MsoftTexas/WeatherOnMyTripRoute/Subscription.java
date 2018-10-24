@@ -404,7 +404,8 @@ public class Subscription extends AppCompatActivity implements IabBroadcastRecei
             options[2] = getString(R.string.subscription_period_halfyearly);
             options[3] = getString(R.string.subscription_period_yearly);
             mFirstChoiceSku = SKU_INFINITE_GAS_MONTHLY;
-            mSecondChoiceSku = SKU_INFINITE_GAS_QUATERLY;            mThirdChoiceSku=SKU_INFINITE_GAS_HALFYEARLY;
+            mSecondChoiceSku = SKU_INFINITE_GAS_QUATERLY;
+            mThirdChoiceSku=SKU_INFINITE_GAS_HALFYEARLY;
             mFourthChoiceSku=SKU_INFINITE_GAS_YEARLY;
         } else {
             // This is the subscription upgrade/downgrade path, so only one option is valid

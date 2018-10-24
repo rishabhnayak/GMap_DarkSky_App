@@ -39,6 +39,7 @@ import static com.MsoftTexas.WeatherOnMyTripRoute.TravelWithActivity.context;
 import static com.MsoftTexas.WeatherOnMyTripRoute.MapActivity.custom_dialog;
 import static com.MsoftTexas.WeatherOnMyTripRoute.TravelWithActivity.destination;
 import static com.MsoftTexas.WeatherOnMyTripRoute.MapActivity.googleMap;
+import static com.MsoftTexas.WeatherOnMyTripRoute.TravelWithActivity.googleKey;
 import static com.MsoftTexas.WeatherOnMyTripRoute.TravelWithActivity.jstart_date_millis;
 import static com.MsoftTexas.WeatherOnMyTripRoute.TravelWithActivity.jstart_time_millis;
 import static com.MsoftTexas.WeatherOnMyTripRoute.MapActivity.loading;
@@ -172,12 +173,12 @@ public class RouteApi extends AsyncTask<Object,Object,DirectionsResult> {
 
             if (netInfo != null && netInfo.isConnected()) {
 
-                GeoApiContext context = new GeoApiContext.Builder().apiKey("AIzaSyCv_imK5ydtkdWnGJP1Dbt-DT07UdvyDeo")
+                GeoApiContext context = new GeoApiContext.Builder().apiKey(googleKey)
                         .build();
 
                 final DirectionsApiRequest apiRequest = DirectionsApi.newRequest(context);
-                apiRequest.origin(new com.google.maps.model.LatLng(origin.latitude,origin.longitude));
-                apiRequest.destination(new com.google.maps.model.LatLng(destination.latitude,destination.longitude));
+                apiRequest.origin(origin);
+                apiRequest.destination(destination);
                 apiRequest.alternatives(true);
 
 

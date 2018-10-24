@@ -1,6 +1,6 @@
 package com.MsoftTexas.WeatherOnMyTripRoute.Models;
 
-import com.google.android.gms.maps.model.LatLng;
+import com.google.maps.model.LatLng;
 
 /**
  * Created by kamlesh on 13-03-2018.

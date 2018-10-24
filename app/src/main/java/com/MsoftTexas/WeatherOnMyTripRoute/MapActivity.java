@@ -655,11 +655,11 @@ public class MapActivity extends AppCompatActivity implements
     }
 
     void drawRoute(){
-                    originMarker=googleMap.addMarker(new MarkerOptions().position(origin).icon(BitmapDescriptorFactory.fromResource(R.drawable.pinb)));
+                    originMarker=googleMap.addMarker(new MarkerOptions().position(new LatLng(origin.lat,origin.lng)).icon(BitmapDescriptorFactory.fromResource(R.drawable.pinb)));
            // originMarker.setDraggable(true);
             originMarker.setTitle("source");
 
-            dstnMarker=googleMap.addMarker(new MarkerOptions().position(destination).icon(BitmapDescriptorFactory.fromResource(R.drawable.pina)));
+            dstnMarker=googleMap.addMarker(new MarkerOptions().position(new LatLng(destination.lat,destination.lng)).icon(BitmapDescriptorFactory.fromResource(R.drawable.pina)));
          //   dstnMarker.setDraggable(true);
             dstnMarker.setTitle("destination");
 

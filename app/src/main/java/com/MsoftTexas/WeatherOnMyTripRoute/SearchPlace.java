@@ -24,10 +24,14 @@ import com.google.android.gms.maps.model.RuntimeRemoteException;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.gson.Gson;
+import com.google.maps.model.LatLng;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.List;
+
+import static com.MsoftTexas.WeatherOnMyTripRoute.TravelWithActivity.origin;
 
 public class SearchPlace extends AppCompatActivity {
     private AdapterView.OnItemClickListener  mAutocompleteClickListenerD;
@@ -100,8 +104,8 @@ public class SearchPlace extends AppCompatActivity {
 
                     TravelWithActivity.tv_source.setText(recentSearches.get(arg2).getAdress());
 
-                    TravelWithActivity.origin=recentSearches.get(arg2).getLatLng();
-
+                    origin=recentSearches.get(arg2).getLatLng();
+                    new TimezoneOfOrigin(Calendar.getInstance().getTimeInMillis(),origin).execute();
                     if(TextUtils.isEmpty(TravelWithActivity.tv_dstn.getText())){
                         Intent intent=new Intent(SearchPlace.this,SearchPlace.class);
                         intent.putExtra("SrcOrDstn","Dstn");
@@ -182,7 +186,7 @@ public class SearchPlace extends AppCompatActivity {
 
                     try {
                         System.out.println("save fn executed....");
-                        Thread thread =new Thread(new PlaceSaver(sd,new MPlace(place.getId(),place.getName().toString(),place.getAddress().toString(),place.getLatLng())));
+                        Thread thread =new Thread(new PlaceSaver(sd,new MPlace(place.getId(),place.getName().toString(),place.getAddress().toString(),new LatLng(place.getLatLng().latitude,place.getLatLng().longitude))));
                         thread.start();
                     }catch (Error e){
                         System.out.println("save fn error");
@@ -191,7 +195,9 @@ public class SearchPlace extends AppCompatActivity {
                     if(getIntent().getStringExtra("SrcOrDstn").equals("Src")){
 
                         TravelWithActivity.tv_source.setText(place.getAddress());
-                        TravelWithActivity.origin=place.getLatLng();
+
+                        origin=new LatLng(place.getLatLng().latitude,place.getLatLng().longitude);
+                        new TimezoneOfOrigin(Calendar.getInstance().getTimeInMillis(),origin).execute();
                         if(TextUtils.isEmpty(TravelWithActivity.tv_dstn.getText())){
                             Intent intent=new Intent(SearchPlace.this,SearchPlace.class);
                             intent.putExtra("SrcOrDstn","Dstn");
@@ -203,7 +209,7 @@ public class SearchPlace extends AppCompatActivity {
                     }else{
 
                         TravelWithActivity.tv_dstn.setText(place.getAddress());
-                        TravelWithActivity.destination=place.getLatLng();
+                        TravelWithActivity.destination=new LatLng(place.getLatLng().latitude,place.getLatLng().longitude);
                         if(TextUtils.isEmpty(TravelWithActivity.tv_source.getText())){
                             Intent intent=new Intent(SearchPlace.this,SearchPlace.class);
                             intent.putExtra("SrcOrDstn","Src");

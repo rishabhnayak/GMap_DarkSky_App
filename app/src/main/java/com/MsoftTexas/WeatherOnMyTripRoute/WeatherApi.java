@@ -71,17 +71,17 @@ public class WeatherApi extends AsyncTask<Object,Object,String> {
         apidata = new Gson().fromJson(data, Apidata.class);
 
         System.out.println("weather data call has started........");
-        MapActivity.weatherloaded=true;
-        System.out.println("here is the list of intermediate Points:");
+    //    MapActivity.weatherloaded=true;
+   //     System.out.println("here is the list of intermediate Points:");
         apiData=apidata;
         int c=-1;
         if(apidata!=null && apidata.getItems()!=null){
             for(final Item item:apidata.getItems()) {
                 c++;
-                System.out.println(new Gson().toJson(item));
-                loading.setVisibility(View.GONE);
-                loading_text.setVisibility(View.GONE);
-                slidingUpPanelLayout.setAlpha(1);
+   //             System.out.println(new Gson().toJson(item));
+   //             loading.setVisibility(View.GONE);
+   //             loading_text.setVisibility(View.GONE);
+   //             slidingUpPanelLayout.setAlpha(1);
                 //   googleMap.addMarker(new MarkerOptions().position(item.getPoint()));
                 final int finalC = c;
                 //Layout To Bitmap items............................................................................
@@ -158,10 +158,10 @@ public class WeatherApi extends AsyncTask<Object,Object,String> {
             link.setAdapter(new DragupListAdapter_weather(context, apidata.getSteps()));
             for(final MStep mStep:apidata.getSteps()) {
                 c++;
-                System.out.println(new Gson().toJson(mStep));
-                loading.setVisibility(View.GONE);
-                loading_text.setVisibility(View.GONE);
-                slidingUpPanelLayout.setAlpha(1);
+    //            System.out.println(new Gson().toJson(mStep));
+    //            loading.setVisibility(View.GONE);
+    //            loading_text.setVisibility(View.GONE);
+    //            slidingUpPanelLayout.setAlpha(1);
                 //   googleMap.addMarker(new MarkerOptions().position(item.getPoint()));
                 final int finalC = c;
 //Layout to Bitmap steps............................................................................
@@ -234,31 +234,31 @@ public class WeatherApi extends AsyncTask<Object,Object,String> {
             System.out.println("api data is null or api.getlist is null");
         }
 
-        if(routeloaded) {
-            new Handler().postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    //Do something after 100ms
-                    custom_dialog.setVisibility(View.GONE);
-                }
-            }, 1000);
-
-        }else{
-
-            custom_dialog.setVisibility(View.VISIBLE);
-            loading_text.setText("loading route...");
-        }
+//        if(routeloaded) {
+//            new Handler().postDelayed(new Runnable() {
+//                @Override
+//                public void run() {
+//                    //Do something after 100ms
+//                    custom_dialog.setVisibility(View.GONE);
+//                }
+//            }, 1000);
+//
+//        }else{
+//
+//     //       custom_dialog.setVisibility(View.VISIBLE);
+//     //       loading_text.setText("loading route...");
+//        }
 
         }catch (Exception e){
             e.printStackTrace();
-            custom_dialog.setVisibility(View.VISIBLE);
-            loading.setVisibility(View.GONE);
-            loading_text.setVisibility(View.VISIBLE);
-            if(data.equals("NoInternet")){
-                loading_text.setText("No Internet Connection.Please Check Your Internet Connection");
-            }else {
-                loading_text.setText("Error :" + e.toString());
-            }
+//            custom_dialog.setVisibility(View.VISIBLE);
+//            loading.setVisibility(View.GONE);
+//            loading_text.setVisibility(View.VISIBLE);
+//            if(data.equals("NoInternet")){
+//                loading_text.setText("No Internet Connection.Please Check Your Internet Connection");
+//            }else {
+//                loading_text.setText("Error :" + e.toString());
+//            }
         }
 
     }
@@ -279,8 +279,8 @@ public class WeatherApi extends AsyncTask<Object,Object,String> {
                 HttpPost request = new HttpPost(url);
 
                 Input input=new Input();
-                input.setOrigin(new LatLng(((float) origin.latitude), ((float) origin.longitude)));
-                input.setDestination(new LatLng(((float)destination.latitude),((float)destination.longitude)));
+                input.setOrigin(origin);
+                input.setDestination(destination);
                 input.setRoute(selectedroute);
                 input.setInterval(interval);
                 input.setTimeZone(timezone);

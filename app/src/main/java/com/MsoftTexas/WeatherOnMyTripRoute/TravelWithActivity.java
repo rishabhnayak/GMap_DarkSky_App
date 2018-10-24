@@ -21,10 +21,12 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
-import com.google.android.gms.maps.model.LatLng;
+
 import com.google.maps.model.DirectionsResult;
+import com.google.maps.model.LatLng;
 
 import java.util.Calendar;
+import java.util.TimeZone;
 
 
 public class TravelWithActivity extends AppCompatActivity {
@@ -44,7 +46,7 @@ public class TravelWithActivity extends AppCompatActivity {
     static LatLng origin = null;
     static LatLng destination = null;
     static Context context;
-
+    static String googleKey="AIzaSyCv_imK5ydtkdWnGJP1Dbt-DT07UdvyDeo";
     static int travelmode=0;
     static String restrictions="0";
 
@@ -273,8 +275,9 @@ public class TravelWithActivity extends AppCompatActivity {
                     @Override
                     public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
 
-                        departAt.setText(dayOfMonth + " " + month[monthOfYear] + " " + String.valueOf(year).substring(2));
+                        departAt.setText(dayOfMonth + " " + month[monthOfYear] + " " + String.valueOf(year).substring(2)+" "+timezone);
                         Calendar cal = Calendar.getInstance();
+                        cal.setTimeZone(TimeZone.getTimeZone(timezone));
                         cal.set(Calendar.DAY_OF_MONTH, dayOfMonth);
                         cal.set(Calendar.MONTH, monthOfYear);
                         cal.set(Calendar.YEAR, year);
@@ -310,7 +313,7 @@ public class TravelWithActivity extends AppCompatActivity {
                         String sHour = mHour < 10 ? "0" + mHour : "" + mHour;
                         String sMinute = mMinute < 10 ? "0" + mMinute : "" + mMinute;
                         String set_time = sHour + ":" + sMinute;
-                        departAt.setText(set_time + "," + departAt.getText());
+                        departAt.setText(set_time + "," + departAt.getText()+" "+timezone);
 
                         jstart_time_millis = (mHour * 60 + mMinute) * 60 * 1000;
 
