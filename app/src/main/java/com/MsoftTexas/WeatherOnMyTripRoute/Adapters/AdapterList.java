@@ -7,18 +7,16 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
+
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.MsoftTexas.WeatherOnMyTripRoute.MapActivity;
 import com.MsoftTexas.WeatherOnMyTripRoute.R;
 import com.MsoftTexas.WeatherOnMyTripRoute.TravelWithActivity;
-import com.MsoftTexas.WeatherOnMyTripRoute.WeatherApi;
+
 import com.google.maps.model.DirectionsResult;
 import com.google.maps.model.DirectionsRoute;
-
-import java.util.Arrays;
 
 
 /**
@@ -87,8 +85,6 @@ public class AdapterList extends RecyclerView.Adapter<AdapterList.AdapterAllHold
             distance=(TextView) itemView.findViewById(R.id.distance);
             icon=itemView.findViewById(R.id.icon);
         }
-
-
 
     }
 }

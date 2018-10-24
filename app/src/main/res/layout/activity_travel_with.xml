@@ -13,12 +13,13 @@
         android:layout_height="wrap_content">
         <android.support.v7.widget.CardView
             android:id="@+id/srcdstcard"
-            app:cardCornerRadius="10dp"
-            android:layout_margin="10dp"
+            app:cardCornerRadius="0dp"
+            android:layout_margin="0dp"
             app:cardElevation="4dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <RelativeLayout
+                android:layout_margin="3dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/fillform"
@@ -29,45 +30,80 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
-                    <TextView
-                        android:textSize="15sp"
-                        android:fontFamily="sans-serif-thin"
-                        android:layout_marginTop="10dp"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginRight="10dp"
-                        android:layout_marginBottom="5dp"
-                        android:background="@drawable/rect"
-                        android:visibility="visible"
-                        android:id="@+id/source"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_horizontal"
-                        android:hint="Starting Address"
-                        android:singleLine="true" />
 
                     <LinearLayout
-
-                        android:layout_marginRight="70dp"
-                        android:layout_marginLeft="10dp"
-                        android:background="@drawable/dottedline"
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp" />
-
-                    <TextView
-                        android:textSize="15sp"
-                        android:fontFamily="sans-serif-thin"
-                        android:layout_marginTop="5dp"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginRight="10dp"
-                        android:layout_marginBottom="10dp"
-                        android:background="@drawable/rect"
-                        android:visibility="visible"
-                        android:id="@+id/destination"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center_horizontal"
-                        android:hint="Destination"
-                        android:singleLine="true" />
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:layout_marginLeft="3dp"
+                            android:id="@+id/swap"
+                            android:layout_gravity="center_vertical"
+                            android:layout_width="35dp"
+                            android:layout_height="35dp"
+                            android:background="@drawable/ic_swap_vertical_circle_black_24dp" />
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="9"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/source"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_horizontal"
+                                android:layout_marginBottom="5dp"
+                                android:layout_marginLeft="10dp"
+                                android:layout_marginRight="10dp"
+                                android:layout_marginTop="10dp"
+                                android:background="@drawable/rect"
+                                android:fontFamily="sans-serif-thin"
+                                android:hint="Starting Address"
+                                android:singleLine="true"
+                                android:textSize="15sp"
+                                android:visibility="visible" />
+
+                            <LinearLayout
+
+                                android:layout_width="match_parent"
+                                android:layout_height="1dp"
+                                android:layout_marginLeft="10dp"
+                                android:layout_marginRight="10dp"
+                                android:background="@drawable/dottedline" />
+
+                            <TextView
+                                android:id="@+id/destination"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_horizontal"
+                                android:layout_marginBottom="10dp"
+                                android:layout_marginLeft="10dp"
+                                android:layout_marginRight="10dp"
+                                android:layout_marginTop="5dp"
+                                android:background="@drawable/rect"
+                                android:fontFamily="sans-serif-thin"
+                                android:hint="Destination"
+                                android:singleLine="true"
+                                android:textSize="15sp"
+                                android:visibility="visible" />
+                        </LinearLayout>
+                        <ImageView
+                            android:id="@+id/submit"
+                            android:layout_gravity="center_vertical"
+                            android:layout_width="35dp"
+                            android:layout_height="35dp"
+                            android:layout_marginRight="3dp"
+                            android:background="@drawable/ic_send_black_24dp" />
+                    </LinearLayout>
+
+
+
+
+
+
 
 
                     <LinearLayout
@@ -182,8 +218,17 @@
         android:orientation="horizontal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
-
+        <TextView
+            android:gravity="center_vertical"
+            android:id="@+id/option"
+            android:textColor="@color/colorPrimary"
+            android:textSize="13sp"
+            android:textAllCaps="true"
+            android:text="options"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
         <Button
+            android:visibility="gone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/mapact"/>
@@ -211,14 +256,7 @@
                         android:layout_margin="7dp"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent">
-                        <TextView
-                            android:id="@+id/option"
-                            android:textColor="@color/colorPrimary"
-                            android:textSize="13sp"
-                            android:textAllCaps="true"
-                            android:text="options"
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent" />
+
                     </LinearLayout>
                     <LinearLayout
                         android:orientation="vertical"
@@ -311,15 +349,7 @@
                     </LinearLayout>
                 </LinearLayout>
 
-                <ImageView
-                    android:id="@+id/submit"
-                    android:layout_width="35dp"
-                    android:layout_height="35dp"
-                    android:layout_alignParentEnd="true"
-                    android:layout_alignParentTop="true"
-                    android:layout_marginEnd="17dp"
-                    android:layout_marginTop="23dp"
-                    android:background="@drawable/ic_send_black_24dp" />
+
             </RelativeLayout>
 
         </android.support.v7.widget.CardView>
