@@ -5,10 +5,14 @@ import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
@@ -54,8 +58,12 @@ public class TravelWithActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_travel_with);
+        setContentView(R.layout.main_travel_with_activity);
         recyclerView = findViewById(R.id.recycler);
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
 
         tv_source = findViewById(R.id.source);
         tv_dstn = findViewById(R.id.destination);
@@ -241,7 +249,6 @@ public class TravelWithActivity extends AppCompatActivity {
 
 
 
-
     }
 
     public void requestDirection() {
@@ -318,5 +325,36 @@ public class TravelWithActivity extends AppCompatActivity {
                     }
                 }, mHour, mMinute, false);
         timePickerDialog.show();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.travel_with_menu, menu);
+        return true;
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        switch (item.getItemId()) {
+
+//            case R.id.action_retry:
+//                requestDirection();
+//                Toast.makeText(this, "Retrying...", Toast.LENGTH_SHORT).show();
+//                return true;
+            case R.id.Subscription:
+                Intent intent=new Intent(getApplicationContext(), Subscription.class);
+                startActivity(intent);
+
+                //               Toast.makeText(this, "Retrying...", Toast.LENGTH_SHORT).show();
+                return true;
+            case R.id.action_clr:
+                Toast.makeText(this, "clear", Toast.LENGTH_SHORT).show();
+                origin=null;
+                destination=null;
+                recreate();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 }

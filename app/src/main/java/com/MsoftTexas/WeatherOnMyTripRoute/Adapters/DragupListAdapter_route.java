@@ -43,7 +43,6 @@ public class DragupListAdapter_route extends RecyclerView.Adapter<DragupListAdap
        // Glide.with(holder.image.getContext()).load(passengerList.getLink()).into(holder.image);
 
 
-
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             holder.instr.setText(Html.fromHtml(mStep.htmlInstructions, Html.FROM_HTML_MODE_COMPACT));
         }else {
@@ -118,18 +117,13 @@ public class DragupListAdapter_route extends RecyclerView.Adapter<DragupListAdap
 
 
 
-        TextView instr,distance,arrtime,temp,weather,stepLength,address;
-        ImageView weatherimg;
+        TextView instr,stepLength;
+        ImageView directionImage;
         public PnrViewHolder(View itemView) {
             super(itemView);
             instr= (TextView) itemView.findViewById(R.id.desc);
-//            weather= (TextView) itemView.findViewById(R.id.weather);
-//            temp= (TextView) itemView.findViewById(R.id.temp);
-//            distance= (TextView) itemView.findViewById(R.id.distance);
-//            arrtime= (TextView) itemView.findViewById(R.id.arrtime);
-//            weatherimg=itemView.findViewById(R.id.weatherImg);
             stepLength=itemView.findViewById(R.id.stepLength);
-//            address=itemView.findViewById(R.id.address);
+            directionImage=itemView.findViewById(R.id.direction_image);
         }
     }
 }
