@@ -33,8 +33,9 @@ import java.io.InputStreamReader;
 
 import static com.MsoftTexas.WeatherOnMyTripRoute.MapActivity.apiData;
 import static com.MsoftTexas.WeatherOnMyTripRoute.MapActivity.context;
-import static com.MsoftTexas.WeatherOnMyTripRoute.MapActivity.custom_dialog;
+
 import static com.MsoftTexas.WeatherOnMyTripRoute.MapActivity.link;
+import static com.MsoftTexas.WeatherOnMyTripRoute.MapActivity.markersSteps;
 import static com.MsoftTexas.WeatherOnMyTripRoute.TravelWithActivity.destination;
 import static com.MsoftTexas.WeatherOnMyTripRoute.MapActivity.googleMap;
 import static com.MsoftTexas.WeatherOnMyTripRoute.MapActivity.interval;
@@ -46,7 +47,7 @@ import static com.MsoftTexas.WeatherOnMyTripRoute.MapActivity.markersInterm;
 
 import static com.MsoftTexas.WeatherOnMyTripRoute.TravelWithActivity.origin;
 import static com.MsoftTexas.WeatherOnMyTripRoute.TravelWithActivity.restrictions;
-import static com.MsoftTexas.WeatherOnMyTripRoute.MapActivity.routeloaded;
+
 import static com.MsoftTexas.WeatherOnMyTripRoute.TravelWithActivity.selectedroute;
 import static com.MsoftTexas.WeatherOnMyTripRoute.MapActivity.slidingUpPanelLayout;
 import static com.MsoftTexas.WeatherOnMyTripRoute.TravelWithActivity.timezone;
@@ -222,11 +223,11 @@ public class WeatherApi extends AsyncTask<Object,Object,String> {
                 BitmapDescriptor icon = new bitmapfromstring(mStep.getWlist().getIcon()).getIcon();
 
 
-//                Marker marker = googleMap.addMarker(new MarkerOptions()
-//                                            .icon(BitmapDescriptorFactory.fromBitmap(bitmap))
-//                                            .position(new LatLng(mStep.getStep().getStart_location().getLat(), mStep.getStep().getStart_location().getLng())));
-//                                    marker.setTag("S" + finalC);
-//                                    markersSteps.add(marker);
+                Marker marker = googleMap.addMarker(new MarkerOptions()
+                                            .icon(BitmapDescriptorFactory.fromBitmap(bitmap))
+                                            .position(new LatLng(mStep.getStep().startLocation.lat, mStep.getStep().startLocation.lng)));
+                                    marker.setTag("S" + finalC);
+                                    markersSteps.add(marker);
 
             }
 

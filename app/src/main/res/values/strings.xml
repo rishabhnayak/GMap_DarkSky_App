@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">WeatherOnMyTripRoute</string>
+    <string name="app_name">WeatherOnMyTrip</string>
     <string name="simple_direction">Simple Direction</string>
     <string name="transit_direction">Transit Direction</string>
     <string name="alternative_direction">Alternative Direction</string>

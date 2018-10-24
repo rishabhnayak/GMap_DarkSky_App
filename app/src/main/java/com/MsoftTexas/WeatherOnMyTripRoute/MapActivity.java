@@ -70,19 +70,17 @@ public class MapActivity extends AppCompatActivity implements
         {
 
     static Context context;
-    static RelativeLayout custom_dialog;
+
     public static final int MY_PERMISSIONS_REQUEST_LOCATION = 99;
-    static  LottieAnimationView loading;
-    static  List<PolylineOptions> polylineOptionsList;
+    static LottieAnimationView loading;
+    static List<PolylineOptions> polylineOptionsList;
     static List<Polyline> polylines=new ArrayList<>();
     static List<Marker> markersInterm = new ArrayList<>();
     static List<Marker> markersSteps = new ArrayList<>();
     static TextView loading_text;
-    static  int selectedroute=0;
-    static String timezone;
-    static int mYear,mMonth,mDay, mHour, mMinute;
+    static int selectedroute=0;
     static long interval=50000;
-    static Boolean weatherloaded=false, routeloaded=false;
+
  //   static TextView time;
  //   static CardView date_holder;
 //   static TextView departAt;
@@ -95,15 +93,13 @@ public class MapActivity extends AppCompatActivity implements
     static Apidata apiData=null;
     static GoogleMap googleMap;
     private String serverKey = "AIzaSyDi3B9R9hVpC9YTmOCCz_pCR1BKW3tIRGY";
-//    static DirectionsResult directionapi;
+
     static TextView distance, duration;
-    ImageView RequestDirection;
-//    static LatLng origin = null;
-//    static LatLng destination = null;
+
+
     protected GeoDataClient mGeoDataClientS, mGeoDataClientD;
     SharedPreferences sd;
- //   String[] month={"Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"};
- //   private FirebaseAnalytics mFirebaseAnalytics;
+
     static RecyclerView link;
     DragupListAdapter_route routeadapter;
     DragupListAdapter_weather adapter;
@@ -155,14 +151,7 @@ public class MapActivity extends AppCompatActivity implements
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         context=getApplicationContext();
-//        src =findViewById(R.id.autocomplete_source);
-//        dstn=findViewById(R.id.autocomplete_destination);
-//        go=findViewById(R.id.request_direction);
-        RequestDirection=findViewById(R.id.request_direction);
-//loading.................lottie
-        custom_dialog=findViewById(R.id.custom_dialog);
-        loading=findViewById(R.id.loading);
-        loading_text=findViewById(R.id.loading_text);
+
 
 
         //setting title null
@@ -194,87 +183,12 @@ public class MapActivity extends AppCompatActivity implements
         distance = findViewById(R.id.distance);
         duration = findViewById(R.id.duration);
 
-  //      time = findViewById(R.id.time);
-//        date_holder = findViewById(R.id.card_date);
-//        departAt=findViewById(R.id.date1);
-
 
         ((SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map)).getMapAsync(this);
 
         mGeoDataClientS = Places.getGeoDataClient(this, null);
         mGeoDataClientD = Places.getGeoDataClient(this, null);
 
-
-        // Retrieve the AutoCompleteTextView that will display Place suggestions.
-
-
-//        src.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Intent intent=new Intent(MapActivity.this,SearchPlace.class);
-//                  intent.putExtra("SrcOrDstn","Src");
-//                    startActivity(intent);
-//            }
-//        });
-//
-//        dstn.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Intent intent=new Intent(MapActivity.this,SearchPlace.class);
-//                intent.putExtra("SrcOrDstn","Dstn");
-//                startActivity(intent);
-//            }
-//        });
-//
-//        RequestDirection.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//             //   findViewById(R.id.option_list).setVisibility(View.GONE);
-//                requestDirection();
-//            }
-//        });
-
-//
-//        final Calendar c = Calendar.getInstance();
-//        timezone=c.getTimeZone().getID();
-//        mYear = c.get(Calendar.YEAR);
-//        mMonth = c.get(Calendar.MONTH);
-//        mDay = c.get(Calendar.DAY_OF_MONTH);
-//        mHour = c.get(Calendar.HOUR_OF_DAY);
-//        mMinute = c.get(Calendar.MINUTE);
-//        jstart_date_millis=c.getTimeInMillis()-((mHour*60+mMinute)*60*1000);
-//        jstart_time_millis=(mHour*60+mMinute)*60*1000;
-//
-//
-//        String sHour = mHour < 10 ? "0" + mHour : "" + mHour;
-//        String sMinute = mMinute < 10 ? "0" + mMinute : "" + mMinute;
-//        String curr_time = sHour + ":" + sMinute;
-// //       time.setText(curr_time);
-//        departAt.setText(curr_time+","+mDay+" "+month[mMonth]+" "+String.valueOf(mYear).substring(2));
-        
-//        Button clearButton = findViewById(R.id.button_clear);
-//        clearButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                recreate();
-//            }
-//        });
-//        date_holder.setOnClickListener(new View.OnClickListener() {
-//
-//            @Override
-//            public void onClick(View v) {
-//                datePicker();
-//
-//            }
-//        });
-//        time.setOnClickListener(new View.OnClickListener() {
-//
-//            @Override
-//            public void onClick(View v) {
-//                tiemPicker();
-//
-//            }
-//        });
 
         Log.d(TAG, "Creating IAB helper.");
         mHelper = new IabHelper(this, base64EncodedPublicKey);
@@ -319,42 +233,15 @@ public class MapActivity extends AppCompatActivity implements
             }
         });
 
-//        Switch weatherSwitch=findViewById(R.id.weather_switch);
-//        weatherSwitch.setChecked(false);
-//        flag=false;
-//        ((ImageView)(findViewById(R.id.weather_switch_icon))).setImageResource(R.drawable.weather_off);
-//        weatherSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-//            @Override
-//            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-//                if (b==true){
-//                    Toast.makeText(getApplicationContext(), "true", Toast.LENGTH_SHORT).show();
-//                    ((ImageView)(findViewById(R.id.weather_switch_icon))).setImageResource(R.drawable.weather_on);
-//                    flag=true;
-//                }else {
-//                    flag=false;
-//                    ((ImageView)(findViewById(R.id.weather_switch_icon))).setImageResource(R.drawable.weather_off);
-//                    Toast.makeText(getApplicationContext(), "false", Toast.LENGTH_SHORT).show();
-//                }
-//            }
-//        });
 
     }
 
     @Override
     public void onBackPressed() {
         finish();
-//        Intent intent = new Intent(Intent.ACTION_MAIN);
-//        intent.addCategory(Intent.CATEGORY_HOME);
-//        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-//        startActivity(intent);
-//        finish();
-//        System.exit(0);
-//        super.onBackPressed();
-
-
     }
 
-    @Override
+       @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main2, menu);
         return true;
@@ -429,7 +316,7 @@ public class MapActivity extends AppCompatActivity implements
             {
 
 
-             //   link.setAdapter(adapter);
+             // link.setAdapter(adapter);
                 int val=0;
                 for(int k=0;k<polylines.size();k++){
                     polylines.get(k).remove();

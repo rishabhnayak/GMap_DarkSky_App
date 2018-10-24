@@ -36,7 +36,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.MsoftTexas.WeatherOnMyTripRoute.TravelWithActivity.context;
-import static com.MsoftTexas.WeatherOnMyTripRoute.MapActivity.custom_dialog;
+
 import static com.MsoftTexas.WeatherOnMyTripRoute.TravelWithActivity.destination;
 import static com.MsoftTexas.WeatherOnMyTripRoute.MapActivity.googleMap;
 import static com.MsoftTexas.WeatherOnMyTripRoute.TravelWithActivity.googleKey;
@@ -52,7 +52,7 @@ import static com.MsoftTexas.WeatherOnMyTripRoute.MapActivity.restrictions;
 import static com.MsoftTexas.WeatherOnMyTripRoute.MapActivity.slidingUpPanelLayout;
 import static com.MsoftTexas.WeatherOnMyTripRoute.TravelWithActivity.recyclerView;
 import static com.MsoftTexas.WeatherOnMyTripRoute.TravelWithActivity.travelmode;
-import static com.MsoftTexas.WeatherOnMyTripRoute.MapActivity.weatherloaded;
+
 
 /**
  * Created by kamlesh on 29-03-2018.

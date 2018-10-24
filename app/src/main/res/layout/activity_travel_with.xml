@@ -61,7 +61,7 @@
                                 android:layout_marginTop="10dp"
                                 android:background="@drawable/rect"
                                 android:fontFamily="sans-serif-thin"
-                                android:hint="Starting Address"
+                                android:hint="Choose starting point"
                                 android:singleLine="true"
                                 android:textSize="15sp"
                                 android:visibility="visible" />
@@ -85,7 +85,7 @@
                                 android:layout_marginTop="5dp"
                                 android:background="@drawable/rect"
                                 android:fontFamily="sans-serif-thin"
-                                android:hint="Destination"
+                                android:hint="Choose destination…"
                                 android:singleLine="true"
                                 android:textSize="15sp"
                                 android:visibility="visible" />
@@ -406,14 +406,6 @@
                             <!--/>-->
                     </RadioGroup>
                 </android.support.v7.widget.CardView>
-<LinearLayout
-    android:orientation="horizontal"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content">
-
-
-
-</LinearLayout>
 
 
 
