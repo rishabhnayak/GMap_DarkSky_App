@@ -41,6 +41,76 @@ public class DragupListAdapter_route extends RecyclerView.Adapter<DragupListAdap
     public void onBindViewHolder(PnrViewHolder holder, int position) {
         DirectionsStep mStep =route.legs[0].steps[position];
        // Glide.with(holder.image.getContext()).load(passengerList.getLink()).into(holder.image);
+try {
+    String maneuvers=mStep.maneuver;
+
+    switch (maneuvers){
+        case "turn-sharp-left":
+//                holder.directionImage.setImageResource(R.id);
+            holder.directionImage.setImageResource(R.drawable.turn_sharp_left);
+            break;
+        case "uturn-right":
+            holder.directionImage.setImageResource(R.drawable.utern_right);
+            break;
+        case "turn-slight-right":
+            holder.directionImage.setImageResource(R.drawable.uturn_slight_right);
+            break;
+        case "merge":
+            holder.directionImage.setImageResource(R.drawable.merge);
+            break;
+        case "roundabout-left":
+            holder.directionImage.setImageResource(R.drawable.rounded_about_left);
+            break;
+        case "roundabout-right":
+            holder.directionImage.setImageResource(R.drawable.rounded_about_right);
+            break;
+        case "uturn-left":
+            holder.directionImage.setImageResource(R.drawable.uturn_left);
+            break;
+        case "turn-slight-left":
+            holder.directionImage.setImageResource(R.drawable.utern_right);
+            break;
+        case "turn-left":
+            holder.directionImage.setImageResource(R.drawable.turn_left);
+            break;
+        case "ramp-right":
+            holder.directionImage.setImageResource(R.drawable.ramp_right);
+            break;
+        case "turn-right":
+            holder.directionImage.setImageResource(R.drawable.turn_right);
+            break;
+        case "fork-right":
+            holder.directionImage.setImageResource(R.drawable.fork_right);
+            break;
+        case "straight":
+            holder.directionImage.setImageResource(R.drawable.straight);
+            break;
+        case "fork-left":
+            holder.directionImage.setImageResource(R.drawable.fork_left);
+            break;
+        case "ferry-train":
+            holder.directionImage.setImageResource(R.drawable.ferry_train);
+            break;
+        case "turn-sharp-right":
+            holder.directionImage.setImageResource(R.drawable.turn_sharp_right);
+            break;
+        case "ramp-left":
+            holder.directionImage.setImageResource(R.drawable.ramp_left);
+            break;
+        case "ferry":
+            holder.directionImage.setImageResource(R.drawable.ferry);
+            break;
+            case "keep-left":
+                holder.directionImage.setImageResource(R.drawable.keep_left);
+                break;
+            case "keep-right":
+                holder.directionImage.setImageResource(R.drawable.keep_right);
+                break;
+        default:
+    }
+}catch (Exception e){
+
+}
 
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
