@@ -47,9 +47,8 @@ import static com.MsoftTexas.WeatherOnMyTripRoute.MapActivity.loading_text;
 import static com.MsoftTexas.WeatherOnMyTripRoute.TravelWithActivity.origin;
 import static com.MsoftTexas.WeatherOnMyTripRoute.MapActivity.polylineOptionsList;
 import static com.MsoftTexas.WeatherOnMyTripRoute.MapActivity.polylines;
-import static com.MsoftTexas.WeatherOnMyTripRoute.MapActivity.restrictions;
-//import static com.MsoftTexas.WeatherOnMyTripRoute.MapActivity.setCameraWithCoordinationBounds;
-import static com.MsoftTexas.WeatherOnMyTripRoute.MapActivity.slidingUpPanelLayout;
+import static com.MsoftTexas.WeatherOnMyTripRoute.TravelWithActivity.restrictions;
+
 import static com.MsoftTexas.WeatherOnMyTripRoute.TravelWithActivity.recyclerView;
 import static com.MsoftTexas.WeatherOnMyTripRoute.TravelWithActivity.travelmode;
 
@@ -82,7 +81,7 @@ public class RouteApi extends AsyncTask<Object,Object,DirectionsResult> {
 
         recyclerView.setAdapter(adapterList);
 
-        System.out.println("code run");
+//        System.out.println("code run");
 
 //            DirectionsRoute route = apidata.routes[0];
 //

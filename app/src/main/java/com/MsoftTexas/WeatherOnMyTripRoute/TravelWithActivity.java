@@ -34,7 +34,7 @@ import java.util.TimeZone;
 
 
 public class TravelWithActivity extends AppCompatActivity {
-    RadioGroup radioGroup;
+ //   RadioGroup radioGroup;
     boolean flag;
     String selectedText = "one", selectedUnit = "automatic";
     static   RecyclerView recyclerView;
@@ -72,70 +72,83 @@ public class TravelWithActivity extends AppCompatActivity {
  //       requestDirection = findViewById(R.id.submit);
         go=findViewById(R.id.submit);
         //Custom radio button...............................................................................
-        radioGroup = findViewById(R.id.test_radio);
-        radioGroup.check(R.id._1);
+//        radioGroup = findViewById(R.id.test_radio);
+//        radioGroup.check(R.id._1);
         context=getApplicationContext();
         ((ImageView) (findViewById(R.id.a))).setImageResource(R.drawable.car_on);
 
         ((ImageView) (findViewById(R.id.c))).setImageResource(R.drawable.walk_off);
         ((ImageView) (findViewById(R.id.d))).setImageResource(R.drawable.bike_off);
 
-        radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(RadioGroup radioGroup, int i) {
-                int selectedId = radioGroup.getCheckedRadioButtonId();
-                selectedText = ((RadioButton) (findViewById(selectedId))).getText().toString();
-                System.out.println(selectedText);
-                switch (selectedText) {
-                    case "one":
-                        ((ImageView) (findViewById(R.id.a))).setImageResource(R.drawable.car_on);
-                        ((ImageView) (findViewById(R.id.c))).setImageResource(R.drawable.walk_off);
-                        ((ImageView) (findViewById(R.id.d))).setImageResource(R.drawable.bike_off);
-                        break;
-                    case "two":
-                        ((ImageView) (findViewById(R.id.a))).setImageResource(R.drawable.car_off);
-                        ((ImageView) (findViewById(R.id.c))).setImageResource(R.drawable.walk_off);
-                        ((ImageView) (findViewById(R.id.d))).setImageResource(R.drawable.bike_off);
-                        break;
-                    case "three":
-                        ((ImageView) (findViewById(R.id.a))).setImageResource(R.drawable.car_off);
-                        ((ImageView) (findViewById(R.id.c))).setImageResource(R.drawable.walk_on);
-                        ((ImageView) (findViewById(R.id.d))).setImageResource(R.drawable.bike_off);
-                        break;
-                    case "four":
-                        ((ImageView) (findViewById(R.id.a))).setImageResource(R.drawable.car_off);
-                        ((ImageView) (findViewById(R.id.c))).setImageResource(R.drawable.walk_off);
-                        ((ImageView) (findViewById(R.id.d))).setImageResource(R.drawable.bike_on);
-
-                        break;
-                    case "five":
-                        ((ImageView) (findViewById(R.id.a))).setImageResource(R.drawable.car_off);
-                        ((ImageView) (findViewById(R.id.c))).setImageResource(R.drawable.walk_off);
-                        ((ImageView) (findViewById(R.id.d))).setImageResource(R.drawable.bike_off);
-                        break;
-                    default:
-
-                }
-
-            }
-        });
+//        radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+//
+//
+//            @Override
+//            public void onCheckedChanged(RadioGroup radioGroup, int i) {
+//                int selectedId = radioGroup.getCheckedRadioButtonId();
+//                selectedText = ((RadioButton) (findViewById(selectedId))).getText().toString();
+//                System.out.println(selectedText);
+//                System.out.println(selectedId);
+//                switch (selectedText) {
+//                    case "one":
+//                        ((ImageView) (findViewById(R.id.a))).setImageResource(R.drawable.car_on);
+//                        ((ImageView) (findViewById(R.id.c))).setImageResource(R.drawable.walk_off);
+//                        ((ImageView) (findViewById(R.id.d))).setImageResource(R.drawable.bike_off);
+//                        travelmode=0;
+//                        break;
+//
+//
+//                    case "four":
+//                        ((ImageView) (findViewById(R.id.a))).setImageResource(R.drawable.car_off);
+//                        ((ImageView) (findViewById(R.id.c))).setImageResource(R.drawable.walk_off);
+//                        ((ImageView) (findViewById(R.id.d))).setImageResource(R.drawable.bike_on);
+//                         travelmode=1;
+//                        break;
+//                    case "three":
+//                        ((ImageView) (findViewById(R.id.a))).setImageResource(R.drawable.car_off);
+//                        ((ImageView) (findViewById(R.id.c))).setImageResource(R.drawable.walk_on);
+//                        ((ImageView) (findViewById(R.id.d))).setImageResource(R.drawable.bike_off);
+//                        travelmode=2;
+//                        break;
+//                    default:
+//
+//                }
+//
+//            }
+//        });
         findViewById(R.id.a).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                radioGroup.check(R.id._1);
+              //  radioGroup.check(R.id._1);
+                ((ImageView) (findViewById(R.id.a))).setImageResource(R.drawable.car_on);
+                ((ImageView) (findViewById(R.id.c))).setImageResource(R.drawable.walk_off);
+                ((ImageView) (findViewById(R.id.d))).setImageResource(R.drawable.bike_off);
+                travelmode=0;
+                System.out.println("travelmode :"+travelmode);
             }
         });
 
         findViewById(R.id.c).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                radioGroup.check(R.id._3);
+             //   radioGroup.check(R.id._3);
+                ((ImageView) (findViewById(R.id.a))).setImageResource(R.drawable.car_off);
+                ((ImageView) (findViewById(R.id.c))).setImageResource(R.drawable.walk_on);
+                ((ImageView) (findViewById(R.id.d))).setImageResource(R.drawable.bike_off);
+                travelmode=2;
+                System.out.println("travelmode :"+travelmode);
             }
         });
         findViewById(R.id.d).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                radioGroup.check(R.id._4);
+             //   radioGroup.check(R.id._4);
+
+                ((ImageView) (findViewById(R.id.a))).setImageResource(R.drawable.car_off);
+                ((ImageView) (findViewById(R.id.c))).setImageResource(R.drawable.walk_off);
+                ((ImageView) (findViewById(R.id.d))).setImageResource(R.drawable.bike_on);
+                travelmode=1;
+                System.out.println("travelmode :"+travelmode);
             }
         });
 

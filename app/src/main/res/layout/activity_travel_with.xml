@@ -363,49 +363,49 @@
                 android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
-                <android.support.v7.widget.CardView
-                    android:visibility="gone"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-                    <RadioGroup
+                <!--<android.support.v7.widget.CardView-->
+                    <!--android:visibility="gone"-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="wrap_content">-->
+                    <!--<RadioGroup-->
 
-                        android:id="@+id/test_radio"
-                        android:gravity="center"
-                        android:orientation="horizontal"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-                        <RadioButton
-                            android:id="@+id/_1"
-                            android:text="one"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            />
+                        <!--android:id="@+id/test_radio"-->
+                        <!--android:gravity="center"-->
+                        <!--android:orientation="horizontal"-->
+                        <!--android:layout_width="match_parent"-->
+                        <!--android:layout_height="wrap_content">-->
                         <!--<RadioButton-->
-                            <!--android:text="two"-->
-                            <!--android:id="@+id/_2"-->
+                            <!--android:id="@+id/_1"-->
+                            <!--android:text="one"-->
                             <!--android:layout_width="wrap_content"-->
                             <!--android:layout_height="wrap_content"-->
                             <!--/>-->
-                        <RadioButton
-                            android:text="three"
-                            android:id="@+id/_3"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            />
-                        <RadioButton
-                            android:text="four"
-                            android:id="@+id/_4"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            />
+                        <!--&lt;!&ndash;<RadioButton&ndash;&gt;-->
+                            <!--&lt;!&ndash;android:text="two"&ndash;&gt;-->
+                            <!--&lt;!&ndash;android:id="@+id/_2"&ndash;&gt;-->
+                            <!--&lt;!&ndash;android:layout_width="wrap_content"&ndash;&gt;-->
+                            <!--&lt;!&ndash;android:layout_height="wrap_content"&ndash;&gt;-->
+                            <!--&lt;!&ndash;/>&ndash;&gt;-->
                         <!--<RadioButton-->
-                            <!--android:text="five"-->
-                            <!--android:id="@+id/_5"-->
+                            <!--android:text="three"-->
+                            <!--android:id="@+id/_3"-->
                             <!--android:layout_width="wrap_content"-->
                             <!--android:layout_height="wrap_content"-->
                             <!--/>-->
-                    </RadioGroup>
-                </android.support.v7.widget.CardView>
+                        <!--<RadioButton-->
+                            <!--android:text="four"-->
+                            <!--android:id="@+id/_4"-->
+                            <!--android:layout_width="wrap_content"-->
+                            <!--android:layout_height="wrap_content"-->
+                            <!--/>-->
+                        <!--&lt;!&ndash;<RadioButton&ndash;&gt;-->
+                            <!--&lt;!&ndash;android:text="five"&ndash;&gt;-->
+                            <!--&lt;!&ndash;android:id="@+id/_5"&ndash;&gt;-->
+                            <!--&lt;!&ndash;android:layout_width="wrap_content"&ndash;&gt;-->
+                            <!--&lt;!&ndash;android:layout_height="wrap_content"&ndash;&gt;-->
+                            <!--&lt;!&ndash;/>&ndash;&gt;-->
+                    <!--</RadioGroup>-->
+                <!--</android.support.v7.widget.CardView>-->
 
 
 
