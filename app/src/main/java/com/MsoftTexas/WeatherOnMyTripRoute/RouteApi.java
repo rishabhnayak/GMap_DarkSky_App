@@ -7,6 +7,7 @@ import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
+import android.widget.Toast;
 
 
 import com.MsoftTexas.WeatherOnMyTripRoute.Adapters.AdapterList;
@@ -81,14 +82,18 @@ public class RouteApi extends AsyncTask<Object,Object,DirectionsResult> {
 //            MapActivity.routeloaded = true;
 
             //      System.out.println("direction data : "+new Gson().toJson(apidata));
+        if(apidata.routes !=null || apidata.routes.length>0) {
             TravelWithActivity.directionapi = apidata;
-        LinearLayoutManager manager = new LinearLayoutManager(context);
-        recyclerView.setLayoutManager(manager);
-        recyclerView.setHasFixedSize(true);
+            LinearLayoutManager manager = new LinearLayoutManager(context);
+            recyclerView.setLayoutManager(manager);
+            recyclerView.setHasFixedSize(true);
 
-        AdapterList adapterList=new AdapterList(TravelWithActivity.context,apidata);
+            AdapterList adapterList = new AdapterList(TravelWithActivity.context, apidata);
 
-        recyclerView.setAdapter(adapterList);
+            recyclerView.setAdapter(adapterList);
+        }else{
+            Toast.makeText(context,"No Routes Available",Toast.LENGTH_SHORT).show();
+        }
 
 //        System.out.println("code run");
 

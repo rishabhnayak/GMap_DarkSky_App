@@ -36,6 +36,7 @@ import java.util.TimeZone;
 public class TravelWithActivity extends AppCompatActivity {
  //   RadioGroup radioGroup;
 
+    int tempYear,tempMonth,tempDay;
     public static int  DistanceUnit = 0;
     static   RecyclerView recyclerView;
     static TextView departAt;
@@ -82,6 +83,24 @@ public class TravelWithActivity extends AppCompatActivity {
         ((ImageView) (findViewById(R.id.c))).setImageResource(R.drawable.walk_off);
         ((ImageView) (findViewById(R.id.d))).setImageResource(R.drawable.bike_off);
 
+
+        findViewById(R.id.swap).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                LatLng temp=origin;
+                origin=destination;
+                destination=temp;
+
+               new TimezoneOfOrigin(Calendar.getInstance().getTimeInMillis(),origin).execute();
+               String srctemp=tv_source.getText().toString();
+               tv_source.setText(tv_dstn.getText());
+               tv_dstn.setText(srctemp);
+
+               directionapi=null;
+               recyclerView.setAdapter(null);
+
+            }
+        });
 //        radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
 //
 //
@@ -322,6 +341,9 @@ public class TravelWithActivity extends AppCompatActivity {
                         cal.set(Calendar.YEAR, year);
                         cal.set(Calendar.HOUR_OF_DAY, 0);
                         cal.set(Calendar.MINUTE, 0);
+                        tempDay=dayOfMonth;
+                        tempMonth=monthOfYear;
+                        tempYear=year;
 
                         jstart_date_millis = cal.getTimeInMillis();
 
@@ -352,13 +374,14 @@ public class TravelWithActivity extends AppCompatActivity {
                         String sHour = mHour < 10 ? "0" + mHour : "" + mHour;
                         String sMinute = mMinute < 10 ? "0" + mMinute : "" + mMinute;
                         String set_time = sHour + ":" + sMinute;
-                        departAt.setText(set_time + "," + departAt.getText()+" "+timezone);
+
+                        departAt.setText(set_time + "," +tempDay + " " + month[tempMonth] + " " + String.valueOf(tempYear).substring(2)+" "+timezone);
 
                         jstart_time_millis = (mHour * 60 + mMinute) * 60 * 1000;
 
 
                     }
-                }, mHour, mMinute, false);
+                }, mHour, mMinute, true);
         timePickerDialog.show();
     }
 
@@ -372,10 +395,12 @@ public class TravelWithActivity extends AppCompatActivity {
 
         switch (item.getItemId()) {
 
-//            case R.id.action_retry:
-//                requestDirection();
-//                Toast.makeText(this, "Retrying...", Toast.LENGTH_SHORT).show();
-//                return true;
+            case R.id.action_retry:
+                directionapi=null;
+                recyclerView.setAdapter(null);
+                requestDirection();
+                Toast.makeText(this, "Retrying...", Toast.LENGTH_SHORT).show();
+                return true;
             case R.id.Subscription:
                 Intent intent=new Intent(getApplicationContext(), Subscription.class);
                 startActivity(intent);
@@ -386,7 +411,13 @@ public class TravelWithActivity extends AppCompatActivity {
                 Toast.makeText(this, "clear", Toast.LENGTH_SHORT).show();
                 origin=null;
                 destination=null;
+                HIGHWAYS=false;
+                TOLLS=false;
+                FERRIES=false;
                 recreate();
+
+
+
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
