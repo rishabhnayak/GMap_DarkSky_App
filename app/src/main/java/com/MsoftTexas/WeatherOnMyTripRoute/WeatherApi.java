@@ -36,6 +36,10 @@ import static com.MsoftTexas.WeatherOnMyTripRoute.MapActivity.context;
 
 import static com.MsoftTexas.WeatherOnMyTripRoute.MapActivity.link;
 import static com.MsoftTexas.WeatherOnMyTripRoute.MapActivity.markersSteps;
+import static com.MsoftTexas.WeatherOnMyTripRoute.TravelWithActivity.DistanceUnit;
+import static com.MsoftTexas.WeatherOnMyTripRoute.TravelWithActivity.FERRIES;
+import static com.MsoftTexas.WeatherOnMyTripRoute.TravelWithActivity.HIGHWAYS;
+import static com.MsoftTexas.WeatherOnMyTripRoute.TravelWithActivity.TOLLS;
 import static com.MsoftTexas.WeatherOnMyTripRoute.TravelWithActivity.destination;
 import static com.MsoftTexas.WeatherOnMyTripRoute.MapActivity.googleMap;
 import static com.MsoftTexas.WeatherOnMyTripRoute.MapActivity.interval;
@@ -286,8 +290,13 @@ public class WeatherApi extends AsyncTask<Object,Object,String> {
                 input.setInterval(interval);
                 input.setTimeZone(timezone);
                 input.setTime(jstart_date_millis+jstart_time_millis);
-                input.setRestrictions(restrictions);
                 input.setTravelmode(travelmode);
+                input.setDistanceUnit(DistanceUnit);
+
+                if(HIGHWAYS)restrictions+="1";
+                if(TOLLS)restrictions+="2";
+                if(FERRIES)restrictions+="3";
+                input.setRestrictions(restrictions);
 
 
                 String json =new Gson().toJson(input);

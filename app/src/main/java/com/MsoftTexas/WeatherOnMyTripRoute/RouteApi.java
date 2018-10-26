@@ -21,20 +21,28 @@ import com.google.maps.android.PolyUtil;
 import com.google.maps.model.DirectionsResult;
 import com.google.maps.model.DirectionsRoute;
 import com.google.maps.model.TravelMode;
+import com.google.maps.model.Unit;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.joda.time.DateTime;
+import org.joda.time.DateTimeZone;
 
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import java.sql.Time;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.TimeZone;
 
+import static com.MsoftTexas.WeatherOnMyTripRoute.TravelWithActivity.DistanceUnit;
+import static com.MsoftTexas.WeatherOnMyTripRoute.TravelWithActivity.FERRIES;
+import static com.MsoftTexas.WeatherOnMyTripRoute.TravelWithActivity.HIGHWAYS;
+import static com.MsoftTexas.WeatherOnMyTripRoute.TravelWithActivity.TOLLS;
 import static com.MsoftTexas.WeatherOnMyTripRoute.TravelWithActivity.context;
 
 import static com.MsoftTexas.WeatherOnMyTripRoute.TravelWithActivity.destination;
@@ -50,6 +58,7 @@ import static com.MsoftTexas.WeatherOnMyTripRoute.MapActivity.polylines;
 import static com.MsoftTexas.WeatherOnMyTripRoute.TravelWithActivity.restrictions;
 
 import static com.MsoftTexas.WeatherOnMyTripRoute.TravelWithActivity.recyclerView;
+import static com.MsoftTexas.WeatherOnMyTripRoute.TravelWithActivity.timezone;
 import static com.MsoftTexas.WeatherOnMyTripRoute.TravelWithActivity.travelmode;
 
 
@@ -181,6 +190,13 @@ public class RouteApi extends AsyncTask<Object,Object,DirectionsResult> {
                 apiRequest.alternatives(true);
 
 
+              switch (DistanceUnit){
+                  case 0:break;
+                  case 1:apiRequest.units(Unit.IMPERIAL);break;
+                  case 2:apiRequest.units(Unit.METRIC);break;
+                  default:
+              }
+
                 switch (travelmode){
                     case 0 :apiRequest.mode(TravelMode.DRIVING);
                         break;
@@ -190,29 +206,27 @@ public class RouteApi extends AsyncTask<Object,Object,DirectionsResult> {
                         break;
                 }
 
-                for (String restriction:restrictions.split("")) {
-                    try {
-                        switch (Integer.parseInt(restrictions)) {
-                            case 0: break;
-                            case 1:
-                                apiRequest.avoid(DirectionsApi.RouteRestriction.HIGHWAYS);
-                                break;
-                            case 2:
-                                apiRequest.avoid(DirectionsApi.RouteRestriction.TOLLS);
-                                break;
-                            case 3:
-                                apiRequest.avoid(DirectionsApi.RouteRestriction.FERRIES);
-                                break;
 
-                        }
-                    }catch (Exception e){
-                        e.printStackTrace();
-                    }
-                }
+                List<DirectionsApi.RouteRestriction> restrictions=new ArrayList<>();
+                if(HIGHWAYS) restrictions.add(DirectionsApi.RouteRestriction.HIGHWAYS);
+
+                if(TOLLS) restrictions.add(DirectionsApi.RouteRestriction.TOLLS);
+
+                if(FERRIES)restrictions.add(DirectionsApi.RouteRestriction.FERRIES);
+
+
+                apiRequest.avoid(restrictions.toArray(new DirectionsApi.RouteRestriction[restrictions.size()]));
+
+
                 long time=jstart_date_millis+jstart_time_millis;
 
+                DateTime t= new DateTime(time, DateTimeZone.forTimeZone(TimeZone.getTimeZone(timezone)));
+                System.out.println(t.toDateTime());
 
-                apiRequest.departureTime(new DateTime(time));
+
+                apiRequest.departureTime(t);
+
+
                 return apiRequest.await();
 
 

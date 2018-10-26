@@ -17,6 +17,8 @@ import com.bumptech.glide.Glide;
 
 import java.util.List;
 
+import static com.MsoftTexas.WeatherOnMyTripRoute.TravelWithActivity.DistanceUnit;
+
 
 /**
  * Created by RAJA on 18-12-2017.
@@ -56,12 +58,21 @@ public class DragupListAdapter_weather extends RecyclerView.Adapter<DragupListAd
 //        holder.distance.setText("Traveled : "+mStep.getAft_distance()/(long)1000+" km");
 //        holder.arrtime.setText("Start time:"+mStep.getArrtime());
         try {
-            holder.distance.setText(String.format("%.2f", (float) mStep.getAft_distance() / (float) 1000 * (0.621371)) + " miles");
+
+
+
             holder.arrtime.setText(mStep.getArrtime());
             holder.weather.setText(mStep.getWlist().getSummary());
             holder.temp.setText(mStep.getWlist().getTemperature() + "°F");
-            holder.stepLength.setText(String.format("%.2f", (float) mStep.getStep().distance.inMeters / (float) 1000 * (0.621371)) + " miles");
-         //   StorageReference storageRef = storage.getReference(mStep.getWlist().getIcon()+".png");
+
+            if(DistanceUnit ==2) {
+                holder.distance.setText(String.format("%.2f", (float) mStep.getAft_distance() / (float) 1000 ) + " km");
+                holder.stepLength.setText(String.format("%.2f", (float) mStep.getStep().distance.inMeters / (float) 1000 ) + " km");
+            }else{
+                holder.distance.setText(String.format("%.2f", (float) mStep.getAft_distance() / (float) 1000 * (0.621371)) + " mi");
+                holder.stepLength.setText(String.format("%.2f", (float) mStep.getStep().distance.inMeters / (float) 1000 * (0.621371)) + " mi");
+            }
+            //   StorageReference storageRef = storage.getReference(mStep.getWlist().getIcon()+".png");
             Drawable icon = context.getResources().getDrawable( R.drawable.clear_day );
 
 

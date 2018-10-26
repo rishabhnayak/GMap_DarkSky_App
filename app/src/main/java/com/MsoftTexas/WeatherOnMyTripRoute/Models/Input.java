@@ -30,6 +30,11 @@ public class Input {
     @SerializedName("travelmode")
     @Expose
     private Integer travelmode;
+
+    @SerializedName("DistanceUnit")
+    @Expose
+    private Integer DistanceUnit;
+
     @SerializedName("restrictions")
     @Expose
     private String restrictions;
@@ -102,4 +107,11 @@ public class Input {
         this.restrictions = restrictions;
     }
 
+    public Integer getDistanceUnit() {
+        return DistanceUnit;
+    }
+
+    public void setDistanceUnit(Integer distanceUnit) {
+        DistanceUnit = distanceUnit;
+    }
 }

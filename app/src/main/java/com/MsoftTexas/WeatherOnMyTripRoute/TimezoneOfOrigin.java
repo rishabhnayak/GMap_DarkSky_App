@@ -42,6 +42,8 @@ public class TimezoneOfOrigin extends AsyncTask<String,String,String> {
 
     @Override
     protected void onPostExecute(String timezone) {
+
+
         TravelWithActivity.timezone= timezone;
         final Calendar c = Calendar.getInstance();
         c.setTimeZone(TimeZone.getTimeZone(timezone));
@@ -69,6 +71,7 @@ public class TimezoneOfOrigin extends AsyncTask<String,String,String> {
                 .build();
 
         try {
+
 
             return TimeZoneApi.getTimeZone(context, startpoint).await().getID();
 

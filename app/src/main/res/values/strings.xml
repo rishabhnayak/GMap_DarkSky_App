@@ -12,7 +12,7 @@
     <string name="wait">wait…</string>
     <string name="LicenseKey">MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAnh6LDOmwwPSQ8KesBlRQ/LrN/75xUFQhVmvfJG6uUlmgxU4iWiMzwr1iydveIz3cNT2C1IdnBpohHuDhn9RlOn5uaR3Cw0BDGrnRzwHZRPdoJ3/tAWIS+cLD/5LU7sriMOi6spMaPTYjgrT/Lck36goPwY88FK+e2G09cFrd54WQBPwHO+COKlKOFQ7Yt9yiCLlwivhdSDbacuVGg696JjAeTBvnw0eqks7Q/FHg2U0TlhBf/RU2+tvCnR2L0hk1kgkkdZFua8aDrZ1xQkEkBzlrrHrGnmqCyVoPHwMcxoOKM61BX511NMRuBJv9Eg19n4QITqT/fsR7vzmnljjxLQIDAQAB</string>
     <string name="googleAPIkey">AIzaSyCv_imK5ydtkdWnGJP1Dbt-DT07UdvyDeo</string>
-
+    <string name="FasttestRoute">Fastest route, despite the usual traffic</string>
 
     <string name="subscription_period_prompt">Select your subscription period</string>
     <string name="subscription_resignup_prompt">To reactivate your subscription, select your subscription period</string>

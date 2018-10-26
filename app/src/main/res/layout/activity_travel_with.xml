@@ -227,11 +227,7 @@
             android:text="options"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
-        <Button
-            android:visibility="gone"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/mapact"/>
+
         <!--<Switch-->
 
             <!--android:textSize="13sp"-->
@@ -324,6 +320,7 @@
                                         android:padding="10dp"
                                         android:id="@+id/automatic"
                                         android:text="automatic"
+                                        android:tag="0"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         />
@@ -331,6 +328,7 @@
                                         android:padding="10dp"
                                         android:text="miles"
                                         android:id="@+id/miles"
+                                        android:tag="1"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         />
@@ -338,6 +336,7 @@
                                         android:padding="10dp"
                                         android:text="km"
                                         android:id="@+id/km"
+                                        android:tag="2"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         />

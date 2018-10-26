@@ -34,7 +34,7 @@ public class AdapterList extends RecyclerView.Adapter<AdapterList.AdapterAllHold
     @Override
     public AdapterAllHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         LayoutInflater inflater=LayoutInflater.from(parent.getContext());
-        View view=inflater.inflate(R.layout.list_view_row_item,parent,false);
+        View view=inflater.inflate(R.layout.listview_item_travelwithactivity,parent,false);
         return new AdapterAllHolder(view);
     }
 
@@ -57,8 +57,18 @@ public class AdapterList extends RecyclerView.Adapter<AdapterList.AdapterAllHold
         System.out.println("AdapterList,on bind view ");
         holder.route.setText(route.summary);
         holder.distance.setText(route.legs[0].distance.humanReadable);
-        holder.time.setText(route.legs[0].duration.humanReadable);
+        holder.time.setText(route.legs[0].durationInTraffic!=null?route.legs[0].durationInTraffic.humanReadable:
+        route.legs[0].duration.humanReadable);
+        if(position==0)
+        holder.route_detail.setText(R.string.FasttestRoute);
 
+        switch (route.legs[0].steps[0].travelMode.toString()) {
+
+            case "driving": holder.icon.setImageResource(R.drawable.car_on);break;
+            case "bicycling": holder.icon.setImageResource(R.drawable.bike_on);break;
+            case "walking": holder.icon.setImageResource(R.drawable.walk_on);break;
+            default:holder.icon.setImageResource(R.drawable.car_on);
+        }
 
 
     }

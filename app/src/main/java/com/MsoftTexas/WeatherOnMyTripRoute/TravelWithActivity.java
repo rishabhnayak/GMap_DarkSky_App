@@ -35,8 +35,8 @@ import java.util.TimeZone;
 
 public class TravelWithActivity extends AppCompatActivity {
  //   RadioGroup radioGroup;
-    boolean flag;
-    String selectedText = "one", selectedUnit = "automatic";
+
+    public static int  DistanceUnit = 0;
     static   RecyclerView recyclerView;
     static TextView departAt;
     static int mYear, mMonth, mDay, mHour, mMinute;
@@ -53,7 +53,9 @@ public class TravelWithActivity extends AppCompatActivity {
     static String googleKey="AIzaSyCv_imK5ydtkdWnGJP1Dbt-DT07UdvyDeo";
     static int travelmode=0;
     static String restrictions="0";
-
+    static boolean HIGHWAYS=false;
+    static boolean TOLLS=false;
+    static boolean FERRIES=false;
     static DirectionsResult directionapi;
     static public int selectedroute=0;
 
@@ -170,24 +172,41 @@ public class TravelWithActivity extends AppCompatActivity {
             @Override
             public void onCheckedChanged(RadioGroup radioGroup, int i) {
                 int selectedId = radioGroup.getCheckedRadioButtonId();
-                selectedUnit = ((RadioButton) (findViewById(selectedId))).getText().toString();
-                System.out.println(selectedUnit);
+                DistanceUnit = Integer.parseInt(findViewById(selectedId).getTag().toString());
+                System.out.println(DistanceUnit);
+
             }
         });
 
-        boolean highway = ((CheckBox) findViewById(R.id.highway)).isChecked();
-        boolean tolls = ((CheckBox) findViewById(R.id.tolls)).isChecked();
-        boolean ferries = ((CheckBox) findViewById(R.id.ferries)).isChecked();
+
+
+        ((CheckBox) findViewById(R.id.highway))
+                .setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                    @Override
+                    public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
+                        HIGHWAYS=isChecked;
+                    }
+                });
+        ((CheckBox) findViewById(R.id.tolls))
+                .setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                    @Override
+                    public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
+                        TOLLS=isChecked;
+                    }
+                });
+
+        ((CheckBox) findViewById(R.id.ferries))
+                .setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                    @Override
+                    public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
+                        FERRIES=isChecked;
+                    }
+                });
 
 //        Switch weatherSwitch=findViewById(R.id.weather_switch);
 //        weatherSwitch.setChecked(false);
 
-        findViewById(R.id.mapact).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(TravelWithActivity.this, MapActivity.class));
-            }
-        });
+
 
 //        flag=false;
 //        ((ImageView)(findViewById(R.id.weather_switch_icon))).setImageResource(R.drawable.weather_off);

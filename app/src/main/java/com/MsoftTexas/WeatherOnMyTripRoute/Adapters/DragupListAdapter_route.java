@@ -122,7 +122,7 @@ try {
 //        holder.distance.setText("Traveled : "+mStep.getAft_distance()/(long)1000+" km");
 //        holder.arrtime.setText("Start time:"+mStep.getArrtime());
         try {
-            String dist= String.format("%.2f", (float) mStep.distance.inMeters / (float) 1000 * (0.621371)) + " miles";
+            String dist= mStep.distance.humanReadable;
             holder.stepLength.setText(dist);
       //      holder.arrtime.setText(mStep.getArrtime());
       //      holder.weather.setText(mStep.getWlist().getSummary());

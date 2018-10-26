@@ -57,6 +57,7 @@ import io.trialy.library.TrialyCallback;
 import static com.MsoftTexas.WeatherOnMyTripRoute.TravelWithActivity.destination;
 import static com.MsoftTexas.WeatherOnMyTripRoute.TravelWithActivity.directionapi;
 import static com.MsoftTexas.WeatherOnMyTripRoute.TravelWithActivity.origin;
+import static com.MsoftTexas.WeatherOnMyTripRoute.TravelWithActivity.selectedroute;
 import static io.trialy.library.Constants.STATUS_TRIAL_JUST_ENDED;
 import static io.trialy.library.Constants.STATUS_TRIAL_JUST_STARTED;
 import static io.trialy.library.Constants.STATUS_TRIAL_NOT_YET_STARTED;
@@ -78,7 +79,7 @@ public class MapActivity extends AppCompatActivity implements
     static List<Marker> markersInterm = new ArrayList<>();
     static List<Marker> markersSteps = new ArrayList<>();
     static TextView loading_text;
-    static int selectedroute=0;
+//    static int selectedroute=0;
     static long interval=50000;
 
  //   static TextView time;

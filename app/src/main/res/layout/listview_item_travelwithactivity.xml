@@ -26,7 +26,7 @@
                     android:id="@+id/icon"
                     android:layout_margin="5dp"
                     android:layout_gravity="top"
-                    android:src="@drawable/train_off"
+                    android:src="@drawable/car_on"
                     android:layout_width="40dp"
                     android:layout_height="40dp" />
             </LinearLayout>
@@ -52,7 +52,7 @@
                     android:id="@+id/route_detail"
                     android:fontFamily="sans-serif-thin"
                     android:textSize="15sp"
-                    android:text="Fastest route, despite the usual traffic"
+                    android:text=""
                     android:layout_weight="4"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
