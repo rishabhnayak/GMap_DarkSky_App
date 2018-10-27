@@ -1,6 +1,8 @@
 package com.MsoftTexas.WeatherOnMyTripRoute;
 
 import android.app.DatePickerDialog;
+import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -61,8 +63,8 @@ public class TravelWithActivity extends AppCompatActivity {
    
     static Context context;
 
-   
-   
+    static ProgressDialog progress;
+
  
 
 
@@ -75,6 +77,7 @@ public class TravelWithActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        progress=new ProgressDialog(this);
 
         tv_source = findViewById(R.id.source);
         tv_dstn = findViewById(R.id.destination);

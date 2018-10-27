@@ -1,5 +1,6 @@
 package com.MsoftTexas.WeatherOnMyTripRoute;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.net.ConnectivityManager;
@@ -36,6 +37,7 @@ import static com.MsoftTexas.WeatherOnMyTripRoute.MapActivity.context;
 
 import static com.MsoftTexas.WeatherOnMyTripRoute.MapActivity.link;
 import static com.MsoftTexas.WeatherOnMyTripRoute.MapActivity.markersSteps;
+import static com.MsoftTexas.WeatherOnMyTripRoute.MapActivity.progressDialog;
 import static com.MsoftTexas.WeatherOnMyTripRoute.TravelWithActivity.DistanceUnit;
 import static com.MsoftTexas.WeatherOnMyTripRoute.TravelWithActivity.FERRIES;
 import static com.MsoftTexas.WeatherOnMyTripRoute.TravelWithActivity.HIGHWAYS;
@@ -52,6 +54,7 @@ import static com.MsoftTexas.WeatherOnMyTripRoute.MapActivity.markersInterm;
 import static com.MsoftTexas.WeatherOnMyTripRoute.TravelWithActivity.origin;
 
 
+import static com.MsoftTexas.WeatherOnMyTripRoute.TravelWithActivity.progress;
 import static com.MsoftTexas.WeatherOnMyTripRoute.TravelWithActivity.selectedroute;
 import static com.MsoftTexas.WeatherOnMyTripRoute.MapActivity.slidingUpPanelLayout;
 import static com.MsoftTexas.WeatherOnMyTripRoute.TravelWithActivity.timezone;
@@ -65,11 +68,15 @@ public class WeatherApi extends AsyncTask<Object,Object,String> {
 
     @Override
     protected void onPreExecute() {
-
+        progressDialog.setTitle("Loading Weather Data...");
+        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        progressDialog.setIndeterminate(true);
+        progressDialog.show();
     }
 
     @Override
     protected void onPostExecute(String data) {
+        progressDialog.dismiss();
         try {
         Apidata apidata=null;
 

@@ -1,6 +1,7 @@
 package com.MsoftTexas.WeatherOnMyTripRoute;
 
 
+import android.app.ProgressDialog;
 import android.os.AsyncTask;
 
 import com.google.maps.GeoApiContext;
@@ -16,6 +17,7 @@ import static com.MsoftTexas.WeatherOnMyTripRoute.TravelWithActivity.mMinute;
 import static com.MsoftTexas.WeatherOnMyTripRoute.TravelWithActivity.mMonth;
 import static com.MsoftTexas.WeatherOnMyTripRoute.TravelWithActivity.mYear;
 import static com.MsoftTexas.WeatherOnMyTripRoute.TravelWithActivity.month;
+import static com.MsoftTexas.WeatherOnMyTripRoute.TravelWithActivity.progress;
 
 
 public class TimezoneOfOrigin extends AsyncTask<String,String,String> {
@@ -39,11 +41,18 @@ public class TimezoneOfOrigin extends AsyncTask<String,String,String> {
         this.starttime=starttime;
     }
 
+    @Override
+    protected void onPreExecute() {
+        progress.setTitle("Fetching Timezone");
+        progress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        progress.setIndeterminate(true);
+        progress.show();
+    }
 
     @Override
     protected void onPostExecute(String timezone) {
 
-
+        progress.dismiss();
         TravelWithActivity.timezone= timezone;
         final Calendar c = Calendar.getInstance();
         c.setTimeZone(TimeZone.getTimeZone(timezone));

@@ -1,5 +1,6 @@
 package com.MsoftTexas.WeatherOnMyTripRoute;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
@@ -16,6 +17,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -81,6 +83,7 @@ public class MapActivity extends AppCompatActivity implements
 //    static int selectedroute=0;
     static long interval=50000;
 
+    static ProgressDialog progressDialog;
  //   static TextView time;
  //   static CardView date_holder;
 //   static TextView departAt;
@@ -140,6 +143,7 @@ public class MapActivity extends AppCompatActivity implements
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main2);
 
+        progressDialog=new ProgressDialog(this);
         mTrialy = new Trialy(this, TRIALY_APP_KEY);
         mTrialy.checkTrial(TRIALY_SKU, mTrialyCallback);
  //       mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);

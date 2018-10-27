@@ -1,12 +1,14 @@
 package com.MsoftTexas.WeatherOnMyTripRoute;
 
 import android.accounts.NetworkErrorException;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 
@@ -56,6 +58,7 @@ import static com.MsoftTexas.WeatherOnMyTripRoute.MapActivity.loading_text;
 import static com.MsoftTexas.WeatherOnMyTripRoute.TravelWithActivity.origin;
 
 
+import static com.MsoftTexas.WeatherOnMyTripRoute.TravelWithActivity.progress;
 import static com.MsoftTexas.WeatherOnMyTripRoute.TravelWithActivity.recyclerView;
 import static com.MsoftTexas.WeatherOnMyTripRoute.TravelWithActivity.timezone;
 import static com.MsoftTexas.WeatherOnMyTripRoute.TravelWithActivity.travelmode;
@@ -70,6 +73,11 @@ public class RouteApi extends AsyncTask<Object,Object,DirectionsResult> {
     @Override
     protected void onPreExecute() {
 
+
+        progress.setTitle("Loading Routes...");
+        progress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        progress.setIndeterminate(true);
+        progress.show();
     }
 
     @Override
@@ -80,7 +88,9 @@ public class RouteApi extends AsyncTask<Object,Object,DirectionsResult> {
 //            MapActivity.routeloaded = true;
 
             //      System.out.println("direction data : "+new Gson().toJson(apidata));
+        progress.dismiss();
         if(apidata.routes !=null && apidata.routes.length>0) {
+
             TravelWithActivity.directionapi = apidata;
             LinearLayoutManager manager = new LinearLayoutManager(context);
             recyclerView.setLayoutManager(manager);
