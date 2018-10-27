@@ -50,7 +50,7 @@ import static com.MsoftTexas.WeatherOnMyTripRoute.MapActivity.loading_text;
 import static com.MsoftTexas.WeatherOnMyTripRoute.MapActivity.markersInterm;
 
 import static com.MsoftTexas.WeatherOnMyTripRoute.TravelWithActivity.origin;
-import static com.MsoftTexas.WeatherOnMyTripRoute.TravelWithActivity.restrictions;
+
 
 import static com.MsoftTexas.WeatherOnMyTripRoute.TravelWithActivity.selectedroute;
 import static com.MsoftTexas.WeatherOnMyTripRoute.MapActivity.slidingUpPanelLayout;
@@ -293,6 +293,7 @@ public class WeatherApi extends AsyncTask<Object,Object,String> {
                 input.setTravelmode(travelmode);
                 input.setDistanceUnit(DistanceUnit);
 
+                String restrictions="0";
                 if(HIGHWAYS)restrictions+="1";
                 if(TOLLS)restrictions+="2";
                 if(FERRIES)restrictions+="3";

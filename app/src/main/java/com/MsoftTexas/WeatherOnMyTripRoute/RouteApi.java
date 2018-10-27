@@ -37,6 +37,7 @@ import java.io.InputStreamReader;
 import java.sql.Time;
 import java.time.Instant;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.util.TimeZone;
 
@@ -47,16 +48,13 @@ import static com.MsoftTexas.WeatherOnMyTripRoute.TravelWithActivity.TOLLS;
 import static com.MsoftTexas.WeatherOnMyTripRoute.TravelWithActivity.context;
 
 import static com.MsoftTexas.WeatherOnMyTripRoute.TravelWithActivity.destination;
-import static com.MsoftTexas.WeatherOnMyTripRoute.MapActivity.googleMap;
-import static com.MsoftTexas.WeatherOnMyTripRoute.TravelWithActivity.googleKey;
+
 import static com.MsoftTexas.WeatherOnMyTripRoute.TravelWithActivity.jstart_date_millis;
 import static com.MsoftTexas.WeatherOnMyTripRoute.TravelWithActivity.jstart_time_millis;
 import static com.MsoftTexas.WeatherOnMyTripRoute.MapActivity.loading;
 import static com.MsoftTexas.WeatherOnMyTripRoute.MapActivity.loading_text;
 import static com.MsoftTexas.WeatherOnMyTripRoute.TravelWithActivity.origin;
-import static com.MsoftTexas.WeatherOnMyTripRoute.MapActivity.polylineOptionsList;
-import static com.MsoftTexas.WeatherOnMyTripRoute.MapActivity.polylines;
-import static com.MsoftTexas.WeatherOnMyTripRoute.TravelWithActivity.restrictions;
+
 
 import static com.MsoftTexas.WeatherOnMyTripRoute.TravelWithActivity.recyclerView;
 import static com.MsoftTexas.WeatherOnMyTripRoute.TravelWithActivity.timezone;
@@ -82,7 +80,7 @@ public class RouteApi extends AsyncTask<Object,Object,DirectionsResult> {
 //            MapActivity.routeloaded = true;
 
             //      System.out.println("direction data : "+new Gson().toJson(apidata));
-        if(apidata.routes !=null || apidata.routes.length>0) {
+        if(apidata.routes !=null && apidata.routes.length>0) {
             TravelWithActivity.directionapi = apidata;
             LinearLayoutManager manager = new LinearLayoutManager(context);
             recyclerView.setLayoutManager(manager);
@@ -186,7 +184,7 @@ public class RouteApi extends AsyncTask<Object,Object,DirectionsResult> {
 
             if (netInfo != null && netInfo.isConnected()) {
 
-                GeoApiContext context = new GeoApiContext.Builder().apiKey(googleKey)
+                GeoApiContext context = new GeoApiContext.Builder().apiKey(TravelWithActivity.googleAPIkey)
                         .build();
 
                 final DirectionsApiRequest apiRequest = DirectionsApi.newRequest(context);
@@ -229,6 +227,7 @@ public class RouteApi extends AsyncTask<Object,Object,DirectionsResult> {
                 System.out.println(t.toDateTime());
 
 
+                if(t.getMillis()>Calendar.getInstance().getTimeInMillis())
                 apiRequest.departureTime(t);
 
 

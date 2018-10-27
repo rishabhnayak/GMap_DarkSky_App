@@ -16,7 +16,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -244,7 +243,7 @@ public class MapActivity extends AppCompatActivity implements
 
        @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.main2, menu);
+        getMenuInflater().inflate(R.menu.mapactivity_menu, menu);
         return true;
     }
 
@@ -277,16 +276,15 @@ public class MapActivity extends AppCompatActivity implements
 //                requestDirection();
 //                Toast.makeText(this, "Retrying...", Toast.LENGTH_SHORT).show();
 //                return true;
-            case R.id.Subscription:
-                Intent intent=new Intent(MapActivity.this, Subscription.class);
-                startActivity(intent);
+//            case R.id.Subscription:
+//                Intent intent=new Intent(MapActivity.this, Subscription.class);
+//                startActivity(intent);
 
  //               Toast.makeText(this, "Retrying...", Toast.LENGTH_SHORT).show();
-                return true;
+ //               return true;
             case R.id.action_clr:
                 Toast.makeText(this, "clear", Toast.LENGTH_SHORT).show();
-                origin=null;
-                destination=null;
+
                 recreate();
                 return true;
                 default:

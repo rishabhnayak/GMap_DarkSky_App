@@ -38,27 +38,33 @@ public class TravelWithActivity extends AppCompatActivity {
 
     int tempYear,tempMonth,tempDay;
     public static int  DistanceUnit = 0;
-    static   RecyclerView recyclerView;
-    static TextView departAt;
+    static DirectionsResult directionapi;
+    static public int selectedroute=0;
     static int mYear, mMonth, mDay, mHour, mMinute;
-    static long jstart_date_millis, jstart_time_millis;
-    static String[] month = {"Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"};
-    static CardView date_holder;
-    ImageView requestDirection;
-    static String timezone;
-    static TextView tv_source, tv_dstn;
-    static ImageView go;
-    static LatLng origin = null;
-    static LatLng destination = null;
-    static Context context;
-    static String googleKey="AIzaSyCv_imK5ydtkdWnGJP1Dbt-DT07UdvyDeo";
     static int travelmode=0;
-    static String restrictions="0";
     static boolean HIGHWAYS=false;
     static boolean TOLLS=false;
     static boolean FERRIES=false;
-    static DirectionsResult directionapi;
-    static public int selectedroute=0;
+    static long jstart_date_millis, jstart_time_millis;
+    static String timezone;
+    static LatLng origin = null;
+    static LatLng destination = null;
+
+    static String googleAPIkey="AIzaSyCv_imK5ydtkdWnGJP1Dbt-DT07UdvyDeo";
+    static String[] month = {"Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"};
+    static RecyclerView recyclerView;
+    static TextView departAt;
+    static CardView date_holder;
+    
+    static TextView tv_source, tv_dstn;
+    static ImageView go;
+   
+    static Context context;
+
+   
+   
+ 
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,56 +93,24 @@ public class TravelWithActivity extends AppCompatActivity {
         findViewById(R.id.swap).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                LatLng temp=origin;
-                origin=destination;
-                destination=temp;
 
-               new TimezoneOfOrigin(Calendar.getInstance().getTimeInMillis(),origin).execute();
-               String srctemp=tv_source.getText().toString();
-               tv_source.setText(tv_dstn.getText());
-               tv_dstn.setText(srctemp);
+                if(origin!=null && destination!=null) {
+                    resetresult();
+                    LatLng temp = origin;
+                    origin = destination;
+                    destination = temp;
 
-               directionapi=null;
-               recyclerView.setAdapter(null);
+                    new TimezoneOfOrigin(Calendar.getInstance().getTimeInMillis(), origin).execute();
+                    String srctemp = tv_source.getText().toString();
+                    tv_source.setText(tv_dstn.getText());
+                    tv_dstn.setText(srctemp);
 
+                }else{
+                    Toast.makeText(context,"start or end Address is null",Toast.LENGTH_LONG).show();
+                }
             }
         });
-//        radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-//
-//
-//            @Override
-//            public void onCheckedChanged(RadioGroup radioGroup, int i) {
-//                int selectedId = radioGroup.getCheckedRadioButtonId();
-//                selectedText = ((RadioButton) (findViewById(selectedId))).getText().toString();
-//                System.out.println(selectedText);
-//                System.out.println(selectedId);
-//                switch (selectedText) {
-//                    case "one":
-//                        ((ImageView) (findViewById(R.id.a))).setImageResource(R.drawable.car_on);
-//                        ((ImageView) (findViewById(R.id.c))).setImageResource(R.drawable.walk_off);
-//                        ((ImageView) (findViewById(R.id.d))).setImageResource(R.drawable.bike_off);
-//                        travelmode=0;
-//                        break;
-//
-//
-//                    case "four":
-//                        ((ImageView) (findViewById(R.id.a))).setImageResource(R.drawable.car_off);
-//                        ((ImageView) (findViewById(R.id.c))).setImageResource(R.drawable.walk_off);
-//                        ((ImageView) (findViewById(R.id.d))).setImageResource(R.drawable.bike_on);
-//                         travelmode=1;
-//                        break;
-//                    case "three":
-//                        ((ImageView) (findViewById(R.id.a))).setImageResource(R.drawable.car_off);
-//                        ((ImageView) (findViewById(R.id.c))).setImageResource(R.drawable.walk_on);
-//                        ((ImageView) (findViewById(R.id.d))).setImageResource(R.drawable.bike_off);
-//                        travelmode=2;
-//                        break;
-//                    default:
-//
-//                }
-//
-//            }
-//        });
+
         findViewById(R.id.a).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -145,6 +119,7 @@ public class TravelWithActivity extends AppCompatActivity {
                 ((ImageView) (findViewById(R.id.c))).setImageResource(R.drawable.walk_off);
                 ((ImageView) (findViewById(R.id.d))).setImageResource(R.drawable.bike_off);
                 travelmode=0;
+                resetresult();
                 System.out.println("travelmode :"+travelmode);
             }
         });
@@ -157,6 +132,7 @@ public class TravelWithActivity extends AppCompatActivity {
                 ((ImageView) (findViewById(R.id.c))).setImageResource(R.drawable.walk_on);
                 ((ImageView) (findViewById(R.id.d))).setImageResource(R.drawable.bike_off);
                 travelmode=2;
+                resetresult();
                 System.out.println("travelmode :"+travelmode);
             }
         });
@@ -169,6 +145,7 @@ public class TravelWithActivity extends AppCompatActivity {
                 ((ImageView) (findViewById(R.id.c))).setImageResource(R.drawable.walk_off);
                 ((ImageView) (findViewById(R.id.d))).setImageResource(R.drawable.bike_on);
                 travelmode=1;
+                resetresult();
                 System.out.println("travelmode :"+travelmode);
             }
         });
@@ -193,7 +170,7 @@ public class TravelWithActivity extends AppCompatActivity {
                 int selectedId = radioGroup.getCheckedRadioButtonId();
                 DistanceUnit = Integer.parseInt(findViewById(selectedId).getTag().toString());
                 System.out.println(DistanceUnit);
-
+                resetresult();
             }
         });
 
@@ -204,6 +181,7 @@ public class TravelWithActivity extends AppCompatActivity {
                     @Override
                     public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
                         HIGHWAYS=isChecked;
+                        resetresult();
                     }
                 });
         ((CheckBox) findViewById(R.id.tolls))
@@ -211,6 +189,7 @@ public class TravelWithActivity extends AppCompatActivity {
                     @Override
                     public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
                         TOLLS=isChecked;
+                        resetresult();
                     }
                 });
 
@@ -219,30 +198,11 @@ public class TravelWithActivity extends AppCompatActivity {
                     @Override
                     public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
                         FERRIES=isChecked;
+                        resetresult();
                     }
                 });
 
-//        Switch weatherSwitch=findViewById(R.id.weather_switch);
-//        weatherSwitch.setChecked(false);
 
-
-
-//        flag=false;
-//        ((ImageView)(findViewById(R.id.weather_switch_icon))).setImageResource(R.drawable.weather_off);
-//        weatherSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-//            @Override
-//            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-//                if (b==true){
-//                    Toast.makeText(getApplicationContext(), "true", Toast.LENGTH_SHORT).show();
-//                    ((ImageView)(findViewById(R.id.weather_switch_icon))).setImageResource(R.drawable.weather_on);
-//                    flag=true;
-//                }else {
-//                    flag=false;
-//                    ((ImageView)(findViewById(R.id.weather_switch_icon))).setImageResource(R.drawable.weather_off);
-//                    Toast.makeText(getApplicationContext(), "false", Toast.LENGTH_SHORT).show();
-//                }
-//            }
-//        });
 
         date_holder = findViewById(R.id.card_date);
         departAt = findViewById(R.id.date1);
@@ -351,6 +311,7 @@ public class TravelWithActivity extends AppCompatActivity {
 
                         //*************Call Time Picker Here ********************
 
+                        resetresult();
                     }
                 }, mYear, mMonth, mDay);
 
@@ -378,6 +339,7 @@ public class TravelWithActivity extends AppCompatActivity {
                         departAt.setText(set_time + "," +tempDay + " " + month[tempMonth] + " " + String.valueOf(tempYear).substring(2)+" "+timezone);
 
                         jstart_time_millis = (mHour * 60 + mMinute) * 60 * 1000;
+
 
 
                     }
@@ -409,18 +371,26 @@ public class TravelWithActivity extends AppCompatActivity {
                 return true;
             case R.id.action_clr:
                 Toast.makeText(this, "clear", Toast.LENGTH_SHORT).show();
-                origin=null;
-                destination=null;
-                HIGHWAYS=false;
-                TOLLS=false;
-                FERRIES=false;
-                recreate();
 
+                   directionapi=null;
+                   selectedroute=0;
+                   DistanceUnit = 0;
+                   travelmode=0;
+                   HIGHWAYS=false;TOLLS=false;FERRIES=false;
+                   origin = null;destination = null;
+                  
+                  finish();
+                  startActivity(getIntent());
 
-
-                return true;
+                  return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
     }
+
+
+    static void resetresult(){
+        directionapi=null;
+        recyclerView.setAdapter(null);
+    };
 }

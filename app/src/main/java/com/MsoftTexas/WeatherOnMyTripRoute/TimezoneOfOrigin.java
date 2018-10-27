@@ -67,13 +67,13 @@ public class TimezoneOfOrigin extends AsyncTask<String,String,String> {
     @Override
     protected String doInBackground(String... strings) {
 
-        GeoApiContext context = new GeoApiContext.Builder().apiKey(TravelWithActivity.googleKey)
+        GeoApiContext context = new GeoApiContext.Builder().apiKey(TravelWithActivity.googleAPIkey)
                 .build();
 
         try {
 
 
-            return TimeZoneApi.getTimeZone(context, startpoint).await().getID();
+              return TimeZoneApi.getTimeZone(context, startpoint).await().getID();
 
         } catch (Exception e) {
             e.printStackTrace();
