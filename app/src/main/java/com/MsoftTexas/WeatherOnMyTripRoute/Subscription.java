@@ -232,7 +232,7 @@ public class Subscription extends AppCompatActivity implements IabBroadcastRecei
             @Override
             public void onClick(View v) {
                 // back button pressed
-                startActivity(new Intent(Subscription.this,MapActivity.class));
+                startActivity(new Intent(Subscription.this,TravelWithActivity.class));
                 finish();
             }
         });
