@@ -1,5 +1,6 @@
 package com.MsoftTexas.WeatherOnMyTripRoute;
 
+import android.accounts.NetworkErrorException;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -8,6 +9,7 @@ import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Handler;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -23,14 +25,20 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.gson.Gson;
 
-import org.apache.http.HttpResponse;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.entity.StringEntity;
-import org.apache.http.impl.client.DefaultHttpClient;
+//import org.apache.http.HttpResponse;
+//import org.apache.http.client.HttpClient;
+//import org.apache.http.client.methods.HttpPost;
+//import org.apache.http.entity.StringEntity;
+//import org.apache.http.impl.client.DefaultHttpClient;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 import static com.MsoftTexas.WeatherOnMyTripRoute.MapActivity.apiData;
 import static com.MsoftTexas.WeatherOnMyTripRoute.MapActivity.context;
@@ -64,23 +72,24 @@ import static com.MsoftTexas.WeatherOnMyTripRoute.TravelWithActivity.travelmode;
  * Created by kamlesh on 29-03-2018.
  */
 
-public class WeatherApi extends AsyncTask<Object,Object,String> {
+public class WeatherApi extends AsyncTask<Object,Object,Apidata> {
 
     @Override
     protected void onPreExecute() {
         progressDialog.setTitle("Loading Weather Data...");
         progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         progressDialog.setIndeterminate(true);
+        progressDialog.getWindow().addFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL);
         progressDialog.show();
     }
 
     @Override
-    protected void onPostExecute(String data) {
+    protected void onPostExecute(Apidata apidata) {
         progressDialog.dismiss();
         try {
-        Apidata apidata=null;
+//        Apidata apidata=null;
 
-        apidata = new Gson().fromJson(data, Apidata.class);
+//        apidata = new Gson().fromJson(data, Apidata.class);
 
         System.out.println("weather data call has started........");
     //    MapActivity.weatherloaded=true;
@@ -276,19 +285,12 @@ public class WeatherApi extends AsyncTask<Object,Object,String> {
     }
 
     @Override
-    protected String doInBackground(Object[] objects) {
+    protected Apidata doInBackground(Object[] objects) {
         try {
             ConnectivityManager mgr = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
             NetworkInfo netInfo = mgr.getActiveNetworkInfo();
 
             if (netInfo != null && netInfo.isConnected()) {
-            HttpClient client = new DefaultHttpClient();
-            HttpResponse response = null;
-
-            BufferedReader rd=null;
-                String url="https://4svktzsdok.execute-api.ap-south-1.amazonaws.com/dev";
-              //  String url="https://dgaprckvs3.execute-api.ap-south-1.amazonaws.com/dev";
-                HttpPost request = new HttpPost(url);
 
                 Input input=new Input();
                 input.setOrigin(origin);
@@ -306,25 +308,84 @@ public class WeatherApi extends AsyncTask<Object,Object,String> {
                 if(FERRIES)restrictions+="3";
                 input.setRestrictions(restrictions);
 
-
-                String json =new Gson().toJson(input);
-                System.out.println("hre is json :\n"+json);
-                StringEntity entity = new StringEntity(json);
-                request.setEntity(entity);
-                request.setHeader("Accept", "application/json");
-                request.setHeader("Content-type", "application/json");
+                Retrofit retrofit = new Retrofit.Builder()
+                        .baseUrl("https://4svktzsdok.execute-api.ap-south-1.amazonaws.com/")
+                        .addConverterFactory(GsonConverterFactory.create())
+                        .build();
 
 
-            response = client.execute(request);
-            rd = new BufferedReader(new InputStreamReader(response.getEntity().getContent()));
-            String line="";
-            StringBuilder sb=new StringBuilder();
-            while ((line=rd.readLine())!=null){
-                sb.append(line);
-            }
-            return sb.toString();
+
+                ApiInterface apiService = retrofit.create(ApiInterface.class);
+                Call<Apidata> call = apiService.inputCall(input);
+                return call.execute().body();
+
+
+
+
+//                ApiInterface taskService = retrofit.create(ApiInterface.class);
+//                Call<Apidata> call1 = taskService.inputCall(input);
+//                Apidata data23 = call.execute().body();
+//                call.enqueue(new Callback<Apidata>() {
+//
+//                    @Override
+//                    public void onResponse(Call<Apidata> call, Response<Apidata> response) {
+//                        data[0] =response.body();
+//                        System.out.println(response.body());
+//
+//                    }
+//
+//                    @Override
+//                    public void onFailure(Call<Apidata> call, Throwable throwable) {
+//                        System.out.println(throwable.getMessage());
+//                    }
+//                });
+//
+//                return data[0];
+
+
+//            HttpClient client = new DefaultHttpClient();
+//            HttpResponse response = null;
+//
+//            BufferedReader rd=null;
+//                String url="https://4svktzsdok.execute-api.ap-south-1.amazonaws.com/dev";
+//              //  String url="https://dgaprckvs3.execute-api.ap-south-1.amazonaws.com/dev";
+//                HttpPost request = new HttpPost(url);
+//
+//                Input input=new Input();
+//                input.setOrigin(origin);
+//                input.setDestination(destination);
+//                input.setRoute(selectedroute);
+//                input.setInterval(interval);
+//                input.setTimeZone(timezone);
+//                input.setTime(jstart_date_millis+jstart_time_millis);
+//                input.setTravelmode(travelmode);
+//                input.setDistanceUnit(DistanceUnit);
+//
+//                String restrictions="0";
+//                if(HIGHWAYS)restrictions+="1";
+//                if(TOLLS)restrictions+="2";
+//                if(FERRIES)restrictions+="3";
+//                input.setRestrictions(restrictions);
+//
+//
+//                String json =new Gson().toJson(input);
+//                System.out.println("hre is json :\n"+json);
+//                StringEntity entity = new StringEntity(json);
+//                request.setEntity(entity);
+//                request.setHeader("Accept", "application/json");
+//                request.setHeader("Content-type", "application/json");
+//
+//
+//            response = client.execute(request);
+//            rd = new BufferedReader(new InputStreamReader(response.getEntity().getContent()));
+//            String line="";
+//            StringBuilder sb=new StringBuilder();
+//            while ((line=rd.readLine())!=null){
+//                sb.append(line);
+//            }
+//            return sb.toString();
             }else{
-                return "NoInternet";
+                throw new NetworkErrorException();
             }
 
         } catch (Exception e) {

@@ -49,6 +49,7 @@ public class AdapterList extends RecyclerView.Adapter<AdapterList.AdapterAllHold
 //                System.out.println(route.summary);
                 Intent intent=new Intent(context,MapActivity.class);
                 TravelWithActivity.selectedroute=position;
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 context.startActivity(intent);
 
             }
