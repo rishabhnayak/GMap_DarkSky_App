@@ -35,10 +35,10 @@ import io.trialy.library.TrialyCallback;
 
 
 import static android.view.View.GONE;
-import static com.MsoftTexas.WeatherOnMyTripRoute.MapActivity.TRIALY_APP_KEY;
-import static com.MsoftTexas.WeatherOnMyTripRoute.MapActivity.TRIALY_SKU;
-import static com.MsoftTexas.WeatherOnMyTripRoute.MapActivity.base64EncodedPublicKey;
-import static com.MsoftTexas.WeatherOnMyTripRoute.MapActivity.havetrial;
+import static com.MsoftTexas.WeatherOnMyTripRoute.BaseActivity.TRIALY_APP_KEY;
+import static com.MsoftTexas.WeatherOnMyTripRoute.BaseActivity.TRIALY_SKU;
+import static com.MsoftTexas.WeatherOnMyTripRoute.BaseActivity.base64EncodedPublicKey;
+import static com.MsoftTexas.WeatherOnMyTripRoute.BaseActivity.havetrial;
 import static io.trialy.library.Constants.STATUS_TRIAL_JUST_ENDED;
 import static io.trialy.library.Constants.STATUS_TRIAL_JUST_STARTED;
 import static io.trialy.library.Constants.STATUS_TRIAL_NOT_YET_STARTED;

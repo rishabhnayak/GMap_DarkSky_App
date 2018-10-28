@@ -55,8 +55,7 @@ import static com.MsoftTexas.WeatherOnMyTripRoute.MapActivity.googleMap;
 import static com.MsoftTexas.WeatherOnMyTripRoute.MapActivity.interval;
 import static com.MsoftTexas.WeatherOnMyTripRoute.TravelWithActivity.jstart_date_millis;
 import static com.MsoftTexas.WeatherOnMyTripRoute.TravelWithActivity.jstart_time_millis;
-import static com.MsoftTexas.WeatherOnMyTripRoute.MapActivity.loading;
-import static com.MsoftTexas.WeatherOnMyTripRoute.MapActivity.loading_text;
+
 import static com.MsoftTexas.WeatherOnMyTripRoute.MapActivity.markersInterm;
 
 import static com.MsoftTexas.WeatherOnMyTripRoute.TravelWithActivity.origin;
