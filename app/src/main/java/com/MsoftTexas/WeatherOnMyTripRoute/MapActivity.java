@@ -74,7 +74,7 @@ public class MapActivity extends AppCompatActivity implements
     static Context context;
 
 
-    static LottieAnimationView loading;
+
     static List<PolylineOptions> polylineOptionsList;
     static List<Polyline> polylines=new ArrayList<>();
     static List<Marker> markersInterm = new ArrayList<>();
@@ -109,9 +109,6 @@ public class MapActivity extends AppCompatActivity implements
 
 
 
-     static int travelmode=0;
-     static String restrictions="0";
-//            boolean flag;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -358,11 +355,9 @@ public class MapActivity extends AppCompatActivity implements
             }
 
 
-            setCameraWithCoordinationBounds(directionapi.routes[0]);
+            setCameraWithCoordinationBounds(directionapi.routes[selectedroute]);
 
-
-
-    }
+            }
 
             public void showWeather(View view) {
                 new WeatherApi().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);

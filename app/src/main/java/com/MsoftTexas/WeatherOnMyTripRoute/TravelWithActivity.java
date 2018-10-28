@@ -38,7 +38,7 @@ import java.util.TimeZone;
 
 public class TravelWithActivity extends BaseActivity
        {
- //   RadioGroup radioGroup;
+
 
     int tempYear,tempMonth,tempDay;
     public static int  DistanceUnit = 0;
@@ -272,14 +272,6 @@ public class TravelWithActivity extends BaseActivity
     public void requestDirection() {
 
         if(origin!=null && destination!=null) {
-            //googleMap.clear();
-            //  custom_dialog.setVisibility(View.VISIBLE);
-            //  loading.setVisibility(View.VISIBLE);
-            //  loading_text.setVisibility(View.VISIBLE);
-            // slidingUpPanelLayout.setAlpha(0.5f);
-            //  loading.setSpeed(1f);
-            //  loading_text.setText("Loading Route");
-
             new RouteApi().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
         }else{
             Toast.makeText(getApplicationContext(),"origin or destination null", Toast.LENGTH_LONG).show();
