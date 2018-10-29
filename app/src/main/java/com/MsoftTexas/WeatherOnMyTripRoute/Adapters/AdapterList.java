@@ -8,6 +8,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import android.view.animation.Animation;
+import android.view.animation.ScaleAnimation;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -55,6 +57,8 @@ public class AdapterList extends RecyclerView.Adapter<AdapterList.AdapterAllHold
             }
         });
 
+        setScaleAnimation(holder.itemView);
+
         System.out.println("AdapterList,on bind view ");
         holder.route.setText(route.summary);
         holder.distance.setText(route.legs[0].distance.humanReadable);
@@ -97,5 +101,10 @@ public class AdapterList extends RecyclerView.Adapter<AdapterList.AdapterAllHold
             icon=itemView.findViewById(R.id.icon);
         }
 
+    }
+    private void setScaleAnimation(View view) {
+        ScaleAnimation anim = new ScaleAnimation(0.0f, 1.0f, 0.0f, 1.0f, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
+        anim.setDuration(500);
+        view.startAnimation(anim);
     }
 }

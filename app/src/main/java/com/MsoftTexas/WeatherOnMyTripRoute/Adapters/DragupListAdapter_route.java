@@ -7,6 +7,8 @@ import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.ScaleAnimation;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -40,6 +42,8 @@ public class DragupListAdapter_route extends RecyclerView.Adapter<DragupListAdap
     @Override
     public void onBindViewHolder(PnrViewHolder holder, int position) {
         DirectionsStep mStep =route.legs[0].steps[position];
+
+        setScaleAnimation(holder.itemView);
        // Glide.with(holder.image.getContext()).load(passengerList.getLink()).into(holder.image);
 try {
     String maneuvers=mStep.maneuver;
@@ -195,5 +199,10 @@ try {
             stepLength=itemView.findViewById(R.id.stepLength);
             directionImage=itemView.findViewById(R.id.direction_image);
         }
+    }
+    private void setScaleAnimation(View view) {
+        ScaleAnimation anim = new ScaleAnimation(0.0f, 1.0f, 0.0f, 1.0f, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
+        anim.setDuration(500);
+        view.startAnimation(anim);
     }
 }

@@ -22,6 +22,9 @@ import android.text.style.CharacterStyle;
 import android.text.style.StyleSpan;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
+import android.view.animation.ScaleAnimation;
 import android.widget.ArrayAdapter;
 import android.widget.Filter;
 import android.widget.Filterable;
@@ -113,7 +116,7 @@ public class PlaceAutocompleteAdapter
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         View row = super.getView(position, convertView, parent);
-
+        setScaleAnimation(row);
         // Sets the primary and secondary text for a row.
         // Note that getPrimaryText() and getSecondaryText() return a CharSequence that may contain
         // styling based on the given CharacterStyle.
@@ -234,4 +237,15 @@ public class PlaceAutocompleteAdapter
             return null;
         }
     }
+    private void setScaleAnimation(View view) {
+        ScaleAnimation anim = new ScaleAnimation(0.0f, 1.0f, 0.0f, 1.0f, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
+        anim.setDuration(250);
+        view.startAnimation(anim);
+    }
+
+//    private void setScaleAnimation(View view) {
+//        AlphaAnimation anim = new AlphaAnimation(0.0f, 1.0f);
+//        anim.setDuration(200);
+//        view.startAnimation(anim);
+//    }
 }

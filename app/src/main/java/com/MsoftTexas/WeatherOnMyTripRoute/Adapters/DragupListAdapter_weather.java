@@ -8,6 +8,8 @@ import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.ScaleAnimation;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -47,7 +49,7 @@ public class DragupListAdapter_weather extends RecyclerView.Adapter<DragupListAd
         MStep mStep =mSteps.get(position);
        // Glide.with(holder.image.getContext()).load(passengerList.getLink()).into(holder.image);
 
-
+        setScaleAnimation(holder.itemView);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             holder.instr.setText(Html.fromHtml(mStep.getStep().htmlInstructions, Html.FROM_HTML_MODE_COMPACT));
@@ -144,5 +146,10 @@ public class DragupListAdapter_weather extends RecyclerView.Adapter<DragupListAd
             stepLength=itemView.findViewById(R.id.stepLength);
 //            address=itemView.findViewById(R.id.address);
         }
+    }
+    private void setScaleAnimation(View view) {
+        ScaleAnimation anim = new ScaleAnimation(0.0f, 1.0f, 0.0f, 1.0f, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
+        anim.setDuration(500);
+        view.startAnimation(anim);
     }
 }
