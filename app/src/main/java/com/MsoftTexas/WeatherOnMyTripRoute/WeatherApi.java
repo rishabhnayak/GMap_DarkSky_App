@@ -33,7 +33,9 @@ import com.google.gson.Gson;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import java.util.concurrent.TimeUnit;
 
+import okhttp3.OkHttpClient;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -307,15 +309,26 @@ public class WeatherApi extends AsyncTask<Object,Object,Apidata> {
                 if(FERRIES)restrictions+="3";
                 input.setRestrictions(restrictions);
 
+
+                OkHttpClient okHttpClient = new OkHttpClient.Builder()
+                        .readTimeout(120, TimeUnit.SECONDS)
+                        .writeTimeout(120, TimeUnit.SECONDS)
+                        .connectTimeout(120, TimeUnit.SECONDS)
+                        //.addInterceptor(loggingInterceptor)
+                        //.addNetworkInterceptor(networkInterceptor)
+                        .build();
                 Retrofit retrofit = new Retrofit.Builder()
                         .baseUrl("https://4svktzsdok.execute-api.ap-south-1.amazonaws.com/")
+                        .client(okHttpClient)
                         .addConverterFactory(GsonConverterFactory.create())
                         .build();
 
 
 
+
                 ApiInterface apiService = retrofit.create(ApiInterface.class);
                 Call<Apidata> call = apiService.inputCall(input);
+
                 return call.execute().body();
 
 
