@@ -111,7 +111,14 @@ public class WeatherApi extends AsyncTask<Object,Object,Apidata> {
 
                 TextView time=MapActivity.step_time;
                 time.setText(item.getArrtime());
-
+                if(item.getLname()!=null) {
+                    String lname[]=item.getLname().split(",");
+                    if(lname.length>=2)
+                    MapActivity.location_name.setText(lname[0]+",\n"+lname[1]);
+                    else{
+                    MapActivity.location_name.setText(lname[0]);
+                    }
+                }
                 Bitmap bitmap=MapActivity.layout_to_image.convert_layout();
 
 

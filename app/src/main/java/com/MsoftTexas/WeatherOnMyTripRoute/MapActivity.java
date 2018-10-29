@@ -105,7 +105,7 @@ public class MapActivity extends AppCompatActivity implements
 
             static Layout_to_Image layout_to_image;
             static LinearLayout relativeLayout;
-            static TextView step_time,step_weather;
+            static TextView step_time,step_weather,location_name;
             static ImageView step_icon;
 
 
@@ -263,6 +263,7 @@ SharedPreferences.Editor editor;
         step_time=findViewById(R.id.step_time);
         step_weather=findViewById(R.id.step_weather);
         step_icon=findViewById(R.id.step_icon);
+        location_name=findViewById(R.id.location_name);
         layout_to_image=new Layout_to_Image(getApplicationContext(),relativeLayout);
         //now call the main working function ;) and hold the returned image in bitmap
 
