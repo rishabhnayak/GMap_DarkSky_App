@@ -16,6 +16,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.DatePicker;
@@ -61,7 +62,7 @@ public class TravelWithActivity extends BaseActivity
     static CardView date_holder;
     
     static TextView tv_source, tv_dstn;
-    static ImageView go;
+    static Button go;
    
     static Context context;
 

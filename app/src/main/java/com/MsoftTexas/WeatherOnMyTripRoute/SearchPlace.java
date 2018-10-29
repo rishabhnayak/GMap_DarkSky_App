@@ -113,7 +113,8 @@ public class SearchPlace extends AppCompatActivity {
                         startActivity(intent);
 
                     }else{
-                        TravelWithActivity.go.setBackground(getResources().getDrawable(R.drawable.explore_on));
+//                        TravelWithActivity.go.setBackground(getResources().getDrawable(R.drawable.explore_on));
+                        TravelWithActivity.go.setEnabled(true);
                     }
 
                 }else{
@@ -125,7 +126,8 @@ public class SearchPlace extends AppCompatActivity {
                         intent.putExtra("SrcOrDstn","Src");
                         startActivity(intent);
                     }else{
-                        TravelWithActivity.go.setBackground(getResources().getDrawable(R.drawable.explore_on));
+//                        TravelWithActivity.go.setBackground(getResources().getDrawable(R.drawable.explore_on));
+                        TravelWithActivity.go.setEnabled(true);
                     }
                 }
                 finish();
@@ -203,7 +205,8 @@ public class SearchPlace extends AppCompatActivity {
                             intent.putExtra("SrcOrDstn","Dstn");
                             startActivity(intent);
                         }else{
-                           TravelWithActivity.go.setBackground(getResources().getDrawable(R.drawable.explore_on));
+//                           TravelWithActivity.go.setBackground(getResources().getDrawable(R.drawable.explore_on));
+                            TravelWithActivity.go.setEnabled(true);
                         }
 
                     }else{
@@ -215,7 +218,8 @@ public class SearchPlace extends AppCompatActivity {
                             intent.putExtra("SrcOrDstn","Src");
                             startActivity(intent);
                         }else{
-                           TravelWithActivity.go.setBackground(getResources().getDrawable(R.drawable.explore_on));
+//                           TravelWithActivity.go.setBackground(getResources().getDrawable(R.drawable.explore_on));
+                            TravelWithActivity.go.setEnabled(true);
                         }
                     }
                // Intent intent = new Intent(SearchPlace.this, MapActivity.class);
