@@ -6,6 +6,7 @@ import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -134,11 +135,109 @@ public class MapActivity extends AppCompatActivity implements
 
      static int travelmode=0;
      static String restrictions="0";
-//            boolean flag;
+//            boolean flag;.
+Menu menu;
+SharedPreferences.Editor editor;
+            int i;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main2);
+
+        editor = getSharedPreferences("distance", MODE_PRIVATE).edit();
+        SharedPreferences prefs = getSharedPreferences("distance", MODE_PRIVATE);
+        int a=prefs.getInt("10",0);
+        switch(a){
+            case 10:
+                //  Toast.makeText(mApp, "10", Toast.LENGTH_SHORT).show();
+
+                try {
+                    Handler handler1 = new Handler();
+                    handler1.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            MenuItem item = menu.findItem(R.id.km10);
+                            interval=10000;
+                            i=1;
+                            item.setChecked(true);
+                        }
+                    }, 2000);
+                }catch (Exception e){
+
+                }
+                break;
+            case 20:
+                //  Toast.makeText(mApp, "20", Toast.LENGTH_SHORT).show();
+                try {
+                    Handler handler1 = new Handler();
+                    handler1.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            MenuItem item = menu.findItem(R.id.km20);
+                            item.setChecked(true);
+                            interval=20000;
+                            i=2;
+                        }
+                    }, 2000);
+                }catch (Exception e){
+
+                }
+
+                break;
+            case 30:
+                //  Toast.makeText(mApp, "30", Toast.LENGTH_SHORT).show();
+                try {
+                    Handler handler1 = new Handler();
+                    handler1.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            MenuItem item = menu.findItem(R.id.km30);
+                            item.setChecked(true);
+                            interval=30000;
+                            i=3;
+                        }
+                    }, 2000);
+                }catch (Exception e){
+
+                }
+                break;
+            case 40:
+                // Toast.makeText(mApp, "40", Toast.LENGTH_SHORT).show();
+                try {
+                    Handler handler1 = new Handler();
+                    handler1.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            MenuItem item = menu.findItem(R.id.km40);
+                            item.setChecked(true);
+                            interval=40000;
+                            i=4;
+                        }
+                    }, 2000);
+                }catch (Exception e){
+
+                }
+                break;
+            case 50:
+                // Toast.makeText(mApp, "50", Toast.LENGTH_SHORT).show();
+                try {
+                    Handler handler1 = new Handler();
+                    handler1.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            MenuItem item = menu.findItem(R.id.km50);
+                            item.setChecked(true);
+                            interval=50000;
+                            i=5;
+                        }
+                    }, 2000);
+                }catch (Exception e){
+
+                }
+                break;
+            default:
+                //   Toast.makeText(mApp, "0", Toast.LENGTH_SHORT).show();
+        }
 
         mTrialy = new Trialy(this, TRIALY_APP_KEY);
         mTrialy.checkTrial(TRIALY_SKU, mTrialyCallback);
@@ -156,6 +255,18 @@ public class MapActivity extends AppCompatActivity implements
 
         //setting title null
         getSupportActionBar().setTitle("");
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        Toolbar back = (Toolbar) findViewById(R.id.toolbar);
+
+        back.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // back button pressed
+                MapActivity.super.onBackPressed();
+            }
+        });
 
 //sliding up layout
         slidingUpPanelLayout=findViewById(R.id.sliding_layout);
@@ -243,7 +354,8 @@ public class MapActivity extends AppCompatActivity implements
 
        @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.mapactivity_menu, menu);
+           getMenuInflater().inflate(R.menu.mapactivity_menu, menu);
+           this.menu=menu;
         return true;
     }
 
@@ -253,24 +365,43 @@ public class MapActivity extends AppCompatActivity implements
         switch (item.getItemId()) {
             case R.id.km10:
                 item.setChecked(true);
-                MapActivity.interval=10000;
+                interval=10000;
+                i=1;
+                editor.putInt("10",10);
+                editor.apply();
+
                 return true;
             case R.id.km20:
                 item.setChecked(true);
-                MapActivity.interval=20000;
+                interval=20000;
+                i=2;
+                editor.putInt("10",20);
+                editor.apply();
+
                 return true;
             case R.id.km30:
-                 item.setChecked(true);
-                MapActivity.interval=30000;
-                Toast.makeText(this, "30km", Toast.LENGTH_SHORT).show();
+                item.setChecked(true);
+                interval=30000;
+                i=3;
+                editor.putInt("10",30);
+                editor.apply();
+
                 return true;
             case R.id.km40:
-               item.setChecked(true);
-               MapActivity.interval=40000;
+                item.setChecked(true);
+                interval=40000;
+                i=4;
+                editor.putInt("10",40);
+                editor.apply();
+
                 return true;
             case R.id.km50:
                 item.setChecked(true);
-                MapActivity.interval=50000;
+                interval=50000;
+                i=5;
+                editor.putInt("10",50);
+                editor.apply();
+
                 return true;
 //            case R.id.action_retry:
 //                requestDirection();

@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.MsoftTexas.WeatherOnMyTripRoute.MapActivity;
@@ -84,7 +85,7 @@ public class AdapterList extends RecyclerView.Adapter<AdapterList.AdapterAllHold
     public class AdapterAllHolder extends RecyclerView.ViewHolder {
 
         TextView route,route_detail,time,distance;
-        ImageView icon;CardView item;
+        ImageView icon;LinearLayout item;
 
         public AdapterAllHolder(View itemView) {
             super(itemView);
