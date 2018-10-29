@@ -113,7 +113,7 @@ public class SearchPlace extends AppCompatActivity {
                         startActivity(intent);
 
                     }else{
-                        TravelWithActivity.go.setBackground(getResources().getDrawable(R.drawable.send_blue));
+                        TravelWithActivity.go.setBackground(getResources().getDrawable(R.drawable.explore_on));
                     }
 
                 }else{
@@ -125,7 +125,7 @@ public class SearchPlace extends AppCompatActivity {
                         intent.putExtra("SrcOrDstn","Src");
                         startActivity(intent);
                     }else{
-                        TravelWithActivity.go.setBackground(getResources().getDrawable(R.drawable.send_blue));
+                        TravelWithActivity.go.setBackground(getResources().getDrawable(R.drawable.explore_on));
                     }
                 }
                 finish();
@@ -203,7 +203,7 @@ public class SearchPlace extends AppCompatActivity {
                             intent.putExtra("SrcOrDstn","Dstn");
                             startActivity(intent);
                         }else{
-                           TravelWithActivity.go.setBackground(getResources().getDrawable(R.drawable.send_blue));
+                           TravelWithActivity.go.setBackground(getResources().getDrawable(R.drawable.explore_on));
                         }
 
                     }else{
@@ -215,7 +215,7 @@ public class SearchPlace extends AppCompatActivity {
                             intent.putExtra("SrcOrDstn","Src");
                             startActivity(intent);
                         }else{
-                           TravelWithActivity.go.setBackground(getResources().getDrawable(R.drawable.send_blue));
+                           TravelWithActivity.go.setBackground(getResources().getDrawable(R.drawable.explore_on));
                         }
                     }
                // Intent intent = new Intent(SearchPlace.this, MapActivity.class);
