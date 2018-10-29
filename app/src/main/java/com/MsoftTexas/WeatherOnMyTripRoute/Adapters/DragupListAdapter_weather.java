@@ -63,7 +63,8 @@ public class DragupListAdapter_weather extends RecyclerView.Adapter<DragupListAd
 
 
 
-            holder.arrtime.setText(mStep.getArrtime());
+            String arrtime=mStep.getArrtime().split(",")[0];
+            holder.arrtime.setText(arrtime);
             holder.weather.setText(mStep.getWlist().getSummary());
             holder.temp.setText(mStep.getWlist().getTemperature() + "°F");
 

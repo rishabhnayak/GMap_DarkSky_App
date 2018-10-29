@@ -110,11 +110,14 @@ public class WeatherApi extends AsyncTask<Object,Object,Apidata> {
                 TextView weather=MapActivity.step_weather;
 
                 TextView time=MapActivity.step_time;
-                time.setText(item.getArrtime());
+                String time_data[]=item.getArrtime().split("\\.");
+                if(time_data.length>=2)
+                time.setText(time_data[0]+"\n"+time_data[1]);
+                else  time.setText(item.getArrtime());
                 if(item.getLname()!=null) {
                     String lname[]=item.getLname().split(",");
                     if(lname.length>=2)
-                    MapActivity.location_name.setText(lname[0]+",\n"+lname[1]);
+                    MapActivity.location_name.setText(lname[0].length()<20?lname[0]:lname[0].substring(0,20)+"..,\n"+lname[1]);
                     else{
                     MapActivity.location_name.setText(lname[0]);
                     }
@@ -197,8 +200,11 @@ public class WeatherApi extends AsyncTask<Object,Object,Apidata> {
                 TextView weather=MapActivity.step_weather;
 
                 TextView time=MapActivity.step_time;
-                time.setText(mStep.getArrtime());
-
+                String time_data[]=mStep.getArrtime().split("\\.");
+                if(time_data.length>=2)
+                    time.setText(time_data[0]+"\n"+time_data[1]);
+                else  time.setText(mStep.getArrtime());
+                MapActivity.location_name.setText("");
                 Bitmap bitmap=MapActivity.layout_to_image.convert_layout();
 
 
