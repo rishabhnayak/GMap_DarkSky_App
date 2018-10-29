@@ -1,6 +1,8 @@
 package com.MsoftTexas.WeatherOnMyTripRoute;
 
 import android.app.DatePickerDialog;
+import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -26,6 +28,7 @@ import android.widget.TimePicker;
 import android.widget.Toast;
 
 
+import com.MsoftTexas.WeatherOnMyTripRoute.util.IabBroadcastReceiver;
 import com.google.maps.model.DirectionsResult;
 import com.google.maps.model.LatLng;
 
@@ -33,8 +36,9 @@ import java.util.Calendar;
 import java.util.TimeZone;
 
 
-public class TravelWithActivity extends AppCompatActivity {
- //   RadioGroup radioGroup;
+public class TravelWithActivity extends BaseActivity
+       {
+
 
     int tempYear,tempMonth,tempDay;
     public static int  DistanceUnit = 0;
@@ -61,8 +65,8 @@ public class TravelWithActivity extends AppCompatActivity {
    
     static Context context;
 
-   
-   
+    static ProgressDialog progress;
+
  
 
 
@@ -75,6 +79,7 @@ public class TravelWithActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        progress=new ProgressDialog(this);
 
         tv_source = findViewById(R.id.source);
         tv_dstn = findViewById(R.id.destination);
@@ -267,14 +272,6 @@ public class TravelWithActivity extends AppCompatActivity {
     public void requestDirection() {
 
         if(origin!=null && destination!=null) {
-            //googleMap.clear();
-            //  custom_dialog.setVisibility(View.VISIBLE);
-            //  loading.setVisibility(View.VISIBLE);
-            //  loading_text.setVisibility(View.VISIBLE);
-            // slidingUpPanelLayout.setAlpha(0.5f);
-            //  loading.setSpeed(1f);
-            //  loading_text.setText("Loading Route");
-
             new RouteApi().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
         }else{
             Toast.makeText(getApplicationContext(),"origin or destination null", Toast.LENGTH_LONG).show();

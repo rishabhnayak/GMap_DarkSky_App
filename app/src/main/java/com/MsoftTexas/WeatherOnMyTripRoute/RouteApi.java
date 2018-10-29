@@ -1,12 +1,15 @@
 package com.MsoftTexas.WeatherOnMyTripRoute;
 
 import android.accounts.NetworkErrorException;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
+import android.view.WindowManager;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 
@@ -24,10 +27,10 @@ import com.google.maps.model.DirectionsRoute;
 import com.google.maps.model.TravelMode;
 import com.google.maps.model.Unit;
 
-import org.apache.http.HttpResponse;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.DefaultHttpClient;
+//import org.apache.http.HttpResponse;
+//import org.apache.http.client.HttpClient;
+//import org.apache.http.client.methods.HttpGet;
+//import org.apache.http.impl.client.DefaultHttpClient;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
 
@@ -51,11 +54,11 @@ import static com.MsoftTexas.WeatherOnMyTripRoute.TravelWithActivity.destination
 
 import static com.MsoftTexas.WeatherOnMyTripRoute.TravelWithActivity.jstart_date_millis;
 import static com.MsoftTexas.WeatherOnMyTripRoute.TravelWithActivity.jstart_time_millis;
-import static com.MsoftTexas.WeatherOnMyTripRoute.MapActivity.loading;
-import static com.MsoftTexas.WeatherOnMyTripRoute.MapActivity.loading_text;
+
 import static com.MsoftTexas.WeatherOnMyTripRoute.TravelWithActivity.origin;
 
 
+import static com.MsoftTexas.WeatherOnMyTripRoute.TravelWithActivity.progress;
 import static com.MsoftTexas.WeatherOnMyTripRoute.TravelWithActivity.recyclerView;
 import static com.MsoftTexas.WeatherOnMyTripRoute.TravelWithActivity.timezone;
 import static com.MsoftTexas.WeatherOnMyTripRoute.TravelWithActivity.travelmode;
@@ -70,6 +73,12 @@ public class RouteApi extends AsyncTask<Object,Object,DirectionsResult> {
     @Override
     protected void onPreExecute() {
 
+
+        progress.setTitle("Loading Routes...");
+        progress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        progress.setIndeterminate(true);
+        progress.getWindow().addFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL);
+        progress.show();
     }
 
     @Override
@@ -80,7 +89,9 @@ public class RouteApi extends AsyncTask<Object,Object,DirectionsResult> {
 //            MapActivity.routeloaded = true;
 
             //      System.out.println("direction data : "+new Gson().toJson(apidata));
+        progress.dismiss();
         if(apidata.routes !=null && apidata.routes.length>0) {
+
             TravelWithActivity.directionapi = apidata;
             LinearLayoutManager manager = new LinearLayoutManager(context);
             recyclerView.setLayoutManager(manager);

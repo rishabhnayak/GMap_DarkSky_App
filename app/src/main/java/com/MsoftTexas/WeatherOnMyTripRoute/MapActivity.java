@@ -1,5 +1,6 @@
 package com.MsoftTexas.WeatherOnMyTripRoute;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
@@ -17,6 +18,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -67,28 +69,25 @@ import static io.trialy.library.Constants.STATUS_TRIAL_RUNNING;
 public class MapActivity extends AppCompatActivity implements
         OnMapReadyCallback
         ,View.OnClickListener
-    , IabBroadcastReceiver.IabBroadcastListener
+
         {
 
     static Context context;
 
-    public static final int MY_PERMISSIONS_REQUEST_LOCATION = 99;
-    static LottieAnimationView loading;
+
+
     static List<PolylineOptions> polylineOptionsList;
     static List<Polyline> polylines=new ArrayList<>();
     static List<Marker> markersInterm = new ArrayList<>();
     static List<Marker> markersSteps = new ArrayList<>();
     static TextView loading_text;
-//    static int selectedroute=0;
+
     static long interval=50000;
 
- //   static TextView time;
- //   static CardView date_holder;
-//   static TextView departAt;
-//    static ImageView go;
-//    static TextView src,dstn;
+    static ProgressDialog progressDialog;
+
     static  SlidingUpPanelLayout slidingUpPanelLayout;
-//    static long jstart_date_millis, jstart_time_millis;
+
     static private Marker originMarker, dstnMarker;
     private List<Marker> markers = new ArrayList<>();
     static Apidata apiData=null;
@@ -103,29 +102,7 @@ public class MapActivity extends AppCompatActivity implements
 
     static RecyclerView link;
     DragupListAdapter_route routeadapter;
-    DragupListAdapter_weather adapter;
 
-
-    static String TRIALY_APP_KEY = "CNXFXUSWNXNREPZN6FW"; //TODO: Replace with your app key, which can be found on your Trialy developer dashboard
-    static String TRIALY_SKU = "t21_test"; //TODO: Replace with a trial SKU, which can be found on your Trialy developer dashboard. Each app can have multiple trials
-    static String base64EncodedPublicKey = "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAnh6LDOmwwPSQ8KesBlRQ/LrN/75xUFQhVmvfJG6uUlmgxU4iWiMzwr1iydveIz3cNT2C1IdnBpohHuDhn9RlOn5uaR3Cw0BDGrnRzwHZRPdoJ3/tAWIS+cLD/5LU7sriMOi6spMaPTYjgrT/Lck36goPwY88FK+e2G09cFrd54WQBPwHO+COKlKOFQ7Yt9yiCLlwivhdSDbacuVGg696JjAeTBvnw0eqks7Q/FHg2U0TlhBf/RU2+tvCnR2L0hk1kgkkdZFua8aDrZ1xQkEkBzlrrHrGnmqCyVoPHwMcxoOKM61BX511NMRuBJv9Eg19n4QITqT/fsR7vzmnljjxLQIDAQAB" ;
-
-     IabHelper mHelper;
-
-            // Provides purchase notification while this app is running
-     IabBroadcastReceiver mBroadcastReceiver;
-     Trialy mTrialy;
-
-      String SKU_INFINITE_GAS_MONTHLY = "infinite_gas_monthly";
-      String SKU_INFINITE_GAS_QUATERLY = "quaterly";
-      String SKU_INFINITE_GAS_HALFYEARLY = "halfyearly";
-      String SKU_INFINITE_GAS_YEARLY = "infinite_gas_yearly";
-
-      boolean mSubscribedToInfiniteGas = true;
-      boolean mAutoRenewEnabled = false;
-     static boolean havetrial=true;
-      String mInfiniteGasSku = "";
-     static final String TAG = "Map Activity";
             static Layout_to_Image layout_to_image;
             static LinearLayout relativeLayout;
             static TextView step_time,step_weather;
@@ -133,16 +110,16 @@ public class MapActivity extends AppCompatActivity implements
 
 
 
-     static int travelmode=0;
-     static String restrictions="0";
-//            boolean flag;.
+
 Menu menu;
 SharedPreferences.Editor editor;
             int i;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main2);
+
 
         editor = getSharedPreferences("distance", MODE_PRIVATE).edit();
         SharedPreferences prefs = getSharedPreferences("distance", MODE_PRIVATE);
@@ -239,14 +216,15 @@ SharedPreferences.Editor editor;
                 //   Toast.makeText(mApp, "0", Toast.LENGTH_SHORT).show();
         }
 
-        mTrialy = new Trialy(this, TRIALY_APP_KEY);
-        mTrialy.checkTrial(TRIALY_SKU, mTrialyCallback);
- //       mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
+
+        progressDialog=new ProgressDialog(this);
+
+
         Bundle bundle = new Bundle();
         bundle.putString(FirebaseAnalytics.Param.ITEM_ID, "1");
         bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, "MapActivity");
  //       mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
-        sd = this.getSharedPreferences("com.MsoftTexas.WeatherOnMyTripRoute", Context.MODE_PRIVATE);
+        sd = this.getSharedPreferences(getPackageName(), Context.MODE_PRIVATE);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         context=getApplicationContext();
@@ -301,48 +279,6 @@ SharedPreferences.Editor editor;
         mGeoDataClientD = Places.getGeoDataClient(this, null);
 
 
-        Log.d(TAG, "Creating IAB helper.");
-        mHelper = new IabHelper(this, base64EncodedPublicKey);
-
-        // enable debug logging (for a production application, you should set this to false).
-        mHelper.enableDebugLogging(true);
-
-        // Start setup. This is asynchronous and the specified listener
-        // will be called once setup completes.
-        Log.d(TAG, "Starting setup.");
-        mHelper.startSetup(new IabHelper.OnIabSetupFinishedListener() {
-            public void onIabSetupFinished(IabResult result) {
-                Log.d(TAG, "Setup finished.");
-
-                if (!result.isSuccess()) {
-                    // Oh noes, there was a problem.
-                    complain("Problem setting up in-app billing: " + result);
-                    return;
-                }
-
-                // Have we been disposed of in the meantime? If so, quit.
-                if (mHelper == null) return;
-
-                // Important: Dynamically register for broadcast messages about updated purchases.
-                // We register the receiver here instead of as a <receiver> in the Manifest
-                // because we always call getPurchases() at startup, so therefore we can ignore
-                // any broadcasts sent while the app isn't running.
-                // Note: registering this listener in an Activity is a bad idea, but is done here
-                // because this is a SAMPLE. Regardless, the receiver must be registered after
-                // IabHelper is setup, but before first call to getPurchases().
-                mBroadcastReceiver = new IabBroadcastReceiver(MapActivity.this);
-                IntentFilter broadcastFilter = new IntentFilter(IabBroadcastReceiver.ACTION);
-                registerReceiver(mBroadcastReceiver, broadcastFilter);
-
-                // IAB is fully set up. Now, let's get an inventory of stuff we own.
-                Log.d(TAG, "Setup successful. Querying inventory.");
-                try {
-                    mHelper.queryInventoryAsync(mGotInventoryListener);
-                } catch (IabHelper.IabAsyncInProgressException e) {
-                    complain("Error querying inventory. Another async operation in progress.");
-                }
-            }
-        });
 
 
     }
@@ -403,16 +339,11 @@ SharedPreferences.Editor editor;
                 editor.apply();
 
                 return true;
-//            case R.id.action_retry:
-//                requestDirection();
-//                Toast.makeText(this, "Retrying...", Toast.LENGTH_SHORT).show();
-//                return true;
-//            case R.id.Subscription:
-//                Intent intent=new Intent(MapActivity.this, Subscription.class);
-//                startActivity(intent);
+            case R.id.action_retry:
+                new WeatherApi().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                Toast.makeText(this, "Fetching Weather...", Toast.LENGTH_SHORT).show();
+                return true;
 
- //               Toast.makeText(this, "Retrying...", Toast.LENGTH_SHORT).show();
- //               return true;
             case R.id.action_clr:
                 Toast.makeText(this, "clear", Toast.LENGTH_SHORT).show();
 
@@ -480,185 +411,13 @@ SharedPreferences.Editor editor;
                 for(int k=0;k<markersInterm.size();k++){
                     markersInterm.get(k).remove();
                 }
-            //    custom_dialog.setVisibility(View.VISIBLE);
-            //    loading.setVisibility(View.VISIBLE);
-            //    loading_text.setVisibility(View.VISIBLE);
-            //    loading_text.setText("loading weather...");
-           //     new WeatherApi().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+
             }
         });
-
-//        googleMap.setOnMapLongClickListener(new GoogleMap.OnMapLongClickListener() {
-//
-//            @Override
-//            public void onMapLongClick(LatLng point) {
-//                if (originMarker == null) {
-//                    originMarker = googleMap.addMarker(new MarkerOptions().position(point).icon(BitmapDescriptorFactory.fromResource(R.drawable.pinb)));
-//                    originMarker.setDraggable(true);
-//                    originMarker.setTitle("Source");
-//                    // originMarker.setTag(0);
-//                    origin=point;
-//                } else if (dstnMarker == null) {
-//                    dstnMarker=googleMap.addMarker(new MarkerOptions().position(point).icon(BitmapDescriptorFactory.fromResource(R.drawable.pina)));
-//                    //    dstnMarker.setTag(1);
-//                    dstnMarker.setDraggable(true);
-//                    dstnMarker.setTitle("Destination");
-//                    destination=point;
-//                    requestDirection();
-//                }
-//
-//            }});
-//
-//        googleMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
-//            @Override
-//            public boolean onMarkerClick(Marker marker) {
-//
-//                System.out.println("marker tag :"+marker.getTag());
-//
-//                try{
-//
-//                    if(marker.getTag().toString().startsWith("I")) {
-//
-//                        Item item = apiData.getItems().get(Integer.parseInt(marker.getTag().toString().replace("I","")));
-//
-//
-//                        AlertDialog.Builder builderSingle = new AlertDialog.Builder(MapActivity.this);
-//
-////                        builderSingle.setTitle(
-////                                item.getLname().substring(0, 20) + "...\n Arr :" + item.getArrtime() + "   Dist :" + item.getDistance()
-////                        );
-//
-//                        builderSingle.setIcon(R.drawable.ic_directions_black_24dp);
-//                        try {
-//                            builderSingle.setTitle(new Geocoder(getApplicationContext(), Locale.ENGLISH).getFromLocation(item.getPoint().lat, item.getPoint().lng, 1).get(0).getAddressLine(0));
-//                        }catch (Exception e){
-//                            e.printStackTrace();
-//                        }
-//                        builderSingle.setMessage("Time :"+item.getArrtime()+"  "+"Traveled :"+String.format("%.2f", (Integer.valueOf(item.getDistance().split(" ")[0]))/(float)1000*(0.621371))+" miles");
-//                        final ArrrayAdapter Adapter = new ArrrayAdapter(MapActivity.this, item);
-//
-//                        final ListView modeList = new ListView(MapActivity.this);
-//                        modeList.setAdapter(Adapter);
-//
-//
-//                        builderSingle.setView(modeList);
-//                        builderSingle.setNegativeButton("OK", new DialogInterface.OnClickListener() {
-//                            @Override
-//                            public void onClick(DialogInterface dialog, int which) {
-//                                dialog.dismiss();
-//                            }
-//                        });
-//
-//                        builderSingle.show();
-//                    }else
-//                        if(marker.getTag().toString().startsWith("S")){
-//                        MStep step = apiData.getSteps().get(Integer.parseInt(marker.getTag().toString().replace("S","")));
-//                        AlertDialog.Builder builderSingle = new AlertDialog.Builder(MapActivity.this);
-//
-////                        builderSingle.setTitle(
-////                                step.getStep().getManeuver() + "...\n Arr :" + step.getArrtime() + "   Dist :" + step.getAft_distance()
-////                        );
-//
-//                        builderSingle.setIcon(R.drawable.ic_directions_black_24dp);
-//          //              builderSingle.setTitle(new Geocoder(getApplicationContext(), Locale.ENGLISH).getFromLocation(step.getStep().getStart_location().getLat(), step.getStep().getStart_location().getLng(), 1).get(0).getAddressLine(0));
-//                        builderSingle.setMessage("Time :"+step.getArrtime()+"  "+"Traveled :"+String.format("%.2f",step.getAft_distance()/(float)1000*(0.621371))+" miles");
-//                        final ArrrayAdapter Adapter = new ArrrayAdapter(MapActivity.this, step);
-//
-//                        final ListView modeList = new ListView(MapActivity.this);
-//                        modeList.setAdapter(Adapter);
-//
-//
-//                        builderSingle.setView(modeList);
-//                        builderSingle.setNegativeButton("OK", new DialogInterface.OnClickListener() {
-//                            @Override
-//                            public void onClick(DialogInterface dialog, int which) {
-//                                dialog.dismiss();
-//                            }
-//                        });
-//
-//                        builderSingle.show();
-//                    }
-//                }catch (Exception e){
-//                    e.printStackTrace();
-//                }
-//
-//
-//                return false;
-//            }
-//        });
-
-
-
-
-//        googleMap.setOnMarkerDragListener(new GoogleMap.OnMarkerDragListener() {
-//
-//            @Override
-//            public void onMarkerDrag(Marker marker) {
-//
-//            }
-//            @Override
-//            public void onMarkerDragEnd(Marker marker) {
-//                LatLng newLocation = marker.getPosition();
-//
-//                if(marker!=null){
-//                    System.out.println("tag :"+marker.getTag());
-//                    System.out.println("title :"+marker.getTitle());
-//                }else{
-//                    System.out.println(" marker is null babes ");
-//                }
-//
-//                if(marker.getTitle().equals(originMarker.getTitle())) {
-//                    origin = newLocation;
-//                    //     googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(origin, 15.0f));
-//
-//                }else if(marker.getTitle().equals(dstnMarker.getTitle())){
-//                    destination = newLocation;
-//                    //     googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(destination, 15.0f));
-//                }
-//                requestDirection();
-//            }
-//            @Override
-//            public void onMarkerDragStart(Marker marker) {}
-//
-//        });
-
 
     }
 
 
-
-
-//    public void requestDirection() {
-//        apiData=null;
-//        weatherloaded=false;
-//        routeloaded=false;
-//        markersInterm.clear();
-//        markersSteps.clear();
-//
-//        if(origin!=null && destination!=null) {
-//            googleMap.clear();
-//          //  custom_dialog.setVisibility(View.VISIBLE);
-//          //  loading.setVisibility(View.VISIBLE);
-//          //  loading_text.setVisibility(View.VISIBLE);
-//           // slidingUpPanelLayout.setAlpha(0.5f);
-//          //  loading.setSpeed(1f);
-//          //  loading_text.setText("Loading Route");
-//
-//            originMarker=googleMap.addMarker(new MarkerOptions().position(origin).icon(BitmapDescriptorFactory.fromResource(R.drawable.pinb)));
-//            originMarker.setDraggable(true);
-//            originMarker.setTitle("source");
-//
-//            dstnMarker=googleMap.addMarker(new MarkerOptions().position(destination).icon(BitmapDescriptorFactory.fromResource(R.drawable.pina)));
-//            dstnMarker.setDraggable(true);
-//            dstnMarker.setTitle("destination");
-//
-//
-//             new RouteApi().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-//             new WeatherApi().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-//        }else{
-//            Toast.makeText(getApplicationContext(),"origin or destination null", Toast.LENGTH_LONG).show();
-//        }
-//    }
 
      void setCameraWithCoordinationBounds(DirectionsRoute route) {
         LatLng southwest = new LatLng(route.bounds.southwest.lat,route.bounds.southwest.lng);
@@ -732,211 +491,11 @@ SharedPreferences.Editor editor;
             }
 
 
-            setCameraWithCoordinationBounds(directionapi.routes[0]);
-
-
-
-    }
-
-
-
-
-
-
-
-//    private void datePicker(){
-//
-//        // Get Current Date
-//
-//
-//        final DatePickerDialog datePickerDialog = new DatePickerDialog(this,
-//                new DatePickerDialog.OnDateSetListener() {
-//
-//                    @Override
-//                    public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-//
-//                        departAt.setText(dayOfMonth + " " + month[monthOfYear] + " " + String.valueOf(year).substring(2));
-//                        Calendar cal = Calendar.getInstance();
-//                        cal.set(Calendar.DAY_OF_MONTH,dayOfMonth);
-//                        cal.set(Calendar.MONTH, monthOfYear);
-//                        cal.set(Calendar.YEAR, year);
-//                        cal.set(Calendar.HOUR_OF_DAY,0);
-//                        cal.set(Calendar.MINUTE,0);
-//
-//                        jstart_date_millis=cal.getTimeInMillis();
-//
-//                        timePicker();
-//
-//                        //*************Call Time Picker Here ********************
-//
-//                    }
-//                }, mYear, mMonth, mDay);
-//
-//
-//
-//     //   datePickerDialog.getDatePicker().setMinDate(jstart_date_millis);
-//     //   datePickerDialog.getDatePicker().setMaxDate(jstart_date_millis+5*24*60*60*1000);
-//        datePickerDialog.show();
-//    }
-//
-//    private void timePicker(){
-//        // Get Current Time
-//
-//
-//        // Launch Time Picker Dialog
-//        TimePickerDialog timePickerDialog = new TimePickerDialog(this,
-//                new TimePickerDialog.OnTimeSetListener() {
-//
-//                    @Override
-//                    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-//
-//                        mHour = hourOfDay;
-//                        mMinute = minute;
-//
-//                        String sHour = mHour < 10 ? "0" + mHour : "" + mHour;
-//                        String sMinute = mMinute < 10 ? "0" + mMinute : "" + mMinute;
-//                        String set_time = sHour + ":" + sMinute;
-//                        departAt.setText(set_time+","+departAt.getText());
-//
-//                        jstart_time_millis=(mHour*60+mMinute)*60*1000;
-//
-//
-//
-//                    }
-//                }, mHour, mMinute, false);
-//        timePickerDialog.show();
-//    }
-
-     IabHelper.QueryInventoryFinishedListener mGotInventoryListener = new IabHelper.QueryInventoryFinishedListener() {
-                public void onQueryInventoryFinished(IabResult result, Inventory inventory) {
-                    Log.d("TAG", "Query inventory finished.");
-
-                    // Have we been disposed of in the meantime? If so, quit.
-                    if (mHelper == null) return;
-
-                    // Is it a failure?
-                    if (result.isFailure()) {
-                        complain("Failed to query inventory: " + result);
-                        return;
-                    }
-
-                    Log.d("TAG", "Query inventory was successful.");
-
-                    /*
-                     * Check for items we own. Notice that for each purchase, we check
-                     * the developer payload to see if it's correct! See
-                     * verifyDeveloperPayload().
-                     */
-
-                    // Do we have the premium upgrade?
-//            Purchase premiumPurchase = inventory.getPurchase(SKU_PREMIUM);
-//            mIsPremium = (premiumPurchase != null && verifyDeveloperPayload(premiumPurchase));
-//            Log.d(TAG, "User is " + (mIsPremium ? "PREMIUM" : "NOT PREMIUM"));
-
-                    // First find out which subscription is auto renewing
-                    Purchase gasMonthly = inventory.getPurchase(SKU_INFINITE_GAS_MONTHLY);
-                    Purchase gasQuaterly = inventory.getPurchase(SKU_INFINITE_GAS_QUATERLY);
-                    Purchase gasHalfYearly = inventory.getPurchase(SKU_INFINITE_GAS_HALFYEARLY);
-                    Purchase gasYearly = inventory.getPurchase(SKU_INFINITE_GAS_YEARLY);
-                    if (gasMonthly != null && gasMonthly.isAutoRenewing()) {
-                        mInfiniteGasSku = SKU_INFINITE_GAS_MONTHLY;
-                        mAutoRenewEnabled = true;
-                    }else if (gasQuaterly != null && gasQuaterly.isAutoRenewing()) {
-                        mInfiniteGasSku = SKU_INFINITE_GAS_QUATERLY;
-                        mAutoRenewEnabled = true;
-                    }else if (gasHalfYearly!= null && gasHalfYearly.isAutoRenewing()) {
-                        mInfiniteGasSku = SKU_INFINITE_GAS_HALFYEARLY;
-                        mAutoRenewEnabled = true;
-                    }
-                    else if (gasYearly != null && gasYearly.isAutoRenewing()) {
-                        mInfiniteGasSku = SKU_INFINITE_GAS_YEARLY;
-                        mAutoRenewEnabled = true;
-                    } else {
-                        mInfiniteGasSku = "";
-                        mAutoRenewEnabled = false;
-                    }
-
-                    // The user is subscribed if either subscription exists, even if neither is auto
-                    // renewing
-                    mSubscribedToInfiniteGas = (gasMonthly != null && verifyDeveloperPayload(gasMonthly))
-                            || (gasQuaterly != null && verifyDeveloperPayload(gasQuaterly))
-                            || (gasHalfYearly != null && verifyDeveloperPayload(gasHalfYearly))
-                            || (gasYearly != null && verifyDeveloperPayload(gasYearly));
-                    Log.d("TAG", "User " + (mSubscribedToInfiniteGas ? "HAS" : "DOES NOT HAVE")
-                            + " infinite gas subscription.");
-                    haveTrialorSubs();
-
-                }
-            };
-
-            @Override
-            public void receivedBroadcast() {
-                // Received a broadcast notification that the inventory of items has changed
-                Log.d("TAG", "Received broadcast notification. Querying inventory.");
-                try {
-                    mHelper.queryInventoryAsync(mGotInventoryListener);
-                } catch (IabHelper.IabAsyncInProgressException e) {
-                    complain("Error querying inventory. Another async operation in progress.");
-                }
-            }
-
-            private TrialyCallback mTrialyCallback = new TrialyCallback() {
-                @Override
-                public void onResult(int status, long timeRemaining, String sku) {
-                    switch (status){
-                        case STATUS_TRIAL_JUST_STARTED:
-
-                          break;
-                        case STATUS_TRIAL_RUNNING:
-
-                          break;
-                        case STATUS_TRIAL_JUST_ENDED:
-                            havetrial=false;
-                            haveTrialorSubs();
-                          break;
-                        case STATUS_TRIAL_NOT_YET_STARTED:
-                            havetrial=false;
-                            haveTrialorSubs();
-                            break;
-                        case STATUS_TRIAL_OVER:
-                            havetrial=false;
-                            haveTrialorSubs();
-                            break;
-                    }
-                    Log.i("TRIALY", "Returned status: " + Trialy.getStatusMessage(status));
-                }
-
-            };
-
-            void complain(String message) {
-                Log.e("TAG", "**** TrivialDrive Error: " + message);
-                alert("Error: " + message);
-            }
-
-            void alert(String message) {
-                android.app.AlertDialog.Builder bld = new android.app.AlertDialog.Builder(this);
-                bld.setMessage(message);
-                bld.setNeutralButton("OK", null);
-                Log.d("TAG", "Showing alert dialog: " + message);
-                bld.create().show();
-
+            setCameraWithCoordinationBounds(directionapi.routes[selectedroute]);
 
             }
-
-            boolean verifyDeveloperPayload(Purchase p) {
-                String payload = p.getDeveloperPayload();
-                return true;
-            }
-
-            void haveTrialorSubs(){
-                if(!havetrial && !mSubscribedToInfiniteGas) {
-                    startActivity(new Intent(MapActivity.this, Subscription.class));
-                    finish();
-                }
-            }
-
 
             public void showWeather(View view) {
                 new WeatherApi().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
             }
-        }
+       }
