@@ -1,5 +1,7 @@
 package com.MsoftTexas.WeatherOnMyTripRoute;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -74,8 +76,8 @@ public class MapActivity extends AppCompatActivity implements
 
     static Context context;
 
-
-
+    final MapActivity cont=MapActivity.this;
+            static android.app.AlertDialog.Builder bld;
     static List<PolylineOptions> polylineOptionsList;
     static List<Polyline> polylines=new ArrayList<>();
     static List<Marker> markersInterm = new ArrayList<>();
@@ -418,6 +420,8 @@ SharedPreferences.Editor editor;
             }
         });
 
+                bld = new AlertDialog.Builder(cont);
+
     }
 
 
@@ -501,4 +505,17 @@ SharedPreferences.Editor editor;
             public void showWeather(View view) {
                 new WeatherApi().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
             }
+
+
+            static void displayError(String title, String msg){
+
+                bld.setMessage(msg);
+                bld.setNeutralButton("OK", null);
+                bld.setTitle(title);
+                Log.d("TAG", "Showing alert dialog: " + msg);
+                Dialog dialog=bld.create();
+                //   dialog.getWindow().setType(WindowManager.LayoutParams.TYPE_SYSTEM_ALERT);
+                dialog.show();
+            };
+
        }

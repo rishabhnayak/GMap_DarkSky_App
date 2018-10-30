@@ -52,6 +52,7 @@ import static com.MsoftTexas.WeatherOnMyTripRoute.TravelWithActivity.context;
 
 import static com.MsoftTexas.WeatherOnMyTripRoute.TravelWithActivity.destination;
 
+import static com.MsoftTexas.WeatherOnMyTripRoute.TravelWithActivity.displayError;
 import static com.MsoftTexas.WeatherOnMyTripRoute.TravelWithActivity.jstart_date_millis;
 import static com.MsoftTexas.WeatherOnMyTripRoute.TravelWithActivity.jstart_time_millis;
 
@@ -68,7 +69,8 @@ import static com.MsoftTexas.WeatherOnMyTripRoute.TravelWithActivity.travelmode;
  * Created by kamlesh on 29-03-2018.
  */
 public class RouteApi extends AsyncTask<Object,Object,DirectionsResult> {
-
+    String emsgHead="error";
+    String emsg="";
 
     @Override
     protected void onPreExecute() {
@@ -84,106 +86,26 @@ public class RouteApi extends AsyncTask<Object,Object,DirectionsResult> {
     @Override
     protected void onPostExecute(DirectionsResult apidata) {
 
-//        try {
-        //    DirectionApi apidata = new Gson().fromJson(data, DirectionApi.class);
-//            MapActivity.routeloaded = true;
 
-            //      System.out.println("direction data : "+new Gson().toJson(apidata));
         progress.dismiss();
-        if(apidata.routes !=null && apidata.routes.length>0) {
+        if(apidata !=null) {
+            if (apidata.routes != null && apidata.routes.length > 0) {
 
-            TravelWithActivity.directionapi = apidata;
-            LinearLayoutManager manager = new LinearLayoutManager(context);
-            recyclerView.setLayoutManager(manager);
-            recyclerView.setHasFixedSize(true);
+                TravelWithActivity.directionapi = apidata;
+                LinearLayoutManager manager = new LinearLayoutManager(context);
+                recyclerView.setLayoutManager(manager);
+                recyclerView.setHasFixedSize(true);
 
-            AdapterList adapterList = new AdapterList(TravelWithActivity.context, apidata);
+                AdapterList adapterList = new AdapterList(TravelWithActivity.context, apidata);
 
-            recyclerView.setAdapter(adapterList);
-        }else{
-            Toast.makeText(context,"No Routes Available",Toast.LENGTH_SHORT).show();
-        }
-
-//        System.out.println("code run");
-
-//            DirectionsRoute route = apidata.routes[0];
-//
-//
-////            System.out.println("here is polyline : " + apidata.routes[0].overviewPolyline.getEncodedPath());
-////            if (weatherloaded) {
-////                custom_dialog.setVisibility(View.GONE);
-////            } else {
-////                MapActivity.loading_text.setText("loading weather..");
-////            }
-//
-////            System.out.println("here is the route data :\n" + new Gson().toJson(apidata));
-//            if (new Gson().toJson(apidata) != null) {
-//
-//                slidingUpPanelLayout.setAlpha(1);
-//            }
-//            System.out.println("direction success.............babes.......");
-//            MapActivity.polylines = new ArrayList<>();
-//            //add route(s) to the map.
-//
-//            MapActivity.distance.setText("(" + route.legs[0].distance.humanReadable+ ")");
-//            MapActivity.duration.setText(route.legs[0].durationInTraffic!=null?route.legs[0].durationInTraffic.humanReadable:route.legs[0].duration.humanReadable);
-//            if (route.legs[0].duration.humanReadable != null) {
-//                slidingUpPanelLayout.setPanelHeight(context.getResources().getDimensionPixelSize(R.dimen.dragupsize));
-//            }
-//
-//
-//            polylineOptionsList = new ArrayList<>();
-//            System.out.println("route options : " + apidata.routes.length);
-//            Polyline selectedPolyline = null;
-//            if (apidata.routes.length > 0) {
-//               List<LatLng> lst = PolyUtil.decode(apidata.routes[0].overviewPolyline.getEncodedPath());
-//
-//                PolylineOptions polyOptions = new PolylineOptions();
-//                polyOptions.color(context.getResources().getColor(R.color.seletedRoute));
-//                polyOptions.width(14);
-//                polyOptions.addAll(lst);
-//                polylineOptionsList.add(polyOptions);
-//                MapActivity.polylines.add(selectedPolyline);
-//            }
-//
-//            if (apidata.routes.length > 1) {
-//                for (int i = 1; i < apidata.routes.length; i++) {
-//                    List<LatLng> lst = PolyUtil.decode(apidata.routes[i].overviewPolyline.getEncodedPath());
-//                    //In case of more than 5 alternative routes
-//                    //   int colorIndex = i % COLORS.length;
-//
-//                    PolylineOptions polyOptions = new PolylineOptions();
-//
-//                    polyOptions.color(context.getResources().getColor(R.color.alternateRoute));
-//                    polyOptions.width(12);
-//
-//
-//                    polyOptions.addAll(lst);
-//                    Polyline polyline = MapActivity.googleMap.addPolyline(polyOptions);
-//                    MapActivity.polylines.add(polyline);
-//                    polyline.setClickable(true);
-//                    polylineOptionsList.add(polyOptions);
-//                }
-//            }
-//
-//            if (polylineOptionsList != null && polylineOptionsList.get(0) != null) {
-//                selectedPolyline = googleMap.addPolyline(polylineOptionsList.get(0));
-//                polylines.set(0, selectedPolyline);
-//                selectedPolyline.setClickable(true);
-//            }
-//
-//            setCameraWithCoordinationBounds(route);
-//        }catch (Exception e){
-//            e.printStackTrace();
-//            custom_dialog.setVisibility(View.VISIBLE);
-//            loading.setVisibility(View.GONE);
-//            loading_text.setVisibility(View.VISIBLE);
-////            if(data.equals("NoInternet")){
-////                loading_text.setText("No Internet Connection.Please Check Your Internet Connection");
-////            }else {
-////                loading_text.setText("Error :" + e.toString());
-////            }
-//        }
+                recyclerView.setAdapter(adapterList);
+            } else {
+                Toast.makeText(context, "No Routes Available", Toast.LENGTH_SHORT).show();
+                displayError("No Route Available", "no Routes found between the Given Start and End Address");
+            }
+        }else {
+            displayError(emsgHead,emsg);
+            }
 
     }
 
@@ -192,6 +114,7 @@ public class RouteApi extends AsyncTask<Object,Object,DirectionsResult> {
         try {
             ConnectivityManager mgr = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
             NetworkInfo netInfo = mgr.getActiveNetworkInfo();
+
 
             if (netInfo != null && netInfo.isConnected()) {
 
@@ -244,44 +167,15 @@ public class RouteApi extends AsyncTask<Object,Object,DirectionsResult> {
 
                 return apiRequest.await();
 
-
-//                    HttpClient client = new DefaultHttpClient();
-//
-//
-//                    HttpResponse response = null;
-//
-//                    //nbsc-1518068960369.appspot.com
-//                    System.out.println("https://maps.googleapis.com/maps/api/directions/json?origin="
-//                            + origin.latitude + "," + origin.longitude
-//                            + "&destination=" + destination.latitude + "," + destination.longitude
-//                            + "&alternatives=true"
-//                            + "&key=AIzaSyDi3B9R9hVpC9YTmOCCz_pCR1BKW3tIRGY");
-//                    HttpGet request = new HttpGet("https://maps.googleapis.com/maps/api/directions/json?origin="
-//                            + origin.latitude + "," + origin.longitude
-//                            + "&destination=" + destination.latitude + "," + destination.longitude
-//                            + "&alternatives=true"
-//                            + "&key=AIzaSyDi3B9R9hVpC9YTmOCCz_pCR1BKW3tIRGY");
-//                    BufferedReader rd = null;
-//                    try {
-//                        response = client.execute(request);
-//                        rd = new BufferedReader(new InputStreamReader(response.getEntity().getContent()));
-//                        String line = "";
-//                        StringBuilder sb = new StringBuilder();
-//                        while ((line = rd.readLine()) != null) {
-//                            sb.append(line);
-//                        }
-//                        return sb.toString();
-//
-//                    } catch (Exception e) {
-//                        System.out.println("error : " + e.toString());
-//                        String line = "";
-//                    }
              }else{
-               throw new NetworkErrorException();
+                 this.emsgHead="No Network Connection";
+                 this.emsg="Please TurnOn Your Mobile Data";
             }
 
         } catch (Exception e) {
             e.printStackTrace();
+            this.emsg=e.getMessage();
+            this.emsgHead="Error";
         }
         return null;
 

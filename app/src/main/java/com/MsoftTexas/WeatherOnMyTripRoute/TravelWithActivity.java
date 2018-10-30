@@ -1,5 +1,6 @@
 package com.MsoftTexas.WeatherOnMyTripRoute;
 
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
@@ -13,9 +14,11 @@ import android.os.Bundle;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
@@ -40,7 +43,7 @@ import java.util.TimeZone;
 public class TravelWithActivity extends BaseActivity
        {
 
-
+    final TravelWithActivity cont=TravelWithActivity.this;
     int tempYear,tempMonth,tempDay;
     public static int  DistanceUnit = 0;
     static DirectionsResult directionapi;
@@ -68,8 +71,7 @@ public class TravelWithActivity extends BaseActivity
 
     static ProgressDialog progress;
 
- 
-
+    static android.app.AlertDialog.Builder bld;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,6 +83,7 @@ public class TravelWithActivity extends BaseActivity
         setSupportActionBar(toolbar);
 
         progress=new ProgressDialog(this);
+
 
         tv_source = findViewById(R.id.source);
         tv_dstn = findViewById(R.id.destination);
@@ -267,6 +270,7 @@ public class TravelWithActivity extends BaseActivity
 
 
 
+        bld = new AlertDialog.Builder(cont);
 
     }
 
@@ -391,4 +395,16 @@ public class TravelWithActivity extends BaseActivity
         directionapi=null;
         recyclerView.setAdapter(null);
     };
+
+     static void displayError(String title, String msg){
+
+         bld.setMessage(msg);
+         bld.setNeutralButton("OK", null);
+         bld.setTitle(title);
+         Log.d("TAG", "Showing alert dialog: " + msg);
+         Dialog dialog=bld.create();
+      //   dialog.getWindow().setType(WindowManager.LayoutParams.TYPE_SYSTEM_ALERT);
+         dialog.show();
+     };
+
 }
