@@ -238,7 +238,7 @@ public class TravelWithActivity extends BaseActivity
         //       time.setText(curr_time);
         departAt.setText(curr_time+","+mDay+" "+month[mMonth]+" "+String.valueOf(mYear).substring(2));
 
-        tv_source.setOnClickListener(new View.OnClickListener() {
+        (findViewById(R.id.source_field)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent=new Intent(TravelWithActivity.this,SearchPlace.class);
@@ -247,7 +247,7 @@ public class TravelWithActivity extends BaseActivity
             }
         });
 
-        tv_dstn.setOnClickListener(new View.OnClickListener() {
+        (findViewById(R.id.dstn_field)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent=new Intent(TravelWithActivity.this,SearchPlace.class);

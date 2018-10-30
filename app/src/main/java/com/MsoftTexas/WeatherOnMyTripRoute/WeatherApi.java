@@ -46,6 +46,7 @@ import static com.MsoftTexas.WeatherOnMyTripRoute.MapActivity.apiData;
 import static com.MsoftTexas.WeatherOnMyTripRoute.MapActivity.context;
 
 import static com.MsoftTexas.WeatherOnMyTripRoute.MapActivity.link;
+import static com.MsoftTexas.WeatherOnMyTripRoute.MapActivity.location_icon;
 import static com.MsoftTexas.WeatherOnMyTripRoute.MapActivity.markersSteps;
 import static com.MsoftTexas.WeatherOnMyTripRoute.MapActivity.progressDialog;
 import static com.MsoftTexas.WeatherOnMyTripRoute.TravelWithActivity.DistanceUnit;
@@ -93,6 +94,7 @@ public class WeatherApi extends AsyncTask<Object,Object,Apidata> {
 //        apidata = new Gson().fromJson(data, Apidata.class);
 
         System.out.println("weather data call has started........");
+
     //    MapActivity.weatherloaded=true;
    //     System.out.println("here is the list of intermediate Points:");
         apiData=apidata;
@@ -110,14 +112,14 @@ public class WeatherApi extends AsyncTask<Object,Object,Apidata> {
                 TextView weather=MapActivity.step_weather;
 
                 TextView time=MapActivity.step_time;
-                String time_data[]=item.getArrtime().split("\\.");
+                String time_data[]=item.getArrtime().split(",",2);
                 if(time_data.length>=2)
                 time.setText(time_data[0]+"\n"+time_data[1]);
                 else  time.setText(item.getArrtime());
                 if(item.getLname()!=null) {
                     String lname[]=item.getLname().split(",");
                     if(lname.length>=2)
-                    MapActivity.location_name.setText(lname[0].length()<20?lname[0]:lname[0].substring(0,20)+"..,\n"+lname[1]);
+                    MapActivity.location_name.setText(lname[0].length()<20?lname[0]:lname[0].substring(0,19)+"..,\n"+lname[1]);
                     else{
                     MapActivity.location_name.setText(lname[0]);
                     }
@@ -200,11 +202,12 @@ public class WeatherApi extends AsyncTask<Object,Object,Apidata> {
                 TextView weather=MapActivity.step_weather;
 
                 TextView time=MapActivity.step_time;
-                String time_data[]=mStep.getArrtime().split("\\.");
+                String time_data[]=mStep.getArrtime().split(",",2);
                 if(time_data.length>=2)
                     time.setText(time_data[0]+"\n"+time_data[1]);
                 else  time.setText(mStep.getArrtime());
                 MapActivity.location_name.setText("");
+                location_icon.setVisibility(View.GONE);
                 Bitmap bitmap=MapActivity.layout_to_image.convert_layout();
 
 
