@@ -13,6 +13,8 @@ import com.MsoftTexas.WeatherOnMyTripRoute.util.IabResult;
 import com.MsoftTexas.WeatherOnMyTripRoute.util.Inventory;
 import com.MsoftTexas.WeatherOnMyTripRoute.util.Purchase;
 
+import java.sql.SQLOutput;
+
 import io.trialy.library.Trialy;
 import io.trialy.library.TrialyCallback;
 
@@ -90,6 +92,10 @@ public class BaseActivity extends AppCompatActivity implements  IabBroadcastRece
                 }
             }
         });
+
+        mTrialy = new Trialy(this, TRIALY_APP_KEY);
+        mTrialy.clearLocalCache(TRIALY_SKU);
+        mTrialy.checkTrial(TRIALY_SKU, mTrialyCallback);
     }
 
 
@@ -216,6 +222,8 @@ public class BaseActivity extends AppCompatActivity implements  IabBroadcastRece
     }
 
     void haveTrialorSubs(){
+        System.out.println(havetrial);
+        System.out.println(mSubscribedToInfiniteGas);
         if(!havetrial && !mSubscribedToInfiniteGas) {
             startActivity(new Intent(BaseActivity.this, Subscription.class));
             finish();
