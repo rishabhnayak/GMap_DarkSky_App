@@ -71,9 +71,7 @@ import static io.trialy.library.Constants.STATUS_TRIAL_RUNNING;
 
 public class MapActivity extends AppCompatActivity implements
         OnMapReadyCallback
-        ,View.OnClickListener
-
-        {
+   {
 
     static Context context;
 
@@ -371,10 +369,7 @@ SharedPreferences.Editor editor;
     }
 
 
-    @Override
-    public void onClick(View view) {
 
-    }
 
 
             @Override
@@ -471,42 +466,59 @@ SharedPreferences.Editor editor;
             polylineOptionsList = new ArrayList<>();
             System.out.println("route options : " + directionapi.routes.length);
             Polyline selectedPolyline = null;
-            if (directionapi.routes.length > 0) {
-               List<LatLng> lst = PolyUtil.decode(directionapi.routes[0].overviewPolyline.getEncodedPath());
+            PolylineOptions SelectedpolyOptions = null;
+//            if (directionapi.routes.length > 0) {
+//               List<LatLng> lst = PolyUtil.decode(directionapi.routes[selectedroute].overviewPolyline.getEncodedPath());
+//
+//                PolylineOptions polyOptions = new PolylineOptions();
+//                polyOptions.color(context.getResources().getColor(R.color.seletedRoute));
+//                polyOptions.width(14);
+//                polyOptions.addAll(lst);
+//                polylineOptionsList.add(polyOptions);
+//                MapActivity.polylines.add(selectedPolyline);
+//            }
 
-                PolylineOptions polyOptions = new PolylineOptions();
-                polyOptions.color(context.getResources().getColor(R.color.seletedRoute));
-                polyOptions.width(14);
-                polyOptions.addAll(lst);
-                polylineOptionsList.add(polyOptions);
-                MapActivity.polylines.add(selectedPolyline);
-            }
+          //  if (directionapi.routes.length > 0) {
+                for (int i = 0; i < directionapi.routes.length; i++) {
+                    if (i != selectedroute) {
+                        List<LatLng> lst = PolyUtil.decode(directionapi.routes[i].overviewPolyline.getEncodedPath());
 
-            if (directionapi.routes.length > 1) {
-                for (int i = 1; i < directionapi.routes.length; i++) {
-                    List<LatLng> lst = PolyUtil.decode(directionapi.routes[i].overviewPolyline.getEncodedPath());
-                    //In case of more than 5 alternative routes
-                    //   int colorIndex = i % COLORS.length;
+                        PolylineOptions polyOptions = new PolylineOptions();
+                        polyOptions.color(context.getResources().getColor(R.color.alternateRoute));
+                        polyOptions.width(12);
+                        polyOptions.addAll(lst);
 
-                    PolylineOptions polyOptions = new PolylineOptions();
+                        Polyline polyline = MapActivity.googleMap.addPolyline(polyOptions);
 
-                    polyOptions.color(context.getResources().getColor(R.color.alternateRoute));
-                    polyOptions.width(12);
+                        MapActivity.polylines.add(polyline);
+                        polyline.setClickable(true);
+
+                        polylineOptionsList.add(polyOptions);
+                    }else {
+                        List<LatLng> lst = PolyUtil.decode(directionapi.routes[selectedroute].overviewPolyline.getEncodedPath());
 
 
-                    polyOptions.addAll(lst);
-                    Polyline polyline = MapActivity.googleMap.addPolyline(polyOptions);
-                    MapActivity.polylines.add(polyline);
-                    polyline.setClickable(true);
-                    polylineOptionsList.add(polyOptions);
+                        SelectedpolyOptions = new PolylineOptions();
+                        SelectedpolyOptions.color(context.getResources().getColor(R.color.seletedRoute));
+                        SelectedpolyOptions.width(14);
+                        SelectedpolyOptions.addAll(lst);
+                        polylineOptionsList.add(SelectedpolyOptions);
+
+
+
+                    }
                 }
-            }
 
-            if (polylineOptionsList != null && polylineOptionsList.get(0) != null) {
-                selectedPolyline = googleMap.addPolyline(polylineOptionsList.get(0));
-                polylines.set(0, selectedPolyline);
-                selectedPolyline.setClickable(true);
-            }
+                if(SelectedpolyOptions !=null) {
+                    selectedPolyline = googleMap.addPolyline(SelectedpolyOptions);
+                    MapActivity.polylines.add(selectedPolyline);
+                    selectedPolyline.setClickable(true);
+                    }
+ //           }
+
+//            if (polylineOptionsList != null && polylineOptionsList.get(0) != null) {
+//
+//            }
 
 
             setCameraWithCoordinationBounds(directionapi.routes[selectedroute]);
