@@ -120,18 +120,18 @@
     },
     {
       "client_info": {
-        "mobilesdk_app_id": "1:270648059074:android:2d084ade75d742f9",
+        "mobilesdk_app_id": "1:270648059074:android:44c0dd98fbba47d7",
         "android_client_info": {
-          "package_name": "com.kamlesh.directionandweather123"
+          "package_name": "com.kamlesh.GmapDarksky"
         }
       },
       "oauth_client": [
         {
-          "client_id": "270648059074-lpv7qo67sjphpaj6kjditb53879jd083.apps.googleusercontent.com",
+          "client_id": "270648059074-sahvg3id8rflu4lp2nb5uq3bvg2d1lgb.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.kamlesh.directionandweather123",
-            "certificate_hash": "896d88af419149ad9c20d5a702cdc2df211ff438"
+            "package_name": "com.kamlesh.GmapDarksky",
+            "certificate_hash": "013a34e63b2758550118b6a8faafccb3650b6ba8"
           }
         },
         {

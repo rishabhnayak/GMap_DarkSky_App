@@ -33,11 +33,14 @@ import android.widget.Toast;
 
 
 import com.MsoftTexas.WeatherOnMyTripRoute.util.IabBroadcastReceiver;
+import com.crashlytics.android.Crashlytics;
 import com.google.maps.model.DirectionsResult;
 import com.google.maps.model.LatLng;
 
 import java.util.Calendar;
 import java.util.TimeZone;
+
+import io.fabric.sdk.android.Fabric;
 
 
 public class TravelWithActivity extends BaseActivity
@@ -78,7 +81,7 @@ public class TravelWithActivity extends BaseActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_travel_with_activity);
         recyclerView = findViewById(R.id.recycler);
-
+        Fabric.with(this, new Crashlytics());
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
