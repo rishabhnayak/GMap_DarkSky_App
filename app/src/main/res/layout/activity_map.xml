@@ -31,6 +31,7 @@
 
                 <android.support.design.widget.FloatingActionButton
                     android:backgroundTint="#ffffff"
+                    sothree:backgroundTint="#ffffff"
                     sothree:borderWidth="0dp"
                     android:layout_alignParentRight="true"
                     android:layout_width="wrap_content"
@@ -38,163 +39,7 @@
                     android:layout_margin="@dimen/fab_margin"
                     android:onClick="showWeather"
                     android:src="@drawable/ic_weather"/>
-                <!--<Button-->
-                    <!--android:layout_width="match_parent"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:id="@+id/showweather"-->
-                    <!--android:onClick="showWeather"-->
-                    <!--android:text="showweather"/>-->
-<!--<android.support.v7.widget.CardView-->
-    <!--android:id="@+id/srcdstcard"-->
-    <!--sothree:cardCornerRadius="10dp"-->
-    <!--android:layout_margin="10dp"-->
-    <!--sothree:cardElevation="4dp"-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="wrap_content">-->
 
-                <!--<RelativeLayout-->
-                    <!--android:visibility="gone"-->
-                    <!--android:layout_width="match_parent"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:id="@+id/fillform"-->
-                    <!--&gt;-->
-
-                    <!--<LinearLayout-->
-
-                        <!--android:id="@+id/card"-->
-                        <!--android:layout_width="match_parent"-->
-                        <!--android:layout_height="wrap_content"-->
-                        <!--android:orientation="vertical">-->
-                    <!--<TextView-->
-                        <!--android:textSize="15sp"-->
-                        <!--android:fontFamily="sans-serif-thin"-->
-                        <!--android:layout_marginTop="10dp"-->
-                        <!--android:layout_marginLeft="10dp"-->
-                        <!--android:layout_marginRight="10dp"-->
-                        <!--android:layout_marginBottom="5dp"-->
-                        <!--android:background="@drawable/rect"-->
-                        <!--android:visibility="visible"-->
-                        <!--android:id="@+id/autocomplete_source"-->
-                        <!--android:layout_width="match_parent"-->
-                        <!--android:layout_height="wrap_content"-->
-                        <!--android:layout_gravity="center_horizontal"-->
-                        <!--android:hint="Starting Address"-->
-                        <!--android:singleLine="true" />-->
-
-                    <!--<LinearLayout-->
-
-                        <!--android:layout_marginRight="70dp"-->
-                        <!--android:layout_marginLeft="10dp"-->
-                        <!--android:background="@drawable/dottedline"-->
-                        <!--android:layout_width="match_parent"-->
-                        <!--android:layout_height="1dp" />-->
-
-                    <!--<TextView-->
-                        <!--android:textSize="15sp"-->
-                        <!--android:fontFamily="sans-serif-thin"-->
-                        <!--android:layout_marginTop="5dp"-->
-                        <!--android:layout_marginLeft="10dp"-->
-                        <!--android:layout_marginRight="10dp"-->
-                        <!--android:layout_marginBottom="10dp"-->
-                        <!--android:background="@drawable/rect"-->
-                        <!--android:visibility="visible"-->
-                        <!--android:id="@+id/autocomplete_destination"-->
-                        <!--android:layout_width="match_parent"-->
-                        <!--android:layout_height="wrap_content"-->
-                        <!--android:layout_gravity="center_horizontal"-->
-                        <!--android:hint="Destination"-->
-                        <!--android:singleLine="true" />-->
-
-
-                        <!--<LinearLayout-->
-                            <!--android:layout_marginLeft="10dp"-->
-                            <!--android:layout_marginRight="10dp"-->
-                            <!--android:layout_marginBottom="10dp"-->
-                            <!--android:gravity="center_vertical"-->
-                            <!--android:layout_width="wrap_content"-->
-                            <!--android:layout_height="wrap_content">-->
-
-
-                            <!--<TextView-->
-
-                                <!--android:fontFamily="sans-serif-thin"-->
-                                <!--android:textColor="@color/colorPrimary"-->
-                                <!--android:layout_width="wrap_content"-->
-                                <!--android:layout_height="wrap_content"-->
-                                <!--android:layout_marginLeft="2dp"-->
-                                <!--android:text="Depart At  : "-->
-                                <!--android:textSize="15sp" />-->
-
-                        <!--<android.support.v7.widget.CardView-->
-
-                            <!--android:layout_marginRight="10dp"-->
-                            <!--android:id="@+id/card_date"-->
-                            <!--sothree:cardBackgroundColor="@color/colorAccent"-->
-                            <!--android:layout_width="wrap_content"-->
-                            <!--android:layout_height="wrap_content"-->
-                            <!--android:layout_margin="0dp"-->
-                            <!--sothree:cardCornerRadius="7dp"-->
-                            <!--sothree:cardElevation="3dp">-->
-
-                            <!--<LinearLayout-->
-                                <!--android:layout_gravity="center_vertical"-->
-                                <!--android:layout_width="wrap_content"-->
-                                <!--android:layout_height="wrap_content"-->
-                                <!--android:layout_marginBottom="3dp"-->
-                                <!--android:layout_marginLeft="15dp"-->
-                                <!--android:layout_marginRight="15dp"-->
-                                <!--android:layout_marginTop="3dp"-->
-                                <!--android:orientation="horizontal">-->
-                                <!--<TextView-->
-                                    <!--android:fontFamily="sans-serif-condensed"-->
-                                    <!--android:textColor="@color/loo_pre"-->
-                                    <!--android:id="@+id/date1"-->
-                                    <!--android:layout_width="wrap_content"-->
-                                    <!--android:layout_height="wrap_content"-->
-                                    <!--android:text="12-12-21"-->
-                                    <!--android:textSize="12sp" />-->
-                            <!--</LinearLayout>-->
-
-                        <!--</android.support.v7.widget.CardView>-->
-                        <!--</LinearLayout>-->
-
-
-                        <!--<LinearLayout-->
-                            <!--android:layout_marginRight="3dp"-->
-                            <!--android:gravity="right"-->
-                            <!--android:orientation="horizontal"-->
-                            <!--android:layout_width="match_parent"-->
-                            <!--android:layout_height="wrap_content">-->
-                            <!--<Switch-->
-
-                                <!--android:textSize="13sp"-->
-                                <!--android:layout_gravity="center_vertical"-->
-                                <!--android:textColor="#9e9e9e"-->
-                                <!--android:id="@+id/weather_switch"-->
-                                <!--android:layout_width="wrap_content"-->
-                                <!--android:layout_height="wrap_content"-->
-                                <!--android:text="Show Weather  " />-->
-                            <!--<ImageView-->
-                                <!--android:id="@+id/weather_switch_icon"-->
-                                <!--android:layout_width="40dp"-->
-                                <!--android:layout_height="40dp" />-->
-                        <!--</LinearLayout>-->
-
-                    <!--</LinearLayout>-->
-
-                    <!--<ImageView-->
-                        <!--android:id="@+id/request_direction"-->
-                        <!--android:layout_width="35dp"-->
-                        <!--android:layout_height="35dp"-->
-                        <!--android:layout_alignParentEnd="true"-->
-                        <!--android:layout_alignParentTop="true"-->
-                        <!--android:layout_marginEnd="17dp"-->
-                        <!--android:layout_marginTop="23dp"-->
-                        <!--android:background="@drawable/ic_send_black_24dp" />-->
-                <!--</RelativeLayout>-->
-
-<!--</android.support.v7.widget.CardView>-->
-                <!--map show temp.............................................-->
                 <android.support.v7.widget.CardView
                     android:elevation="5dp"
                     sothree:cardCornerRadius="8dp"
@@ -212,7 +57,6 @@
                     <LinearLayout
                         android:orientation="vertical"
                         android:id="@+id/show"
-                        android:background="@drawable/chat"
                         android:paddingTop="5dp"
                         android:paddingBottom="35dp"
                         android:paddingLeft="10dp"
@@ -327,62 +171,6 @@
 
                     </LinearLayout>
                 </android.support.v7.widget.CardView>
-                <!--.........................................................-->
-                <!--<LinearLayout-->
-
-                    <!--android:orientation="horizontal"-->
-                    <!--android:layout_width="match_parent"-->
-                    <!--android:layout_height="wrap_content">-->
-
-             <!---->
-
-                    <!--<android.support.v7.widget.CardView-->
-<!--android:visibility="gone"-->
-                        <!--sothree:cardCornerRadius="10dp"-->
-                        <!--android:layout_margin="15dp"-->
-                        <!--android:layout_width="wrap_content"-->
-                        <!--android:layout_weight="1"-->
-                        <!--android:layout_height="match_parent" >-->
-                        <!--<LinearLayout-->
-                            <!--android:layout_width="match_parent"-->
-                            <!--android:layout_height="match_parent"-->
-                            <!--android:orientation="vertical">-->
-                            <!--<TextView-->
-
-                                <!--android:textSize="10sp"-->
-                                <!--android:textAlignment="center"-->
-                                <!--android:text="Time"-->
-                                <!--android:layout_width="match_parent"-->
-                                <!--android:layout_height="wrap_content" />-->
-                            <!--<TextView-->
-                                <!--android:id="@+id/time"-->
-                                <!--android:textAlignment="center"-->
-                                <!--android:text="hello"-->
-                                <!--android:layout_width="match_parent"-->
-                                <!--android:layout_height="wrap_content" />-->
-                        <!--</LinearLayout>-->
-
-                    <!--</android.support.v7.widget.CardView>-->
-                    <!--<Button-->
-                        <!--android:visibility="gone"-->
-                        <!--android:id="@+id/button_clear"-->
-                        <!--android:layout_weight="1"-->
-                        <!--android:layout_width="wrap_content"-->
-                        <!--android:layout_height="wrap_content"-->
-                        <!--android:layout_gravity="center_horizontal"-->
-                        <!--android:text="clr" />-->
-                <!--</LinearLayout>-->
-
-                <!--<android.support.design.widget.FloatingActionButton-->
-                  <!--android:visibility="gone"-->
-                    <!--android:id="@+id/date"-->
-                    <!--android:layout_width="wrap_content"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:layout_alignParentRight="true"-->
-                    <!--android:layout_alignParentBottom="true"-->
-                    <!--android:layout_margin="@dimen/fab_margin"-->
-                    <!--android:src="@drawable/ic_today_black_24dp" />-->
-
             </RelativeLayout>
         </LinearLayout>
         <LinearLayout

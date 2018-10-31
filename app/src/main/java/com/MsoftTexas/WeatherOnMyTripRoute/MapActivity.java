@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
@@ -257,6 +258,16 @@ SharedPreferences.Editor editor;
         link = (RecyclerView) findViewById(R.id.dragup_list_recycler);
         link.setLayoutManager(new LinearLayoutManager(this));
 //Markers with text.................................................................................
+
+
+        if (android.os.Build.VERSION.SDK_INT > Build.VERSION_CODES.KITKAT) {
+            // only for gingerbread and newer versions
+            ((LinearLayout)findViewById(R.id.show)).setBackgroundResource(R.drawable.chat);
+        } else {
+    ((LinearLayout)findViewById(R.id.show)).setBackgroundResource(R.drawable.ic_chat_bubble_black_24dp);
+
+}
+
 
         routeadapter = new DragupListAdapter_route(context, directionapi.routes[selectedroute]);
         link.setAdapter(routeadapter);
