@@ -168,7 +168,7 @@ public class RouteApi extends AsyncTask<Object,Object,DirectionsResult> {
                 return apiRequest.await();
 
              }else{
-                 this.emsgHead="No Network Connection";
+                 this.emsgHead="No Internet Connection";
                  this.emsg="Please TurnOn Your Mobile Data";
             }
 

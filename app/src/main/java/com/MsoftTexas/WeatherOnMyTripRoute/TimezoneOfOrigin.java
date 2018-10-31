@@ -93,7 +93,7 @@ public class TimezoneOfOrigin extends AsyncTask<String,String,String> {
                  return null;
             }
         }else{
-            this.emsgHead="No Network Connection";
+            this.emsgHead="No Internet Connection";
             this.emsg="Please Turn On Your Mobile Data";
             return null;
         }

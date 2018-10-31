@@ -27,7 +27,7 @@ import static io.trialy.library.Constants.STATUS_TRIAL_RUNNING;
 public class BaseActivity extends AppCompatActivity implements  IabBroadcastReceiver.IabBroadcastListener {
     static String TRIALY_APP_KEY = "CNXFXUSWNXNREPZN6FW"; //TODO: Replace with your app key, which can be found on your Trialy developer dashboard
     static String TRIALY_SKU = "premium_test"; //TODO: Replace with a trial SKU, which can be found on your Trialy developer dashboard. Each app can have multiple trials
-    static String base64EncodedPublicKey = "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAnh6LDOmwwPSQ8KesBlRQ/LrN/75xUFQhVmvfJG6uUlmgxU4iWiMzwr1iydveIz3cNT2C1IdnBpohHuDhn9RlOn5uaR3Cw0BDGrnRzwHZRPdoJ3/tAWIS+cLD/5LU7sriMOi6spMaPTYjgrT/Lck36goPwY88FK+e2G09cFrd54WQBPwHO+COKlKOFQ7Yt9yiCLlwivhdSDbacuVGg696JjAeTBvnw0eqks7Q/FHg2U0TlhBf/RU2+tvCnR2L0hk1kgkkdZFua8aDrZ1xQkEkBzlrrHrGnmqCyVoPHwMcxoOKM61BX511NMRuBJv9Eg19n4QITqT/fsR7vzmnljjxLQIDAQAB" ;
+    static String base64EncodedPublicKey = "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAsGAwg6yWWzv0sh77t3Ba+xkYOGxM2pfueFWaaVDt6eVLqbh2xbMpnThRWhuMAkFrEkLdN1DJWDZu1UuQZkUq7J4oUff3fpJny87yG8ATjBhxe1eT7bNXHyL66J/BVDW4rCC98bW4LE/ApsIdllFDxzxif5YM1wL8+E1X1J6liwnbwcjFv7mUWT/eCqMXe6OYegcc3d4Rvb/tinDTxDqAwWxK4SqwmRpFFzNnVen0X/Y+AG3iAWiTEmrF1MZuVn19iD+PxTSAE2e1Xsrp5l6TZlLWBMCTLXBXau2fMC6nAF9HJ63kLzJ604q713gP834mz/8fOUWjM2UN1QyFCMhLKwIDAQAB" ;
 
     IabHelper mHelper;
 
@@ -35,10 +35,10 @@ public class BaseActivity extends AppCompatActivity implements  IabBroadcastRece
     IabBroadcastReceiver mBroadcastReceiver;
     Trialy mTrialy;
 
-    String SKU_INFINITE_GAS_MONTHLY = "monthly_01";
-    String SKU_INFINITE_GAS_QUATERLY = "quaterly_03";
-    String SKU_INFINITE_GAS_HALFYEARLY = "halfyearly_06";
-    String SKU_INFINITE_GAS_YEARLY = "yearly_12";
+    static String SKU_INFINITE_GAS_MONTHLY = "monthly_01";
+    static String SKU_INFINITE_GAS_QUATERLY = "quaterly_03";
+    static String SKU_INFINITE_GAS_HALFYEARLY = "halfyearly_06";
+    static String SKU_INFINITE_GAS_YEARLY = "yearly_12";
 
     boolean mSubscribedToInfiniteGas = true;
     boolean mAutoRenewEnabled = false;

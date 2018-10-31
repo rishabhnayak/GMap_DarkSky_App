@@ -341,7 +341,7 @@ public class WeatherApi extends AsyncTask<Object,Object,Apidata> {
                 return call.execute().body();
 
             }else{
-                this.emsgHead="No Network Connection";
+                this.emsgHead="No Internet Connection";
                 this.emsg="Please TurnOn Your Mobile Data";
             }
 
