@@ -302,7 +302,7 @@ public class Subscription extends AppCompatActivity implements IabBroadcastRecei
             Log.d(TAG, "User " + (mSubscribedToInfiniteGas ? "HAS" : "DOES NOT HAVE")
                     + " infinite gas subscription.");
             if (mSubscribedToInfiniteGas){
-                Button btnSubscribe=findViewById(R.id.subscribe);
+                FancyButton btnSubscribe=findViewById(R.id.subscribe);
                 btnSubscribe.setText("Subscribed");
                 btnSubscribe.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
                 btnSubscribe.setTextColor(getResources().getColor(R.color.loo_pre));
