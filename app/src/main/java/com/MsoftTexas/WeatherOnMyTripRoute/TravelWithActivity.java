@@ -247,6 +247,7 @@ public class TravelWithActivity extends BaseActivity
         (findViewById(R.id.source_field)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                resetresult();
                 Intent intent=new Intent(TravelWithActivity.this,SearchPlace.class);
                 intent.putExtra("SrcOrDstn","Src");
                 startActivity(intent);
@@ -256,6 +257,7 @@ public class TravelWithActivity extends BaseActivity
         (findViewById(R.id.dstn_field)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                resetresult();
                 Intent intent=new Intent(TravelWithActivity.this,SearchPlace.class);
                 intent.putExtra("SrcOrDstn","Dstn");
                 startActivity(intent);
