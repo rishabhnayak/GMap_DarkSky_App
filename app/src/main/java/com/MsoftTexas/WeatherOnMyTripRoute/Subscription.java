@@ -32,6 +32,7 @@ import java.util.Locale;
 
 import io.trialy.library.Trialy;
 import io.trialy.library.TrialyCallback;
+import mehdi.sakout.fancybuttons.FancyButton;
 
 
 import static android.view.View.GONE;
@@ -142,12 +143,12 @@ public class Subscription extends AppCompatActivity implements IabBroadcastRecei
                 // Do something after 5s = 5000ms
             findViewById(R.id.main_layout).setVisibility(View.VISIBLE);
             }
-        }, 300);
-        StartSmartAnimation.startAnimation( findViewById(R.id.toolbar) , AnimationType.SlideInDown , 700 , 0 , true );
-      //  StartSmartAnimation.startAnimation( findViewById(R.id.sun) , AnimationType.BounceInDown , 2000 , 0 , true );
-        StartSmartAnimation.startAnimation( findViewById(R.id.llTimeRemainingg) , AnimationType.ZoomInRubberBand , 700 , 0 , true );
-        StartSmartAnimation.startAnimation( findViewById(R.id.sub_box) , AnimationType.SlideInLeft , 700 , 0 , true );
-        StartSmartAnimation.startAnimation( findViewById(R.id.linearLayout3) , AnimationType.SlideInUp , 700 , 0 , true );
+        }, 000);
+//        StartSmartAnimation.startAnimation( findViewById(R.id.toolbar) , AnimationType.SlideInDown , 700 , 0 , true );
+//      //  StartSmartAnimation.startAnimation( findViewById(R.id.sun) , AnimationType.BounceInDown , 2000 , 0 , true );
+//        StartSmartAnimation.startAnimation( findViewById(R.id.llTimeRemainingg) , AnimationType.ZoomInRubberBand , 700 , 0 , true );
+//        StartSmartAnimation.startAnimation( findViewById(R.id.sub_box) , AnimationType.SlideInLeft , 700 , 0 , true );
+//        StartSmartAnimation.startAnimation( findViewById(R.id.linearLayout3) , AnimationType.SlideInUp , 700 , 0 , true );
         // load game data
     //    loadData();
 
@@ -692,6 +693,7 @@ public class Subscription extends AppCompatActivity implements IabBroadcastRecei
                 case STATUS_TRIAL_JUST_STARTED:
                     //The trial has just started - enable the premium features for the user
                     disableStartTrialButton("Trial Activated");
+                    ((FancyButton)findViewById(R.id.btnStartTrial)).setTextColor(R.color.cardview_dark_background);
                     //Update the "Time remaining"-label
                     havetrial=true;
                     updateTimeRemainingLabel(timeRemaining);
@@ -710,8 +712,8 @@ public class Subscription extends AppCompatActivity implements IabBroadcastRecei
 //                    startActivity(intent1);
                     havetrial=true;
                     disableStartTrialButton("Trial Activated");
-                    Button btnStartTrial = (Button)findViewById(R.id.btnStartTrial);
-                    btnStartTrial.setTextColor(getResources().getColor(R.color.loo_pre));
+                    FancyButton btnStartTrial = findViewById(R.id.btnStartTrial);
+                    btnStartTrial.setTextColor(getResources().getColor(R.color.cardview_dark_background));
                     btnStartTrial.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
                     break;
                 case STATUS_TRIAL_JUST_ENDED:
@@ -751,7 +753,7 @@ public class Subscription extends AppCompatActivity implements IabBroadcastRecei
     }
 
     private void disableStartTrialButton(String text){
-        Button btnStartTrial = (Button)findViewById(R.id.btnStartTrial);
+        FancyButton btnStartTrial = findViewById(R.id.btnStartTrial);
         btnStartTrial.setEnabled(false);
         btnStartTrial.setText(text);
     }

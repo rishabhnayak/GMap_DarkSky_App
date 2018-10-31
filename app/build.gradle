@@ -61,6 +61,7 @@ dependencies {
     implementation 'org.slf4j:slf4j-simple:1.7.25'
     implementation files('libs/retrofit-2.4.0.jar')
     implementation files('libs/converter-gson-2.4.0.jar')
+    implementation 'com.github.medyo:fancybuttons:1.9.0'
 }
 
 

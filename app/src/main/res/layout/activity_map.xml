@@ -37,7 +37,7 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/fab_margin"
                     android:onClick="showWeather"
-                    android:src="@drawable/partly_cloudy_day"/>
+                    android:src="@drawable/ic_weather"/>
                 <!--<Button-->
                     <!--android:layout_width="match_parent"-->
                     <!--android:layout_height="wrap_content"-->
