@@ -8,8 +8,8 @@ android {
     }
     compileSdkVersion 27
     defaultConfig {
-        //   applicationId "com.MsoftTexas.WeatherOnMyTripRoute"
-        applicationId "com.kamlesh.GmapDarksky"
+        //  applicationId "com.MsoftTexas.WeatherOnMyTripRoute"
+        applicationId "com.kamlesh.directionandweather123"
         minSdkVersion 19
         targetSdkVersion 27
         versionCode 27
