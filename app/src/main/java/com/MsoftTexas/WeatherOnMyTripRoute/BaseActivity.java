@@ -35,10 +35,10 @@ public class BaseActivity extends AppCompatActivity implements  IabBroadcastRece
     IabBroadcastReceiver mBroadcastReceiver;
     Trialy mTrialy;
 
-    String SKU_INFINITE_GAS_MONTHLY = "infinite_gas_monthly";
-    String SKU_INFINITE_GAS_QUATERLY = "quaterly";
-    String SKU_INFINITE_GAS_HALFYEARLY = "halfyearly";
-    String SKU_INFINITE_GAS_YEARLY = "infinite_gas_yearly";
+    String SKU_INFINITE_GAS_MONTHLY = "monthly_01";
+    String SKU_INFINITE_GAS_QUATERLY = "quaterly_03";
+    String SKU_INFINITE_GAS_HALFYEARLY = "halfyearly_06";
+    String SKU_INFINITE_GAS_YEARLY = "yearly_12";
 
     boolean mSubscribedToInfiniteGas = true;
     boolean mAutoRenewEnabled = false;
