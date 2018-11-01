@@ -307,7 +307,11 @@ public class Subscription extends AppCompatActivity implements IabBroadcastRecei
                 btnSubscribe.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
                 btnSubscribe.setTextColor(getResources().getColor(R.color.loo_pre));
                 findViewById(R.id.btnStartTrial).setVisibility(GONE);
-                findViewById(R.id.llTimeRemaining).setVisibility(GONE);
+                findViewById(R.id.llTimeRemaining).setVisibility(View.VISIBLE);
+                TextView tvTimeRemaining = (TextView)findViewById(R.id.tvTimeRemaining);
+                tvTimeRemaining.setText(String.format(Locale.ENGLISH, "You are subscribed to %s pack", mInfiniteGasSku.split("_")[0]));
+              //  (findViewById(R.id.llTimeRemaining)))
+                   //     .setVisibility(GONE);
                 }
  //               mTank = TANK_MAX;
 
@@ -599,7 +603,7 @@ public class Subscription extends AppCompatActivity implements IabBroadcastRecei
                     || purchase.getSku().equals(SKU_INFINITE_GAS_YEARLY)) {
                 // bought the infinite gas subscription
                 Log.d(TAG, "Infinite gas subscription purchased.");
-                alert("Thank you for subscribing to infinite gas!");
+                alert("Thank you for subscribing to "+purchase.getSku().split("_")[0]+" pack!");
                 mSubscribedToInfiniteGas = true;
                 mAutoRenewEnabled = purchase.isAutoRenewing();
                 mInfiniteGasSku = purchase.getSku();
@@ -612,8 +616,9 @@ public class Subscription extends AppCompatActivity implements IabBroadcastRecei
                btnSubscribe.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
                btnSubscribe.setTextColor(getResources().getColor(R.color.loo_pre));
                     findViewById(R.id.btnStartTrial).setVisibility(GONE);
-                    findViewById(R.id.llTimeRemaining).setVisibility(GONE);
-
+                    findViewById(R.id.llTimeRemaining).setVisibility(View.VISIBLE);
+                    TextView tvTimeRemaining = (TextView)findViewById(R.id.tvTimeRemaining);
+                    tvTimeRemaining.setText(String.format(Locale.ENGLISH, "You are subscribed to %s pack",  purchase.getSku().split("_")[0]));
 //                    startActivity(new Intent(Subscription.this,MapActivity.class));
 //                    finish();
 
@@ -745,15 +750,17 @@ public class Subscription extends AppCompatActivity implements IabBroadcastRecei
             LinearLayout llTimeRemaining = (LinearLayout)findViewById(R.id.llTimeRemaining);
             llTimeRemaining.setVisibility(GONE);
             return;
-        }
+        }else  if(!mSubscribedToInfiniteGas) {
         //Convert the "timeRemaining"-value (in seconds) to days
         int daysRemaining = (int) timeRemaining / (60 * 60 * 24);
         //Update the tvTimeRemaining-TextView
-        TextView tvTimeRemaining = (TextView)findViewById(R.id.tvTimeRemaining);
-        tvTimeRemaining.setText(String.format(Locale.ENGLISH, "Your trial ends in %d days",  daysRemaining));
-        //Show the llTimeRemaining-LinearLayout
-        LinearLayout llTimeRemaining = (LinearLayout)findViewById(R.id.llTimeRemaining);
-        llTimeRemaining.setVisibility(View.VISIBLE);
+
+            TextView tvTimeRemaining = (TextView) findViewById(R.id.tvTimeRemaining);
+            tvTimeRemaining.setText(String.format(Locale.ENGLISH, "Your trial ends in %d days", daysRemaining));
+            //Show the llTimeRemaining-LinearLayout
+            LinearLayout llTimeRemaining = (LinearLayout) findViewById(R.id.llTimeRemaining);
+            llTimeRemaining.setVisibility(View.VISIBLE);
+        }
     }
 
     private void disableStartTrialButton(String text){

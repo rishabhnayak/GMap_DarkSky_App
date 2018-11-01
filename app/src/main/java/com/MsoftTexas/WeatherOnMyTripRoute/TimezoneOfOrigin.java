@@ -39,7 +39,7 @@ public class TimezoneOfOrigin extends AsyncTask<String,String,String> {
 
     @Override
     protected void onPreExecute() {
-        progress.setTitle("Fetching Timezone");
+        progress.setTitle("Fetching Local Time");
         progress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         progress.setIndeterminate(true);
         progress.show();
@@ -67,7 +67,7 @@ public class TimezoneOfOrigin extends AsyncTask<String,String,String> {
             String sMinute = mMinute < 10 ? "0" + mMinute : "" + mMinute;
             String curr_time = sHour + ":" + sMinute;
             //       time.setText(curr_time);
-            TravelWithActivity.departAt.setText(curr_time + "," + mDay + " " + month[mMonth] + " " + String.valueOf(mYear).substring(2) + " " + timezone);
+            TravelWithActivity.departAt.setText(curr_time + "," + mDay + " " + month[mMonth] + " " + String.valueOf(mYear).substring(2));
         }else{
               displayError(emsgHead,emsg);
         }
@@ -88,7 +88,7 @@ public class TimezoneOfOrigin extends AsyncTask<String,String,String> {
                 return TimeZoneApi.getTimeZone(context, startpoint).await().getID();
             } catch (Exception e) {
                 e.printStackTrace();
-                this.emsgHead="Fetching Timezone Error";
+                this.emsgHead="Fetching Local Time Error";
                 this.emsg=e.getMessage();
                  return null;
             }

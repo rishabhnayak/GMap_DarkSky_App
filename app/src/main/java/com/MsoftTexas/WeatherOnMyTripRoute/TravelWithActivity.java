@@ -300,7 +300,7 @@ public class TravelWithActivity extends BaseActivity
                     @Override
                     public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
 
-                        departAt.setText(dayOfMonth + " " + month[monthOfYear] + " " + String.valueOf(year).substring(2)+" "+timezone);
+                        departAt.setText(dayOfMonth + " " + month[monthOfYear] + " " + String.valueOf(year).substring(2));
                         Calendar cal = Calendar.getInstance();
                         cal.setTimeZone(TimeZone.getTimeZone(timezone));
                         cal.set(Calendar.DAY_OF_MONTH, dayOfMonth);
