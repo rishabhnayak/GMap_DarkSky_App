@@ -1,5 +1,6 @@
 package com.MsoftTexas.WeatherOnMyTripRoute;
 
+import android.app.ActionBar;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
@@ -14,6 +15,7 @@ import android.os.Bundle;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.text.Html;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -84,7 +86,7 @@ public class TravelWithActivity extends BaseActivity
         Fabric.with(this, new Crashlytics());
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
+        getSupportActionBar().setTitle("");
         progress=new ProgressDialog(this);
 
 

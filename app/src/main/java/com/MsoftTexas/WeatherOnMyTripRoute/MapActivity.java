@@ -1,5 +1,6 @@
 package com.MsoftTexas.WeatherOnMyTripRoute;
 
+import android.app.ActionBar;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
@@ -15,6 +16,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.text.Html;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -122,7 +124,7 @@ SharedPreferences.Editor editor;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main2);
 
-
+        setTitle("MapView");
         editor = getSharedPreferences("distance", MODE_PRIVATE).edit();
         SharedPreferences prefs = getSharedPreferences("distance", MODE_PRIVATE);
         int a=prefs.getInt("10",0);
