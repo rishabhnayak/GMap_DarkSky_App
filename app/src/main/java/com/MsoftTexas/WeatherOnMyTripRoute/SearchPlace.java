@@ -99,7 +99,7 @@ public class SearchPlace extends AppCompatActivity {
                 }catch (Error e){
                     System.out.println("save fn error");
                 }
-                Toast.makeText(getApplicationContext(),recentSearches.get(arg2).getName(),Toast.LENGTH_LONG).show();
+  //              Toast.makeText(getApplicationContext(),recentSearches.get(arg2).getName(),Toast.LENGTH_LONG).show();
                 if(getIntent().getStringExtra("SrcOrDstn").equals("Src")){
 
                     TravelWithActivity.tv_source.setText(recentSearches.get(arg2).getAdress());
@@ -112,9 +112,9 @@ public class SearchPlace extends AppCompatActivity {
 
                         startActivity(intent);
 
-                    }else{
+//                    }else{
 //                        TravelWithActivity.go.setBackground(getResources().getDrawable(R.drawable.explore_on));
-                        TravelWithActivity.go.setEnabled(true);
+//                        TravelWithActivity.go.setEnabled(true);
                     }
 
                 }else{
@@ -125,9 +125,9 @@ public class SearchPlace extends AppCompatActivity {
                         Intent intent=new Intent(SearchPlace.this,SearchPlace.class);
                         intent.putExtra("SrcOrDstn","Src");
                         startActivity(intent);
-                    }else{
+//                    }else{
 //                        TravelWithActivity.go.setBackground(getResources().getDrawable(R.drawable.explore_on));
-                        TravelWithActivity.go.setEnabled(true);
+//                        TravelWithActivity.go.setEnabled(true);
                     }
                 }
                 finish();
@@ -164,8 +164,8 @@ public class SearchPlace extends AppCompatActivity {
                 Task<PlaceBufferResponse> placeResult = mGeoDataClientD.getPlaceById(placeId);
                 placeResult.addOnCompleteListener(mUpdatePlaceDetailsCallback);
 
-                Toast.makeText(getApplicationContext(), "Clicked: " + primaryText,
-                        Toast.LENGTH_SHORT).show();
+      //          Toast.makeText(getApplicationContext(), "Clicked: " + primaryText,
+       //                 Toast.LENGTH_SHORT).show();
                 Log.i("TAG", "Called getPlaceById to get Place details for " + placeId);
             }
         };
@@ -204,9 +204,9 @@ public class SearchPlace extends AppCompatActivity {
                             Intent intent=new Intent(SearchPlace.this,SearchPlace.class);
                             intent.putExtra("SrcOrDstn","Dstn");
                             startActivity(intent);
-                        }else{
+//                        }else{
 //                           TravelWithActivity.go.setBackground(getResources().getDrawable(R.drawable.explore_on));
-                            TravelWithActivity.go.setEnabled(true);
+ //                           TravelWithActivity.go.setEnabled(true);
                         }
 
                     }else{
@@ -217,9 +217,9 @@ public class SearchPlace extends AppCompatActivity {
                             Intent intent=new Intent(SearchPlace.this,SearchPlace.class);
                             intent.putExtra("SrcOrDstn","Src");
                             startActivity(intent);
-                        }else{
+//                        }else{
 //                           TravelWithActivity.go.setBackground(getResources().getDrawable(R.drawable.explore_on));
-                            TravelWithActivity.go.setEnabled(true);
+//                            TravelWithActivity.go.setEnabled(true);
                         }
                     }
                // Intent intent = new Intent(SearchPlace.this, MapActivity.class);

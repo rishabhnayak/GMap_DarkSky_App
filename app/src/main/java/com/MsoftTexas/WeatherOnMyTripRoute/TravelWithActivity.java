@@ -1,6 +1,7 @@
 package com.MsoftTexas.WeatherOnMyTripRoute;
 
 import android.app.ActionBar;
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
@@ -8,11 +9,14 @@ import android.app.ProgressDialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.CardView;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.Html;
@@ -34,12 +38,23 @@ import android.widget.TimePicker;
 import android.widget.Toast;
 
 
+import com.MsoftTexas.WeatherOnMyTripRoute.Adapters.AdapterList;
 import com.MsoftTexas.WeatherOnMyTripRoute.util.IabBroadcastReceiver;
 import com.crashlytics.android.Crashlytics;
+import com.google.maps.DirectionsApi;
+import com.google.maps.DirectionsApiRequest;
+import com.google.maps.GeoApiContext;
 import com.google.maps.model.DirectionsResult;
 import com.google.maps.model.LatLng;
+import com.google.maps.model.TravelMode;
+import com.google.maps.model.Unit;
 
+import org.joda.time.DateTime;
+import org.joda.time.DateTimeZone;
+
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 import java.util.TimeZone;
 
 import io.fabric.sdk.android.Fabric;
@@ -78,10 +93,12 @@ public class TravelWithActivity extends BaseActivity
 
     static android.app.AlertDialog.Builder bld;
 
+    static Activity activity;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_travel_with_activity);
+
         recyclerView = findViewById(R.id.recycler);
         Fabric.with(this, new Crashlytics());
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -120,7 +137,8 @@ public class TravelWithActivity extends BaseActivity
                     tv_dstn.setText(srctemp);
 
                 }else{
-                    Toast.makeText(context,"start or end Address is null",Toast.LENGTH_LONG).show();
+                    displayError("Start/Destination Address no filled","Please fill Start and Destination to find routes");
+                    //Toast.makeText(context,"start or end Address is null",Toast.LENGTH_LONG).show();
                 }
             }
         });
@@ -132,6 +150,8 @@ public class TravelWithActivity extends BaseActivity
                 ((ImageView) (findViewById(R.id.a))).setImageResource(R.drawable.car_on);
                 ((ImageView) (findViewById(R.id.c))).setImageResource(R.drawable.walk_off);
                 ((ImageView) (findViewById(R.id.d))).setImageResource(R.drawable.bike_off);
+                ((CheckBox) findViewById(R.id.highway)).setVisibility(View.VISIBLE);
+                ((CheckBox) findViewById(R.id.tolls)).setVisibility(View.VISIBLE);
                 travelmode=0;
                 resetresult();
                 System.out.println("travelmode :"+travelmode);
@@ -145,6 +165,8 @@ public class TravelWithActivity extends BaseActivity
                 ((ImageView) (findViewById(R.id.a))).setImageResource(R.drawable.car_off);
                 ((ImageView) (findViewById(R.id.c))).setImageResource(R.drawable.walk_on);
                 ((ImageView) (findViewById(R.id.d))).setImageResource(R.drawable.bike_off);
+                ((CheckBox) findViewById(R.id.highway)).setVisibility(View.GONE);
+                ((CheckBox) findViewById(R.id.tolls)).setVisibility(View.GONE);
                 travelmode=2;
                 resetresult();
                 System.out.println("travelmode :"+travelmode);
@@ -158,6 +180,8 @@ public class TravelWithActivity extends BaseActivity
                 ((ImageView) (findViewById(R.id.a))).setImageResource(R.drawable.car_off);
                 ((ImageView) (findViewById(R.id.c))).setImageResource(R.drawable.walk_off);
                 ((ImageView) (findViewById(R.id.d))).setImageResource(R.drawable.bike_on);
+                ((CheckBox) findViewById(R.id.highway)).setVisibility(View.GONE);
+                ((CheckBox) findViewById(R.id.tolls)).setVisibility(View.GONE);
                 travelmode=1;
                 resetresult();
                 System.out.println("travelmode :"+travelmode);
@@ -270,6 +294,7 @@ public class TravelWithActivity extends BaseActivity
             @Override
             public void onClick(View view) {
                 //   findViewById(R.id.option_list).setVisibility(View.GONE);
+
                 requestDirection();
             }
         });
@@ -284,9 +309,12 @@ public class TravelWithActivity extends BaseActivity
     public void requestDirection() {
 
         if(origin!=null && destination!=null) {
+            getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
+                    WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
             new RouteApi().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
         }else{
-            Toast.makeText(getApplicationContext(),"origin or destination null", Toast.LENGTH_LONG).show();
+            displayError("Start/Destination Address no filled","Please fill Start and Destination to find routes");
+            //Toast.makeText(getApplicationContext(),"origin or destination null", Toast.LENGTH_LONG).show();
         }
     }
 
@@ -302,7 +330,7 @@ public class TravelWithActivity extends BaseActivity
                     @Override
                     public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
 
-                        departAt.setText(dayOfMonth + " " + month[monthOfYear] + " " + String.valueOf(year).substring(2));
+                        departAt.setText("00:00,"+dayOfMonth + " " + month[monthOfYear] + " " + String.valueOf(year).substring(2));
                         Calendar cal = Calendar.getInstance();
                         cal.setTimeZone(TimeZone.getTimeZone(timezone));
                         cal.set(Calendar.DAY_OF_MONTH, dayOfMonth);
@@ -345,14 +373,13 @@ public class TravelWithActivity extends BaseActivity
                         String sMinute = mMinute < 10 ? "0" + mMinute : "" + mMinute;
                         String set_time = sHour + ":" + sMinute;
 
-                        departAt.setText(set_time + "," +tempDay + " " + month[tempMonth] + " " + String.valueOf(tempYear).substring(2)+" "+timezone);
+                        departAt.setText(set_time + "," +tempDay + " " + month[tempMonth] + " " + String.valueOf(tempYear).substring(2));
 
                         jstart_time_millis = (mHour * 60 + mMinute) * 60 * 1000;
 
-
-
                     }
                 }, mHour, mMinute, true);
+
         timePickerDialog.show();
     }
 
@@ -386,7 +413,8 @@ public class TravelWithActivity extends BaseActivity
                    DistanceUnit = 0;
                    travelmode=0;
                    HIGHWAYS=false;TOLLS=false;FERRIES=false;
-                   origin = null;destination = null;
+                   origin = null;
+                   destination = null;
                   
                   finish();
                   startActivity(getIntent());
@@ -413,5 +441,126 @@ public class TravelWithActivity extends BaseActivity
       //   dialog.getWindow().setType(WindowManager.LayoutParams.TYPE_SYSTEM_ALERT);
          dialog.show();
      };
+         class RouteApi extends AsyncTask<Object,Object,DirectionsResult> {
+               String emsgHead="error";
+               String emsg="";
 
-}
+               @Override
+               protected void onPreExecute() {
+
+
+                   progress.setTitle("Loading Routes...");
+                   progress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+                   progress.setIndeterminate(true);
+                   progress.getWindow().addFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+                   getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
+                           WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+                   progress.show();
+               }
+
+               @Override
+               protected void onPostExecute(DirectionsResult apidata) {
+
+
+                   progress.dismiss();
+                   getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+
+                   if(apidata !=null) {
+
+                       if (apidata.routes != null && apidata.routes.length > 0) {
+
+                           TravelWithActivity.directionapi = apidata;
+                           LinearLayoutManager manager = new LinearLayoutManager(context);
+                           recyclerView.setLayoutManager(manager);
+                           recyclerView.setHasFixedSize(true);
+
+                           AdapterList adapterList = new AdapterList(TravelWithActivity.context, apidata);
+
+                           recyclerView.setAdapter(adapterList);
+                       } else {
+                         //  Toast.makeText(context, "No Routes Available", Toast.LENGTH_SHORT).show();
+                           displayError("No Route Available", "no Routes found between the Given Start and End Address");
+                       }
+                   }else {
+                       displayError(emsgHead,emsg);
+                   }
+
+               }
+
+               @Override
+               protected DirectionsResult doInBackground(Object[] objects) {
+                   try {
+                       ConnectivityManager mgr = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+                       NetworkInfo netInfo = mgr.getActiveNetworkInfo();
+
+
+                       if (netInfo != null && netInfo.isConnected()) {
+
+                           GeoApiContext context = new GeoApiContext.Builder().apiKey(TravelWithActivity.googleAPIkey)
+                                   .build();
+
+                           final DirectionsApiRequest apiRequest = DirectionsApi.newRequest(context);
+                           apiRequest.origin(origin);
+                           apiRequest.destination(destination);
+                           apiRequest.alternatives(true);
+
+
+                           switch (DistanceUnit){
+                               case 0:break;
+                               case 1:apiRequest.units(Unit.IMPERIAL);break;
+                               case 2:apiRequest.units(Unit.METRIC);break;
+                               default:
+                           }
+
+                           switch (travelmode){
+                               case 0 :apiRequest.mode(TravelMode.DRIVING);
+                                   break;
+                               case 1: apiRequest.mode(TravelMode.BICYCLING);
+                                   break;
+                               case 2: apiRequest.mode(TravelMode.WALKING);
+                                   break;
+                           }
+
+
+                           List<DirectionsApi.RouteRestriction> restrictions=new ArrayList<>();
+                           if(HIGHWAYS) restrictions.add(DirectionsApi.RouteRestriction.HIGHWAYS);
+
+                           if(TOLLS) restrictions.add(DirectionsApi.RouteRestriction.TOLLS);
+
+                           if(FERRIES)restrictions.add(DirectionsApi.RouteRestriction.FERRIES);
+
+
+                           apiRequest.avoid(restrictions.toArray(new DirectionsApi.RouteRestriction[restrictions.size()]));
+
+
+                           long time=jstart_date_millis+jstart_time_millis;
+
+                           DateTime t= new DateTime(time, DateTimeZone.forTimeZone(TimeZone.getTimeZone(timezone)));
+                           System.out.println(t.toDateTime());
+
+
+                           if(t.getMillis()>Calendar.getInstance().getTimeInMillis())
+                               apiRequest.departureTime(t);
+
+
+                           return apiRequest.await();
+
+                       }else{
+                           this.emsgHead="No Internet Connection";
+                           this.emsg="Please TurnOn Your Mobile Data";
+                       }
+
+                   } catch (Exception e) {
+                       e.printStackTrace();
+                       this.emsg=e.getMessage();
+                       this.emsgHead="Error";
+                   }
+                   return null;
+
+               }
+
+
+
+           }
+
+       }

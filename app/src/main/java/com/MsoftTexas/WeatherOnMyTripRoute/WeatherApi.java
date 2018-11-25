@@ -85,7 +85,12 @@ public class WeatherApi extends AsyncTask<Object,Object,Apidata> {
         progressDialog.setTitle("Loading Weather Data...");
         progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         progressDialog.setIndeterminate(true);
-        progressDialog.getWindow().addFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL);
+       (TravelWithActivity.activity).getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
+               WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+      //  progressDialog
+                //.getWindow().addFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABL
+
+
         progressDialog.show();
     }
 
