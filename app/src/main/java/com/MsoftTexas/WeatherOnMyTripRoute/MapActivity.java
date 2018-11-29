@@ -5,6 +5,7 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
@@ -84,6 +85,7 @@ import static com.MsoftTexas.WeatherOnMyTripRoute.TravelWithActivity.directionap
 import static com.MsoftTexas.WeatherOnMyTripRoute.TravelWithActivity.jstart_date_millis;
 import static com.MsoftTexas.WeatherOnMyTripRoute.TravelWithActivity.jstart_time_millis;
 import static com.MsoftTexas.WeatherOnMyTripRoute.TravelWithActivity.origin;
+import static com.MsoftTexas.WeatherOnMyTripRoute.TravelWithActivity.progress;
 import static com.MsoftTexas.WeatherOnMyTripRoute.TravelWithActivity.selectedroute;
 import static com.MsoftTexas.WeatherOnMyTripRoute.TravelWithActivity.timezone;
 import static com.MsoftTexas.WeatherOnMyTripRoute.TravelWithActivity.travelmode;
@@ -134,7 +136,7 @@ public class MapActivity extends AppCompatActivity implements
             static ImageView step_icon;
             static ImageView location_icon;
 
-
+            WeatherApi weatherApi;
 
 
 Menu menu;
@@ -243,7 +245,7 @@ SharedPreferences.Editor editor;
         }
 
 
-        progressDialog=new ProgressDialog(this);
+ //       progressDialog=new ProgressDialog(this);
 
 
         Bundle bundle = new Bundle();
@@ -378,12 +380,13 @@ SharedPreferences.Editor editor;
 
                 return true;
             case R.id.action_retry:
-                new WeatherApi().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-                Toast.makeText(this, "Fetching Weather...", Toast.LENGTH_SHORT).show();
+                weatherApi = new WeatherApi();
+                weatherApi.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+ //               Toast.makeText(this, "Fetching Weather...", Toast.LENGTH_SHORT).show();
                 return true;
 
             case R.id.action_clr:
-                Toast.makeText(this, "clear", Toast.LENGTH_SHORT).show();
+  //              Toast.makeText(this, "clear", Toast.LENGTH_SHORT).show();
 
                 recreate();
                 return true;
@@ -550,7 +553,8 @@ SharedPreferences.Editor editor;
             }
 
             public void showWeather(View view) {
-                new WeatherApi().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                weatherApi = new WeatherApi();
+                weatherApi.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
             }
 
 
@@ -566,18 +570,24 @@ SharedPreferences.Editor editor;
             };
 
 
-
        class WeatherApi extends AsyncTask<Object,Object,Apidata> {
-
+           Thread progressThread=null;
            String emsgHead="error";
            String emsg="";
 
+
+
+
            @Override
            protected void onPreExecute() {
+               progressDialog =null;
+               progressDialog=new ProgressDialog(MapActivity.this);
                progressDialog.setTitle("Loading Weather Data...");
-               progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-               progressDialog.setIndeterminate(true);
-              getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
+               progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+               progressDialog.setIndeterminate(false);
+               progressDialog.setProgress(0);
+
+               getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
                        WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
                progressDialog.getWindow().addFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
 
@@ -586,8 +596,18 @@ SharedPreferences.Editor editor;
            }
 
            @Override
+           protected void onProgressUpdate(Object... progress) {
+            //   super.onProgressUpdate(progress);
+           //    System.out.println("progress :"+(int)progress[0]);
+              progressDialog.setProgress((int)progress[0]);
+           }
+
+           @Override
            protected void onPostExecute(Apidata apidata) {
-               progressDialog.dismiss();
+               progressThread.interrupt();
+               publishProgress(100);
+
+
                getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
                try {
 
@@ -791,7 +811,7 @@ SharedPreferences.Editor editor;
                }catch (Exception e){
                    displayError("Weather Display Error ","Error While Parsing Weather");
                }
-
+               progressDialog.dismiss();
            }
 
            @Override
@@ -801,6 +821,26 @@ SharedPreferences.Editor editor;
                    NetworkInfo netInfo = mgr.getActiveNetworkInfo();
 
                    if (netInfo != null && netInfo.isConnected()) {
+
+
+                       progressThread = new Thread(new Runnable() {
+                           @Override
+                           public void run() {
+                               int count=0;
+                               while(count<=90) {
+                                   try{
+                                       Thread.sleep(200);
+                                  //     System.out.println("thread count"+count);
+                                       publishProgress(count++);
+
+                                   } catch (InterruptedException e) {
+                                       return;
+                                   }
+
+                               }
+                           }
+                       });
+                       progressThread.start();
 
                        Input input=new Input();
                        input.setOrigin(origin);
@@ -852,4 +892,5 @@ SharedPreferences.Editor editor;
 
        }
 
-       }
+
+   }

@@ -36,7 +36,7 @@ public class BaseActivity extends AppCompatActivity implements  IabBroadcastRece
     Trialy mTrialy;
 
     static String SKU_INFINITE_GAS_MONTHLY = "monthly_01";
-    static String SKU_INFINITE_GAS_QUATERLY = "quaterly_03";
+    static String SKU_INFINITE_GAS_QUATERLY = "quarterly_03";
     static String SKU_INFINITE_GAS_HALFYEARLY = "halfyearly_06";
     static String SKU_INFINITE_GAS_YEARLY = "yearly_12";
 

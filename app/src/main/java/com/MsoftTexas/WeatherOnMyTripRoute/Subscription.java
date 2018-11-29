@@ -584,7 +584,9 @@ public class Subscription extends AppCompatActivity implements IabBroadcastRecei
             if (mHelper == null) return;
 
             if (result.isFailure()) {
-                complain("Error purchasing: " + result);
+                if(result.getResponse()!= -1005){
+                    complain("Error purchasing: " + result);
+                }
                 setWaitScreen(false);
                 return;
             }

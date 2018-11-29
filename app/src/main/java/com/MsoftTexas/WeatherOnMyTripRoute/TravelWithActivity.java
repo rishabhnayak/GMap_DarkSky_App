@@ -154,6 +154,7 @@ public class TravelWithActivity extends BaseActivity
                 ((CheckBox) findViewById(R.id.tolls)).setVisibility(View.VISIBLE);
                 travelmode=0;
                 resetresult();
+                resetrestrictions();
                 System.out.println("travelmode :"+travelmode);
             }
         });
@@ -168,6 +169,7 @@ public class TravelWithActivity extends BaseActivity
                 ((CheckBox) findViewById(R.id.highway)).setVisibility(View.GONE);
                 ((CheckBox) findViewById(R.id.tolls)).setVisibility(View.GONE);
                 travelmode=2;
+                resetrestrictions();
                 resetresult();
                 System.out.println("travelmode :"+travelmode);
             }
@@ -183,6 +185,7 @@ public class TravelWithActivity extends BaseActivity
                 ((CheckBox) findViewById(R.id.highway)).setVisibility(View.GONE);
                 ((CheckBox) findViewById(R.id.tolls)).setVisibility(View.GONE);
                 travelmode=1;
+                resetrestrictions();
                 resetresult();
                 System.out.println("travelmode :"+travelmode);
             }
@@ -397,7 +400,7 @@ public class TravelWithActivity extends BaseActivity
                 directionapi=null;
                 recyclerView.setAdapter(null);
                 requestDirection();
-                Toast.makeText(this, "Retrying...", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(this, "Retrying...", Toast.LENGTH_SHORT).show();
                 return true;
             case R.id.Subscription:
                 Intent intent=new Intent(getApplicationContext(), Subscription.class);
@@ -406,7 +409,7 @@ public class TravelWithActivity extends BaseActivity
                 //               Toast.makeText(this, "Retrying...", Toast.LENGTH_SHORT).show();
                 return true;
             case R.id.action_clr:
-                Toast.makeText(this, "clear", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(this, "clear", Toast.LENGTH_SHORT).show();
 
                    directionapi=null;
                    selectedroute=0;
@@ -430,6 +433,15 @@ public class TravelWithActivity extends BaseActivity
         directionapi=null;
         recyclerView.setAdapter(null);
     };
+
+   void resetrestrictions(){
+        HIGHWAYS=false;
+        TOLLS=false;
+        FERRIES=false;
+       ((CheckBox) findViewById(R.id.tolls)).setChecked(false);
+       ((CheckBox) findViewById(R.id.highway)).setChecked(false);
+       ((CheckBox) findViewById(R.id.ferries)).setChecked(false);
+    }
 
      static void displayError(String title, String msg){
 
