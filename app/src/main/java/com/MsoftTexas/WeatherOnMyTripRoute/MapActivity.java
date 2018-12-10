@@ -16,6 +16,7 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -606,6 +607,14 @@ SharedPreferences.Editor editor;
            protected void onPostExecute(Apidata apidata) {
                progressThread.interrupt();
                publishProgress(100);
+               new Handler().postDelayed(new Runnable() {
+                   @Override
+                   public void run() {
+                       //Do something after 100ms
+                       progressDialog.dismiss();
+                   }
+               }, 1200);
+
 
 
                getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
@@ -811,7 +820,7 @@ SharedPreferences.Editor editor;
                }catch (Exception e){
                    displayError("Weather Display Error ","Error While Parsing Weather");
                }
-               progressDialog.dismiss();
+
            }
 
            @Override

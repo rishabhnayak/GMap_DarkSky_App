@@ -575,4 +575,20 @@ public class TravelWithActivity extends BaseActivity
 
            }
 
+           @Override
+           public void onBackPressed() {
+              super.onBackPressed();
+                   DistanceUnit = 0;
+                directionapi=null;
+                 selectedroute=0;
+                 travelmode=0;
+                HIGHWAYS=false;
+                 TOLLS=false;
+                 FERRIES=false;
+                origin = null;
+                destination = null;
+           }
+
+
+
        }
