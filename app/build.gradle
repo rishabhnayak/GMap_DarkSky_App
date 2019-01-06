@@ -9,8 +9,10 @@ android {
         config {
             keyAlias 'Mobile Apps'
             keyPassword 'Pampa012'
-            storeFile file('D:/Desktop_flex14_backup/dandw.jks')
+            storeFile file('C:/Users/Rishabh Nayak/Desktop/dandw.jks')
             storePassword 'Pampa012'
+        }
+        config1 {
         }
     }
     compileSdkVersion 27
@@ -29,10 +31,13 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-    //        debuggable true
+            //        debuggable true
             signingConfig signingConfigs.config
         }
         debug {
+            debuggable true
+        }
+        buildType {
         }
     }
     productFlavors {
